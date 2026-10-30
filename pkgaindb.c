@@ -28,7 +28,7 @@
  */
 
 #include <sqlite3.h>
-#include "pkgin.h"
+#include "pkgain.h"
 
 static sqlite3	*pdb;
 static int              repo_counter = 0;
@@ -45,42 +45,42 @@ static const char *pragmaopts[] = {
  * Used to keep track of the current query so that it can be used in the
  * error log callback for diagnostics.
  *
- * Most database access goes through pkgindb_doquery which will set curquery
+ * Most database access goes through pkgaindb_doquery which will set curquery
  * to the query it has been passed, and then resets it to NULL afterwards.
  * Any callers that perform their own database access should use curquery to
  * store their query so that errors are logged correctly.
  */
 static const char *curquery = NULL;
 
-char *pkgin_dbdir;
-char *pkgin_sqldb;
-char *pkgin_cache;
-char *pkgin_errlog;
-char *pkgin_sqllog;
+char *pkgain_dbdir;
+char *pkgain_sqldb;
+char *pkgain_cache;
+char *pkgain_errlog;
+char *pkgain_sqllog;
 
 void
-setup_pkgin_dbdir(void)
+setup_pkgain_dbdir(void)
 {
 	char *p;
 
-	if ((p = getenv("PKGIN_DBDIR")) != NULL)
-		pkgin_dbdir = xasprintf("%s", p);
+	if ((p = getenv("PKGAIN_DBDIR")) != NULL)
+		pkgain_dbdir = xasprintf("%s", p);
 	else
-		pkgin_dbdir = xasprintf("%s", PKGIN_DBDIR);
+		pkgain_dbdir = xasprintf("%s", PKGAIN_DBDIR);
 
-	pkgin_sqldb = xasprintf("%s/pkgin.db", pkgin_dbdir);
-	pkgin_cache = xasprintf("%s/cache", pkgin_dbdir);
-	pkgin_errlog = xasprintf("%s/pkg_install-err.log", pkgin_dbdir);
-	pkgin_sqllog = xasprintf("%s/sql.log", pkgin_dbdir);
+	pkgain_sqldb = xasprintf("%s/pkgain.db", pkgain_dbdir);
+	pkgain_cache = xasprintf("%s/cache", pkgain_dbdir);
+	pkgain_errlog = xasprintf("%s/pkg_install-err.log", pkgain_dbdir);
+	pkgain_sqllog = xasprintf("%s/sql.log", pkgain_dbdir);
 
-	if (access(pkgin_dbdir, F_OK) != 0) {
-		if (mkdir(pkgin_dbdir, 0755) < 0)
-			err(1, "Failed to create %s", pkgin_dbdir);
+	if (access(pkgain_dbdir, F_OK) != 0) {
+		if (mkdir(pkgain_dbdir, 0755) < 0)
+			err(1, "Failed to create %s", pkgain_dbdir);
 	}
 
-	if (access(pkgin_cache, F_OK) != 0) {
-		if (mkdir(pkgin_cache, 0755) < 0)
-			err(1, "Failed to create %s", pkgin_cache);
+	if (access(pkgain_cache, F_OK) != 0) {
+		if (mkdir(pkgain_cache, 0755) < 0)
+			err(1, "Failed to create %s", pkgain_cache);
 	}
 }
 
@@ -92,9 +92,9 @@ have_privs(int reqd)
 	    (access(pkgdb_get_dir(), W_OK) < 0))
 		return 0;
 
-	if ((reqd & PRIVS_PKGINDB) &&
-	    (access(pkgin_dbdir, F_OK) == 0) &&
-	    (access(pkgin_dbdir, W_OK) < 0))
+	if ((reqd & PRIVS_PKGAINDB) &&
+	    (access(pkgain_dbdir, F_OK) == 0) &&
+	    (access(pkgain_dbdir, W_OK) < 0))
 		return 0;
 
 	return 1;
@@ -140,7 +140,7 @@ pdb_get_value(void *param, int argc, char **argv, char **colname)
  * regular users can issue queries.
  */
 static void
-pkgindb_sqlerr_cb(void *arg, int errcode, const char *errmsg)
+pkgaindb_sqlerr_cb(void *arg, int errcode, const char *errmsg)
 {
 	FILE *fp;
 	struct tm tm;
@@ -152,7 +152,7 @@ pkgindb_sqlerr_cb(void *arg, int errcode, const char *errmsg)
 	tm = *(localtime(&now));
 	strftime(curtime, sizeof(curtime), "%Y-%m-%d %H:%M:%S %Z", &tm);
 
-	if ((fp = fopen(pkgin_sqllog, "a")) != NULL) {
+	if ((fp = fopen(pkgain_sqllog, "a")) != NULL) {
 		fprintf(fp, "SQL error at %s\n", curtime);
 		fprintf(fp, "   errmsg: %s\n", errmsg);
 		if (*query)
@@ -162,7 +162,7 @@ pkgindb_sqlerr_cb(void *arg, int errcode, const char *errmsg)
 }
 
 int
-pkgindb_doquery(const char *query, int (*cb)(void *, int, char *[], char *[]),
+pkgaindb_doquery(const char *query, int (*cb)(void *, int, char *[], char *[]),
     void *param)
 {
 	int rv;
@@ -182,7 +182,7 @@ pkgindb_doquery(const char *query, int (*cb)(void *, int, char *[], char *[]),
 }
 
 int
-pkgindb_dovaquery(const char *fmt, ...)
+pkgaindb_dovaquery(const char *fmt, ...)
 {
 	char *buf;
 	va_list ap;
@@ -193,7 +193,7 @@ pkgindb_dovaquery(const char *fmt, ...)
 		errx(EXIT_FAILURE, "Insufficient memory to construct query");
 	va_end(ap);
 
-	rv = pkgindb_doquery(buf, NULL, NULL);
+	rv = pkgaindb_doquery(buf, NULL, NULL);
 
 	sqlite3_free(buf);
 
@@ -201,43 +201,43 @@ pkgindb_dovaquery(const char *fmt, ...)
 }
 
 uint64_t
-pkgindb_savepoint(void)
+pkgaindb_savepoint(void)
 {
 	uint64_t savepoint = savepoint_counter++;
 
-	if (pkgindb_dovaquery("SAVEPOINT sp%"PRIu64, savepoint))
+	if (pkgaindb_dovaquery("SAVEPOINT sp%"PRIu64, savepoint))
 		errx(EXIT_FAILURE, "savepoint: %s", sqlite3_errmsg(pdb));
 
 	return savepoint;
 }
 
 void
-pkgindb_savepoint_rollback(uint64_t savepoint)
+pkgaindb_savepoint_rollback(uint64_t savepoint)
 {
 
-	if (pkgindb_dovaquery("ROLLBACK TO sp%"PRIu64, savepoint)) {
+	if (pkgaindb_dovaquery("ROLLBACK TO sp%"PRIu64, savepoint)) {
 		errx(EXIT_FAILURE, "rollback savepoint %s",
 		    sqlite3_errmsg(pdb));
 	}
 }
 
 void
-pkgindb_savepoint_release(uint64_t savepoint)
+pkgaindb_savepoint_release(uint64_t savepoint)
 {
 
-	if (pkgindb_dovaquery("RELEASE sp%"PRIu64, savepoint)) {
+	if (pkgaindb_dovaquery("RELEASE sp%"PRIu64, savepoint)) {
 		errx(EXIT_FAILURE, "release savepoint %s",
 		    sqlite3_errmsg(pdb));
 	}
 }
 
 /*
- * Configure the pkgin database.  Returns 0 if opening an existing compatible
+ * Configure the pkgain database.  Returns 0 if opening an existing compatible
  * database, or 1 if the database needs to be created or recreated (in the case
  * of a schema upgrade).  Any other error is fatal.
  */
 int
-pkgindb_open(void)
+pkgaindb_open(void)
 {
 	int create, i, oflags;
 	char buf[128];
@@ -245,7 +245,7 @@ pkgindb_open(void)
 	/*
 	 * Configure our sqlite error log callback function.
 	 */
-	sqlite3_config(SQLITE_CONFIG_LOG, pkgindb_sqlerr_cb, &curquery);
+	sqlite3_config(SQLITE_CONFIG_LOG, pkgaindb_sqlerr_cb, &curquery);
 
 	/*
 	 * Determine if we need to create a new database or can load an
@@ -256,12 +256,12 @@ pkgindb_open(void)
 recreate:
 	create = 0;
 	oflags = SQLITE_OPEN_READWRITE;
-	if (access(pkgin_sqldb, F_OK) < 0) {
+	if (access(pkgain_sqldb, F_OK) < 0) {
 		create = 1;
 		oflags |= SQLITE_OPEN_CREATE;
 	}
 
-	if (sqlite3_open_v2(pkgin_sqldb, &pdb, oflags, NULL) != SQLITE_OK)
+	if (sqlite3_open_v2(pkgain_sqldb, &pdb, oflags, NULL) != SQLITE_OK)
 		err(EXIT_FAILURE, "cannot open database");
 
 	/*
@@ -271,12 +271,12 @@ recreate:
 	 * and recreate, there is no support for online upgrades at this time.
 	 */
 	if (create) {
-		if (pkgindb_doquery(CREATE_DRYDB, NULL, NULL) != PDB_OK)
+		if (pkgaindb_doquery(CREATE_DRYDB, NULL, NULL) != PDB_OK)
 			errx(EXIT_FAILURE, "cannot create database: %s",
 			    sqlite3_errmsg(pdb));
 	} else {
-		if (pkgindb_doquery(CHECK_DB_LATEST, NULL, NULL) != PDB_OK) {
-			if (unlink(pkgin_sqldb) < 0)
+		if (pkgaindb_doquery(CHECK_DB_LATEST, NULL, NULL) != PDB_OK) {
+			if (unlink(pkgain_sqldb) < 0)
 				err(EXIT_FAILURE, "cannot recreate database");
 			goto recreate;
 		}
@@ -285,25 +285,25 @@ recreate:
 	/* Apply PRAGMA properties */
 	for (i = 0; pragmaopts[i] != NULL; i++) {
 		snprintf(buf, sizeof(buf), "PRAGMA %s;", pragmaopts[i]);
-		pkgindb_doquery(buf, NULL, NULL);
+		pkgaindb_doquery(buf, NULL, NULL);
 	}
 
 	return create;
 }
 
 void
-pkgindb_close(void)
+pkgaindb_close(void)
 {
 	sqlite3_close(pdb);
 }
 
 __attribute__((noreturn))
 static void
-pkgindb_sqlfail(void)
+pkgaindb_sqlfail(void)
 {
-	pkgindb_close();
+	pkgaindb_close();
 
-	errx(EXIT_FAILURE, "SQL query failed, see %s", pkgin_sqllog);
+	errx(EXIT_FAILURE, "SQL query failed, see %s", pkgain_sqllog);
 }
 
 /*
@@ -311,13 +311,13 @@ pkgindb_sqlfail(void)
  * cost of parsing the same query for every row.  Errors are fatal.
  */
 sqlite3_stmt *
-pkgindb_stmt_prepare(const char *query)
+pkgaindb_stmt_prepare(const char *query)
 {
 	sqlite3_stmt *stmt;
 
 	curquery = query;
 	if (sqlite3_prepare_v2(pdb, query, -1, &stmt, NULL) != SQLITE_OK)
-		pkgindb_sqlfail();
+		pkgaindb_sqlfail();
 	curquery = NULL;
 
 	return stmt;
@@ -325,12 +325,12 @@ pkgindb_stmt_prepare(const char *query)
 
 /*
  * Execute a prepared statement with values already bound by the caller, and
- * reset it ready for the next execution.  As with pkgindb_doquery(), errors
+ * reset it ready for the next execution.  As with pkgaindb_doquery(), errors
  * are returned to the caller and logged to the SQL log, they may be expected
  * (for example UNIQUE constraint failures for duplicate packages).
  */
 int
-pkgindb_stmt_exec(sqlite3_stmt *stmt)
+pkgaindb_stmt_exec(sqlite3_stmt *stmt)
 {
 	int rv;
 
@@ -343,7 +343,7 @@ pkgindb_stmt_exec(sqlite3_stmt *stmt)
 }
 
 void
-pkgindb_stmt_finalize(sqlite3_stmt *stmt)
+pkgaindb_stmt_finalize(sqlite3_stmt *stmt)
 {
 	(void) sqlite3_finalize(stmt);
 }
@@ -367,7 +367,7 @@ pkg_db_mtime(struct stat *st)
 		   "ORDER BY ROWID DESC LIMIT 1;";
 
 	if (sqlite3_prepare_v2(pdb, curquery, -1, &stmt, NULL) != SQLITE_OK)
-		pkgindb_sqlfail();
+		pkgaindb_sqlfail();
 
 	rc = sqlite3_step(stmt);
 
@@ -379,13 +379,13 @@ pkg_db_mtime(struct stat *st)
 		db_ntime = 0;
 	} else {
 		/* This shouldn't happen, abort and investigate */
-		pkgindb_sqlfail();
+		pkgaindb_sqlfail();
 	}
 
 	sqlite3_finalize(stmt);
 
 	/* Databases matched pkgdb, we're up-to-date */
-	if (db_mtime == st->st_mtime && db_ntime == st->pkgin_nanotime)
+	if (db_mtime == st->st_mtime && db_ntime == st->pkgain_nanotime)
 		return 0;
 
 	/* We're not up to date, request a refresh. */
@@ -404,35 +404,59 @@ pkg_db_update_mtime(struct stat *st)
 		   "VALUES (?, ?);";
 
 	if (sqlite3_prepare_v2(pdb, curquery, -1, &stmt, NULL) != SQLITE_OK)
-		pkgindb_sqlfail();
+		pkgaindb_sqlfail();
 
 	if (sqlite3_bind_int64(stmt, 1, st->st_mtime) != SQLITE_OK)
-		pkgindb_sqlfail();
+		pkgaindb_sqlfail();
 
-	if (sqlite3_bind_int64(stmt, 2, st->pkgin_nanotime) != SQLITE_OK)
-		pkgindb_sqlfail();
+	if (sqlite3_bind_int64(stmt, 2, st->pkgain_nanotime) != SQLITE_OK)
+		pkgaindb_sqlfail();
 
 	if (sqlite3_step(stmt) != SQLITE_DONE)
-		pkgindb_sqlfail();
+		pkgaindb_sqlfail();
 
 	sqlite3_finalize(stmt);
 }
 
 void
-repo_record(char **repos)
+repo_record(RepoConf *repos)
 {
 	int	i;
 	char	query[BUFSIZ], value[20];
 
-	for (i = 0; repos[i] != NULL; i++) {
-		sqlite3_snprintf(BUFSIZ, query, EXISTS_REPO, repos[i]);
-		pkgindb_doquery(query, pdb_get_value, &value[0]);
+	for (i = 0; repos[i].url != NULL; i++) {
+		sqlite3_snprintf(BUFSIZ, query, EXISTS_REPO, repos[i].url);
+		pkgaindb_doquery(query, pdb_get_value, &value[0]);
                 repo_counter++;
 
 		if (value[0] == '0') {
 			/* repository does not exists */
-			sqlite3_snprintf(BUFSIZ, query, INSERT_REPO, repos[i]);
-			pkgindb_doquery(query, NULL, NULL);
+			if (repos[i].alias != NULL) {
+				/* release alias from any other URL */
+				sqlite3_snprintf(BUFSIZ, query,
+				    RELEASE_REPO_ALIAS, repos[i].alias);
+				pkgaindb_doquery(query, NULL, NULL);
+			}
+			sqlite3_snprintf(BUFSIZ, query, INSERT_REPO,
+			    repos[i].url, repos[i].alias);
+			pkgaindb_doquery(query, NULL, NULL);
+		} else if (repos[i].alias != NULL) {
+			/*
+			 * Release the alias from any other URL before
+			 * claiming it, so aliases can be freely reassigned
+			 * between repositories.
+			 */
+			sqlite3_snprintf(BUFSIZ, query, RELEASE_REPO_ALIAS,
+			    repos[i].alias);
+			pkgaindb_doquery(query, NULL, NULL);
+			sqlite3_snprintf(BUFSIZ, query, UPDATE_REPO_ALIAS,
+			    repos[i].alias, repos[i].url);
+			pkgaindb_doquery(query, NULL, NULL);
+		} else {
+			/* clear any stale alias for un-named repositories */
+			sqlite3_snprintf(BUFSIZ, query, UPDATE_REPO_ALIAS,
+			    NULL, repos[i].url);
+			pkgaindb_doquery(query, NULL, NULL);
 		}
 	}
 }
@@ -448,7 +472,7 @@ pkg_sum_mtime(char *repo)
 	sqlite3_snprintf(BUFSIZ, query,
 	    "SELECT REPO_MTIME FROM REPOS WHERE REPO_URL GLOB %Q || '*';",
 	    repo);
-	pkgindb_doquery(query, pdb_get_value, str_mtime);
+	pkgaindb_doquery(query, pdb_get_value, str_mtime);
 
 	if (str_mtime[0] != '\0')
 		db_mtime = (time_t)strtol(str_mtime, (char **)NULL, 10);
@@ -457,24 +481,30 @@ pkg_sum_mtime(char *repo)
 }
 
 void
-pkgindb_stats(void)
+pkgaindb_stats(void)
 {
 	sqlite3_stmt	*stmt;
 	int		lcount, rcount;
 	char	lsize[H_BUF], rsize[H_BUF];
 
+	/*
+	 * The remote totals consider only the copy from the first-listed
+	 * repository, matching the package actually offered to the user.
+	 */
 	curquery = "SELECT "
 		   " (SELECT COUNT(PKG_ID) FROM LOCAL_PKG) AS lcount, "
 		   " (SELECT SUM(SIZE_PKG) FROM LOCAL_PKG) AS lsize, "
-		   " (SELECT COUNT(PKG_ID) FROM REMOTE_PKG) AS rcount, "
-		   " (SELECT SUM(FILE_SIZE) FROM REMOTE_PKG) AS rsize;";
+		   " (SELECT COUNT(DISTINCT FULLPKGNAME) FROM REMOTE_PKG) AS rcount, "
+		   " (SELECT SUM(FILE_SIZE) FROM REMOTE_PKG WHERE PKG_ID IN "
+		   "    (SELECT MIN(PKG_ID) FROM REMOTE_PKG "
+		   "      GROUP BY FULLPKGNAME)) AS rsize;";
 
 	if (sqlite3_prepare_v2(pdb, curquery, -1, &stmt, NULL) != SQLITE_OK)
-		pkgindb_sqlfail();
+		pkgaindb_sqlfail();
 
 	/* Anything other than a single row is an error */
 	if (sqlite3_step(stmt) != SQLITE_ROW)
-		pkgindb_sqlfail();
+		pkgaindb_sqlfail();
 
 	/*
 	 * Counts are simple integers.  Sizes are converted to human readable

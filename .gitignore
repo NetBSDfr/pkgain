@@ -8,8 +8,8 @@ config.log
 config.status
 external/.deps
 external/.dirstamp
-pkgin
-pkgin.1
-pkgin.1.html
-pkgindb_create.h
+pkgain
+pkgain.1
+pkgain.1.html
+pkgaindb_create.h
 stamp-h1

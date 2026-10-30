@@ -34,10 +34,10 @@
  */
 
 #include <sqlite3.h>
-#include "pkgin.h"
+#include "pkgain.h"
 
 void
-pkgin_autoremove(void)
+pkgain_autoremove(void)
 {
 	Plistarray	*depshead;
 	Plistnumbered	*nokeephead, *keephead;
@@ -183,7 +183,7 @@ pkg_keep(int type, char *pattern)
 	Pkglist *lpkg;
 	char query[BUFSIZ];
 
-	if (!have_privs(PRIVS_PKGDB|PRIVS_PKGINDB))
+	if (!have_privs(PRIVS_PKGDB|PRIVS_PKGAINDB))
 		errx(EXIT_FAILURE, MSG_DONT_HAVE_RIGHTS);
 
 	if (is_empty_local_pkglist())
@@ -219,7 +219,7 @@ pkg_keep(int type, char *pattern)
 		break;
 	}
 
-	pkgindb_doquery(query, NULL, NULL);
+	pkgaindb_doquery(query, NULL, NULL);
 
 	return 0;
 }

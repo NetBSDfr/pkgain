@@ -1,4 +1,4 @@
-name: Build all pkgin release tags
+name: Build all pkgain release tags
 on:
   workflow_dispatch:
 jobs:
@@ -71,7 +71,7 @@ jobs:
         run: |
           mkdir bin
           for tag in $(git tag | grep ^v); do
-            # TODO: < v0.10 require patches for PKGIN_DBDIR / PKG_INSTALL_DIR
+            # TODO: < v0.10 require patches for PKGAIN_DBDIR / PKG_INSTALL_DIR
             case "${tag}" in
             v0.[0-9].*)
               continue
@@ -94,7 +94,7 @@ jobs:
               v0.*)
                 CONFIGURE_ARGS="${CONFIGURE_ARGS} --with-libraries=/tmp/destdir/usr/lib"
                 CONFIGURE_ARGS="${CONFIGURE_ARGS} --with-includes=/tmp/destdir/usr/include"
-                CONFIGURE_ARGS="${CONFIGURE_ARGS} --with-pkginstall=/usr/local/sbin"
+                CONFIGURE_ARGS="${CONFIGURE_ARGS} --with-pkgainstall=/usr/local/sbin"
                 ;;
               *)
                 CONFIGURE_ARGS="${CONFIGURE_ARGS} --disable-maintainer-mode"
@@ -114,12 +114,12 @@ jobs:
               ../configure ${CONFIGURE_ARGS} || (cat config.log && ./configure --help && false)
               bmake || make V=1
             )
-            sudo cp build/pkgin /usr/local/bin/pkgin-"$tag"
+            sudo cp build/pkgain /usr/local/bin/pkgain-"$tag"
             rm -rf build
           done
-          tar -czvf pkgin-bins.tar.gz /usr/local/{bin/pkgin-*,sbin/pkg*}
+          tar -czvf pkgain-bins.tar.gz /usr/local/{bin/pkgain-*,sbin/pkg*}
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: pkgin-binaries
-          path: pkgin-bins.tar.gz
+          name: pkgain-binaries
+          path: pkgain-bins.tar.gz

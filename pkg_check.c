@@ -28,7 +28,7 @@
  */
 
 #include <sqlite3.h>
-#include "pkgin.h"
+#include "pkgain.h"
 
 /*
  * Check that REQUIRES is satisifed for incoming packages.  As the check

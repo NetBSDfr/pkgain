@@ -1,8 +1,8 @@
 .Dd July 1, 2020
-.Dt PKGIN 1
+.Dt PKGAIN 1
 .Os
 .Sh NAME
-.Nm pkgin
+.Nm pkgain
 .Nd pkgsrc binary package manager
 .Sh SYNOPSIS
 .Nm
@@ -26,11 +26,11 @@ The following command line arguments are supported:
 .Bl -tag -width 15n -offset 6n
 .It Fl 4
 Forces
-.B pkgin
+.B pkgain
 to only use IPv4 addresses.
 .It Fl 6
 Forces
-.B pkgin
+.B pkgain
 to only use IPv6 addresses.
 .It Fl c Ar chroot_path
 Enable chrooting
@@ -86,15 +86,21 @@ category/package by line).
 .It Cm import Ar file
 Import a list of packages to be installed from file (one
 category/package by line)
-.It Cm install Ar package Ns | Ns Ar glob Ar
+.It Cm install Ar package Ns | Ns Ar glob Ns | Ns Ar package/alias
 Performs installation or upgrade of package.
 If more than one packages are specified on the command-line, all will
 be installed (or upgraded).
 Instead of a package name, a glob can be specified in order to install
 specific versions.
+If a repository alias is defined in
+.Pa repositories.conf ,
+the search can be restricted to that single repository using the
+.Ar package/alias
+form.
 .Pp
-Example:
-.Dl pkgin install 'mysql-server>=5.6<5.7'
+Examples:
+.Dl pkgain install 'mysql-server>=5.6<5.7'
+.Dl pkgain install xterm/repo2
 .It Cm keep Ar package Ar
 Marks package as "non auto-removable".
 A
@@ -196,21 +202,40 @@ The
 .Ev PKG_REPOS
 environment variable can be pointed to a suitable repository or a list
 of space separated repositories in order to override
-.Pa /usr/pkg/etc/pkgin/repositories.conf .
+.Pa /usr/pkg/etc/pkgain/repositories.conf .
+These repositories have no alias, and the first of them can be selected
+with the special alias
+.Dv default .
 .El
 .Sh FILES
 .Bl -tag -width 12n
-.It Pa /usr/pkg/etc/pkgin/repositories.conf
-This file contains a list of repository URIs that
-.Nm
-will use.
+.It Pa /usr/pkg/etc/pkgain/repositories.conf
+This file contains one repository per line, each line being a repository
+URI, optionally preceded by an alias name separated by whitespace.
+Alias names allow packages to be selected from a specific repository
+with the
+.Ar package/alias
+form of the
+.Cm install
+command, and must not contain
+.Ql /
+or
+.Ql =
+characters.
+A repository listed without an alias acts as the default, and the first
+such repository can also be selected explicitly with the special alias
+.Dv default .
+When a package is available from multiple repositories at the same
+version, it is fetched from the default repository (the first one
+listed without an alias); otherwise order matters and the first
+repository listed wins.
 It may contain macros
 .Dv $arch
 to define the machine hardware platform and
 .Dv $osrelease
 to define the release version for the operating system (as reported by
 .Xr uname 1 ) .
-.It Pa /usr/pkg/etc/pkgin/preferred.conf
+.It Pa /usr/pkg/etc/pkgain/preferred.conf
 This file contains a list of preferences regarding packages to be
 installed or upgraded.
 Each line defines a package preference taking the form of a simple
@@ -220,25 +245,25 @@ such as:
 .Dl autoconf=2.69.*
 .Dl mysql-server<5.6
 .Dl php>=5.4
-.It Pa /var/db/pkgin
+.It Pa /var/db/pkgain
 This directory contains the individual files and
 directories used by
 .Nm
 listed below.
-.It Pa /var/db/pkgin/cache
+.It Pa /var/db/pkgain/cache
 This directory contains the packages downloaded by
 .Nm .
 It is safe to empty it if necessary by running:
 .Pp
-.Dl # pkgin clean
-.It Pa /var/db/pkgin/pkgin.db
+.Dl # pkgain clean
+.It Pa /var/db/pkgain/pkgain.db
 This is the main
-.Nm pkgin
+.Nm pkgain
 sqlite database.
 This format has been chosen in order to parse, query, match and order
 packages using the SQL language thus making packages list manipulation
 a lot easier.
-.It Pa /var/db/pkgin/pkg_install-err.log
+.It Pa /var/db/pkgain/pkg_install-err.log
 This file contains errors and warnings given by
 .Xr pkg_add 1
 and
@@ -246,7 +271,7 @@ and
 which are the tools called by
 .Nm
 to manipulate packages themselves.
-.It Pa /var/db/pkgin/sql.log
+.It Pa /var/db/pkgain/sql.log
 This file contains SQL errors that might have occurred on a sqlite
 query.
 Mainly for debugging purposes.
@@ -254,24 +279,24 @@ Mainly for debugging purposes.
 .Sh EXAMPLES
 Setup the initial database:
 .Pp
-.Dl # vi /usr/pkg/etc/pkgin/repositories.conf
+.Dl # vi /usr/pkg/etc/pkgain/repositories.conf
 .Dl https://cdn.netbsd.org/pub/pkgsrc/packages/NetBSD/$arch/9.0/All
 .Pp
-.Dl # pkgin update
+.Dl # pkgain update
 .Pp
 Listing all packages available in the repository:
 .Pp
-.Dl # pkgin avail
+.Dl # pkgain avail
 .Pp
 Search for specific packages:
 .Pp
-.Dl # pkgin search '^abook|lbdb|mutt|xlhtml'
+.Dl # pkgain search '^abook|lbdb|mutt|xlhtml'
 .Dl abook-0.6.1          Text-based addressbook program
 .Dl lbdb-0.48.1nb1       The little brother's database
 .Dl mutt-1.14.5 =        Text-based MIME mail client with PGP & S/MIME support
 .Dl xlhtml-0.5nb2        Microsoft xls/ppt to HTML converter
 .Pp
-.Dl # pkgin search '^php-'
+.Dl # pkgain search '^php-'
 .Dl php-7.4.7            PHP Hypertext Preprocessor version 7.4
 .Dl php-7.3.19           PHP Hypertext Preprocessor version 7.3
 .Dl php-7.2.31nb1        PHP Hypertext Preprocessor version 7.2
@@ -280,21 +305,21 @@ Search for specific packages:
 .Pp
 Install packages and their dependencies:
 .Pp
-.Dl # pkgin install abook lbdb mutt xlhtml
+.Dl # pkgain install abook lbdb mutt xlhtml
 .Pp
-.Dl # pkgin install 'php>=7.3<7.4'
+.Dl # pkgain install 'php>=7.3<7.4'
 .Pp
 Upgrade all packages:
 .Pp
-.Dl # pkgin upgrade
+.Dl # pkgain upgrade
 .Pp
 Remove packages and their reverse dependencies:
 .Pp
-.Dl # pkgin remove mutt
+.Dl # pkgain remove mutt
 .Pp
 Remove orphaned dependencies:
 .Pp
-.Dl # pkgin autoremove
+.Dl # pkgain autoremove
 .Sh SEE ALSO
 .Xr pkg_add 1 ,
 .Xr pkg_info 1 ,

@@ -27,16 +27,55 @@
  * SUCH DAMAGE.
  */
 
-#include "pkgin.h"
+#include "pkgain.h"
 
 #define GLOBCHARS "{<>[]?*"
 
 /*
+ * Return true if remote package p should be preferred over best, preferring
+ * the higher version and, for identical versions, the earlier-listed
+ * repository.
+ */
+static int
+remote_pkg_better(Pkglist *best, Pkglist *p)
+{
+	const char	*durl;
+	int		 p_def, best_def;
+
+	if (best == NULL)
+		return 1;
+
+	if (best->version != NULL && p->version != NULL) {
+		if (dewey_cmp(p->version, DEWEY_GT, best->version))
+			return 1;
+		if (dewey_cmp(best->version, DEWEY_GT, p->version))
+			return 0;
+	} else if (version_check(best->full, p->full) == 2)
+		return 1;
+
+	/*
+	 * Identical versions: the default repository (first one listed
+	 * without an alias) wins, otherwise earlier repository wins.
+	 */
+	durl = default_repo_url();
+	if (durl != NULL) {
+		p_def = p->repo != NULL && strcmp(p->repo, durl) == 0;
+		best_def = best->repo != NULL &&
+		    strcmp(best->repo, durl) == 0;
+		if (p_def != best_def)
+			return p_def;
+	}
+	return p->repo_prio < best->repo_prio;
+}
+
+/*
  * Return best candidate for a remote package, taking into consideration any
- * preferred.conf matches.
+ * preferred.conf matches.  If repo is set, only packages from that
+ * repository URL are considered.
  */
 int
-find_preferred_pkg(const char *pkgname, Pkglist **pkg, char **match)
+find_preferred_pkg(const char *pkgname, const char *repo, Pkglist **pkg,
+    char **match)
 {
 	Pkglist *p, *best = NULL;
 	int i;
@@ -46,6 +85,9 @@ find_preferred_pkg(const char *pkgname, Pkglist **pkg, char **match)
 	for (i = 0; i < REMOTE_PKG_HASH_SIZE; i++) {
 	SLIST_FOREACH(p, &r_plisthead[i], next) {
 		if (!pkg_match(pkgname, p->full))
+			continue;
+
+		if (repo != NULL && pkgstrcmp(repo, p->repo) != 0)
 			continue;
 
 		/*
@@ -65,7 +107,7 @@ find_preferred_pkg(const char *pkgname, Pkglist **pkg, char **match)
 			continue;
 
 		/* Save best match */
-		if (best == NULL || version_check(best->full, p->full) == 2)
+		if (remote_pkg_better(best, p))
 			best = p;
 	}
 	}
@@ -133,10 +175,12 @@ unique_pkg(const char *pkgname, const char *dest)
 
 /*
  * Return best remote package for a pattern and optional pkgpath, or NULL if no
- * valid match.
+ * valid match.  If repo is set, only packages from that repository URL are
+ * considered.
  */
 Pkglist *
-find_remote_pkg(const char *pattern, const char *pkgname, const char *pkgpath)
+find_remote_pkg(const char *pattern, const char *pkgname, const char *pkgpath,
+    const char *repo)
 {
 	Pkglist	*p, *pkg = NULL;
 	size_t size = REMOTE_PKG_HASH_SIZE;
@@ -167,16 +211,17 @@ find_remote_pkg(const char *pattern, const char *pkgname, const char *pkgpath)
 			if (pkgpath && pkgstrcmp(pkgpath, p->pkgpath) != 0)
 				continue;
 
+			if (repo != NULL && pkgstrcmp(repo, p->repo) != 0)
+				continue;
+
 			if (chk_preferred(p->full, NULL) != 0)
 				continue;
 
 			/*
 			 * Save match if we haven't seen one yet, or if this
-			 * one is a higher version number than the current best
-			 * match.
+			 * one is a better version/repository match.
 			 */
-			if (pkg == NULL ||
-			    version_check(pkg->full, p->full) == 2)
+			if (remote_pkg_better(pkg, p))
 				pkg = p;
 		}
 	}
@@ -258,7 +303,7 @@ version_check(char *first_pkg, char *second_pkg)
 }
 
 /*
- * Compare string values between two packages.  Often in pkgin the comparison
+ * Compare string values between two packages.  Often in pkgain the comparison
  * in question allows both to be NULL, for example with pkg_summary fields
  * that are optional, so this function returns true if both are NULL.
  *

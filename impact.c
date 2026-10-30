@@ -28,7 +28,7 @@
  */
 
 #include <sqlite3.h>
-#include "pkgin.h"
+#include "pkgain.h"
 
 /*
  * Check for an existing entry in impact head for either a local pkg or remote.
@@ -159,7 +159,7 @@ find_supersedes(Plistarray *impacthead)
 	supersedes = init_head();
 
 	sqlite3_snprintf(BUFSIZ, query, REMOTE_SUPERSEDES);
-	pkgindb_doquery(query, record_supersedes, supersedes);
+	pkgaindb_doquery(query, record_supersedes, supersedes);
 
 	if (SLIST_EMPTY(supersedes)) {
 		free_pkglist(&supersedes);
@@ -210,7 +210,7 @@ add_remote_to_impact(Plistarray *impacthead, Pkglist *pkg)
 		char query[BUFSIZ];
 		char *cpkgname = xmalloc(BUFSIZ * sizeof(char));
 		sqlite3_snprintf(BUFSIZ, query, REMOTE_CONFLICTS, cmatch);
-		pkgindb_doquery(query, pdb_get_value, cpkgname);
+		pkgaindb_doquery(query, pdb_get_value, cpkgname);
 		if ((lpkg = find_local_pkg(cpkgname, NULL)) != NULL) {
 			if ((p = local_pkg_in_impact(impacthead, lpkg))) {
 				p->action = ACTION_REMOVE;
@@ -326,7 +326,8 @@ pkg_impact_upgrade(int verbose)
 		 * If there are no matches the package is just skipped, this
 		 * can happen if for example the local package is self-built.
 		 */
-		p->rpkg = find_remote_pkg(lpkg->name, lpkg->name, lpkg->pkgpath);
+		p->rpkg = find_remote_pkg(lpkg->name, lpkg->name, lpkg->pkgpath,
+			    NULL);
 		if (p->rpkg == NULL) {
 			TRACE("   | - no remote match found\n");
 			continue;
@@ -370,7 +371,8 @@ pkg_impact_upgrade(int verbose)
 			char *repmatch = xasprintf("%s-[0-9]*", lpkg->replace);
 			if ((newp = find_local_pkg(repmatch, lpkg->replace)) == NULL) {
 				newp = malloc_pkglist();
-				newp->rpkg = find_remote_pkg(repmatch, lpkg->replace, NULL);
+				newp->rpkg = find_remote_pkg(repmatch,
+				    lpkg->replace, NULL, NULL);
 				/*
 				 * The replacement may not exist in any repository, for
 				 * example with self-built or incomplete repositories.
@@ -500,7 +502,7 @@ resolve_reverse_deps(Plisthead *upgrades, Plistarray *impacthead, Pkglist *pkg)
 		 * return NULL, but if it does then there's not much we can do
 		 * about it other than log and skip.
 		 */
-		p->rpkg = find_remote_pkg(p->name, p->name, p->pkgpath);
+		p->rpkg = find_remote_pkg(p->name, p->name, p->pkgpath, NULL);
 		if (p->rpkg == NULL) {
 			TRACE("ERROR: unable to find remote pkg for %s at %s\n",
 			    p->name, p->pkgpath);
@@ -550,7 +552,8 @@ pkg_impact_install(char **pkgargs, int *rc, int verbose)
 	Plistarray *deps, *impacthead;
 	Plisthead *ipkgs;
 	Pkglist *dpkg, *rpkg, *p, *r;
-	char **arg, *pkgname = NULL;
+	char **arg, *pkgname = NULL, *slash, *name;
+	const char *repo;
 	int i, istty, rv;
 
 	istty = isatty(fileno(stdout));
@@ -561,9 +564,35 @@ pkg_impact_install(char **pkgargs, int *rc, int verbose)
 		TRACE("  [+]-impact for %s\n", *arg);
 
 		/*
+		 * Split off an optional "/repo" suffix selecting a named
+		 * repository, e.g. "foo/repo2".  The right-hand side must be
+		 * a configured repository alias.
+		 */
+		name = *arg;
+		repo = NULL;
+		slash = strrchr(name, '/');
+		if (slash != NULL) {
+			*slash = '\0';
+			if (*name == '\0' ||
+			    (repo = lookup_repo(slash + 1)) == NULL) {
+				*slash = '/';
+				if (repo == NULL && *name != '\0')
+					fprintf(stderr, MSG_UNKNOWN_REPO,
+					    slash + 1);
+				else
+					fprintf(stderr, MSG_PKG_NOT_AVAIL,
+					    *arg);
+				*rc = EXIT_FAILURE;
+				continue;
+			}
+		}
+
+		/*
 		 * Find best remote package match.
 		 */
-		if ((rv = find_preferred_pkg(*arg, &rpkg, &pkgname)) != 0) {
+		if ((rv = find_preferred_pkg(name, repo, &rpkg, &pkgname)) != 0) {
+			if (slash != NULL)
+				*slash = '/';
 			if (pkgname == NULL)
 				fprintf(stderr, MSG_PKG_NOT_AVAIL, *arg);
 			else

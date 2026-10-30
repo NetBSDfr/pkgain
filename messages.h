@@ -43,7 +43,7 @@
 #define MSG_CHDIR_FAILED "Unable to chroot"
 
 #define MSG_MISSING_PKG_REPOS \
-	PKGIN_CONF"/"REPOS_FILE" has no repositories or does not exist.\nNo PKG_REPOS variable to fallback to."
+	PKGAIN_CONF"/"REPOS_FILE" has no repositories or does not exist.\nNo PKG_REPOS variable to fallback to."
 #define MSG_CANT_OPEN_WRITE "Couldn't open %s for writing.\n"
 #define MSG_DONT_HAVE_RIGHTS "You don't have enough rights for this operation."
 
@@ -51,6 +51,7 @@
 #define MSG_NOT_REMOVING_PKG_INSTALL \
 	"pkg_install is a critical package and cannot be deleted\n"
 #define MSG_PKG_NO_REPO "%s has no associated repository"
+#define MSG_UNKNOWN_REPO "unknown repository '%s' in package specification\n"
 #define MSG_ERR_OPEN "error opening %s"
 #define MSG_REQT_NOT_PRESENT \
 	"%s, needed by %s is not present in this system.\n"
@@ -89,7 +90,7 @@
 #define MSG_DOWNLOAD_FREED	"%s to download, " \
 				"%s of disk space will be freed up\n"
 #define MSG_PKGTOOLS_UPGRADED	"Package tools were upgraded.  Re-run " \
-				"\"pkgin upgrade\" to complete the upgrade.\n"
+				"\"pkgain upgrade\" to complete the upgrade.\n"
 
 /* depends.c */
 #define MSG_DIRECT_DEPS_FOR "direct dependencies for %s\n"
@@ -108,7 +109,7 @@
 #define MSG_DB_IS_UP_TO_DATE "database for %s is up-to-date\n"
 #define MSG_PROCESSING_REMOTE_SUMMARY "processing remote summary (%s)...\n"
 #define MSG_COULDNT_FETCH "Could not fetch %s: %s"
-#define MSG_ARCH_DONT_MATCH "\r\n/!\\ Warning /!\\ %s doesn't match your current architecture (%s)\nYou probably want to modify "PKGIN_CONF"/"REPOS_FILE".\nStill want to "
+#define MSG_ARCH_DONT_MATCH "\r\n/!\\ Warning /!\\ %s doesn't match your current architecture (%s)\nYou probably want to modify "PKGAIN_CONF"/"REPOS_FILE".\nStill want to "
 
 /* impact.c */
 #define MSG_PKG_NOT_AVAIL "%s is not available in the repository\n"

@@ -1,20 +1,28 @@
-pkgin(1) -- A tool to manage pkgsrc binary packages.
+pkgain(1) -- A tool to manage pkgsrc binary packages.
 ====================================================
 
 ## SYNOPSIS
 
-`pkgin` [`-dfFhpPvVyn`] [`-l` _limit_chars_] [`-c` _chroot_path_] [`-t` _log_file_] _command_ [package ...]
+`pkgain` [`-dfFhpPvVyn`] [`-l` _limit_chars_] [`-c` _chroot_path_] [`-t` _log_file_] _command_ [package ...]
 
 ## DESCRIPTION
 
-The pkgin command is aimed at being an `apt` / `yum` like tool for managing pkgsrc(7) binary packages. It relies on pkg_summary(5) for installation, removal and upgrade of packages and associated dependencies, using a remote repository.
+The pkgain command is aimed at being an `apt` / `yum` like tool for managing pkgsrc(7) binary packages. It relies on pkg_summary(5) for installation, removal and upgrade of packages and associated dependencies, using a remote repository.
+
+## ABOUT THIS FORK
+
+`pkgain` is a fork of `pkgin`, maintained by pkgin's original author.
+
+Some of the features it carries were written with the help of an LLM. As
+the NetBSD project's policy makes AI-generated contributions difficult to
+adopt upstream, this fork gives them a home of their own.
 
 ## OPTIONS
 
 The following command line arguments are supported:
 
   * `-c` chroot_path:
-    Enable chrooting pkgin in the given repository
+    Enable chrooting pkgain in the given repository
 
   * `-d`:
     Download only
@@ -44,7 +52,7 @@ The following command line arguments are supported:
     Logs package browsing (dependencies and impact) to a given log file
 
   * `-v`:
-    Displays pkgin version
+    Displays pkgain version
 
   * `-V`:
     Be verbose when (un)installing
@@ -52,7 +60,7 @@ The following command line arguments are supported:
   * `-y`:
     Assumes "yes" as default answer, except for autoremove
 
-The `pkgin` utility provides several commands:
+The `pkgain` utility provides several commands:
 
   * `autoremove`:
     Automatically removes orphan dependencies. When used with the `-n` flag, it can be used to show packages that are possibly not necessary.
@@ -77,7 +85,7 @@ The `pkgin` utility provides several commands:
 
     Example:
 
-    pkgin in 'mysql-server&gt;5.1&lt;5.6'  
+    pkgain in 'mysql-server&gt;5.1&lt;5.6'  
 
   * `keep` _package_ ...:
     Marks package as "non auto-removable". A `keep`-able package is equivalent to a non-automatic package in pkgsrc(7) terminology.
@@ -113,7 +121,7 @@ The `pkgin` utility provides several commands:
     Displays all direct dependencies recursively
 
   * `show-rev-deps` _package_:
-    Displays all reverse direct dependencies for package. If more than one package is specified, pkgin will show recursively reverse direct dependencies for all packages on the command-line.
+    Displays all reverse direct dependencies for package. If more than one package is specified, pkgain will show recursively reverse direct dependencies for all packages on the command-line.
 
   * `show-category` _category_:
     Show packages belonging to category.
@@ -131,7 +139,7 @@ The `pkgin` utility provides several commands:
     Marks package as "auto-removable". If no other package depends on it, it will be removed when using the autoremove modifier. It is equivalent to an `automatic` package in pkgsrc(7) terminology.
 
   * `update`:
-    Creates and populates the initial database of locally installed packages and available packages (from the remote pkg_summary(5) list). This is done automatically when pkgin is first used, when the system package database has been modified, or when pkgin is upgraded to a new database version.
+    Creates and populates the initial database of locally installed packages and available packages (from the remote pkg_summary(5) list). This is done automatically when pkgain is first used, when the system package database has been modified, or when pkgain is upgraded to a new database version.
 
 ## STATUS FLAGS
 
@@ -149,14 +157,14 @@ When using the `-l` flag along with the list command, the following status flag 
 ## ENVIRONMENT
 
 `PKG_REPOS`
-    The `PKG_REPOS` environment variable can be pointed to a suitable repository or a list of space separated repositories in order to override _/usr/pkg/etc/pkgin/repositories.conf_
+    The `PKG_REPOS` environment variable can be pointed to a suitable repository or a list of space separated repositories in order to override _/usr/pkg/etc/pkgain/repositories.conf_
 
 ## FILES
 
-  * _/usr/pkg/etc/pkgin/repositories.conf_:
-    This file contains a list of repository URIs that pkgin will use. It may contain macros `$arch` to define the machine hardware platform and `$osrelease` to define the release version for the operating system (as reported by uname(3)).
+  * _/usr/pkg/etc/pkgain/repositories.conf_:
+    This file contains a list of repository URIs that pkgain will use. It may contain macros `$arch` to define the machine hardware platform and `$osrelease` to define the release version for the operating system (as reported by uname(3)).
 
-  * _/usr/pkg/etc/pkgin/preferred.conf_:
+  * _/usr/pkg/etc/pkgain/preferred.conf_:
     This file contains a list of preferences regarding packages to be installed or upgraded. Each line defines a package preference taking the form of a simple glob(3).
 
     Example:
@@ -166,27 +174,27 @@ When using the `-l` flag along with the list command, the following status flag 
     autoconf=2.69.*
 
 
-  * _/var/db/pkgin_:
-    This directory contains component needed by `pkgin` at run time. This directory can be completely emptied if `pkgin`'s database gets corrupted, `pkgin` will rebuild its database based on `pkg_install`'s `PKG_DB` next time it is called.
+  * _/var/db/pkgain_:
+    This directory contains component needed by `pkgain` at run time. This directory can be completely emptied if `pkgain`'s database gets corrupted, `pkgain` will rebuild its database based on `pkg_install`'s `PKG_DB` next time it is called.
 
-  * _/var/db/pkgin/cache_:
-    This directory contains the packages downloaded by `pkgin`. It is safe to empty it regularily using `pkgin clean` or simply `rm -rf /var/db/pkgin/cache`.
+  * _/var/db/pkgain/cache_:
+    This directory contains the packages downloaded by `pkgain`. It is safe to empty it regularily using `pkgain clean` or simply `rm -rf /var/db/pkgain/cache`.
 
-  * _/var/db/pkgin/pkgin.db_:
-    _pkgin.db_ is the main `pkgin` `SQLite` database. This format has been chosen in order to parse, query, match and order packages using the `SQL` language thus making packages list manipulation a lot easier.
+  * _/var/db/pkgain/pkgain.db_:
+    _pkgain.db_ is the main `pkgain` `SQLite` database. This format has been chosen in order to parse, query, match and order packages using the `SQL` language thus making packages list manipulation a lot easier.
 
-  * _/var/db/pkgin/pkg_install-err.log_:
-    This file contains errors and warnings given by pkg_add(1) and pkg_delete(1), which are the tools called by `pkgin` to manipulate packages themselves.
+  * _/var/db/pkgain/pkg_install-err.log_:
+    This file contains errors and warnings given by pkg_add(1) and pkg_delete(1), which are the tools called by `pkgain` to manipulate packages themselves.
 
-  * _/var/db/pkgin/sql.log_:
+  * _/var/db/pkgain/sql.log_:
     This file contains `SQL` errors that might have occurred on a `SQLite` query. Mainly for debugging purposes. 
 
 ## EXAMPLES
 
     Setup the initial database:
 
-    # echo ftp://ftp.fr.netbsd.org/pub/pkgsrc/packages/NetBSD/i386/5.0/All > /usr/pkg/etc/pkgin/repositories.conf
-    # pkgin update
+    # echo ftp://ftp.fr.netbsd.org/pub/pkgsrc/packages/NetBSD/i386/5.0/All > /usr/pkg/etc/pkgain/repositories.conf
+    # pkgain update
     processing local summary...
     updating database: 100%
     downloading pkg_summary.bz2: 100%
@@ -195,7 +203,7 @@ When using the `-l` flag along with the list command, the following status flag 
 
     Listing all packages available in the repository:
 
-    # pkgin avail | more
+    # pkgain avail | more
     [...]
     autoconf-2.63        Generates automatic source code configuration scripts
     aumix-gtk-2.8nb3     Set mix levels (ncurses and GTK+ 2.0 interfaces)
@@ -206,20 +214,20 @@ When using the `-l` flag along with the list command, the following status flag 
 
     Install packages and their dependencies:
 
-    # pkgin install links eterm
+    # pkgain install links eterm
     nothing to upgrade.
     11 packages to be installed: tiff-3.8.2nb4 png-1.2.35 libungif-4.1.4nb1 libltdl-1.5.26 jpeg-6bnb4 pcre-7.8 perl-5.10.0nb5 libast-0.6.1nb3 imlib2-1.4.2nb1 links-2.2nb1 eterm-0.9.4nb1 (25M to download, 64M to install)
     proceed ? [y/N]
 
     Remove packages and their reverse dependencies:
 
-    # pkgin remove links eterm
+    # pkgain remove links eterm
     2 packages to delete: links-2.2nb1 eterm-0.9.4nb1
     proceed ? [y/N]
 
     Remove orphan dependencies:
 
-    # pkgin autoremove
+    # pkgain autoremove
     in order to remove packages from the autoremove list, flag those with the -k modifier.
     9 packages to be autoremoved: libast-0.6.1nb3 pcre-7.8 imlib2-1.4.2nb1 tiff-3.8.2nb4 png-1.2.35 libungif-4.1.4nb1 libltdl-1.5.26 perl-5.10.0nb5 jpeg-6bnb4
     proceed ? [y/N]

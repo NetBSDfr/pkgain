@@ -28,7 +28,7 @@
  */
 
 #include <sqlite3.h>
-#include "pkgin.h"
+#include "pkgain.h"
 #include <regex.h>
 
 #define PKG_EQUAL	'='
@@ -124,6 +124,7 @@ free_pkglist_entry(Pkglist **plist)
 	XFREE((*plist)->category);
 	XFREE((*plist)->pkgpath);
 	XFREE((*plist)->comment);
+	XFREE((*plist)->repo);
 
 	for (i = 0; i < (*plist)->patcount; i++)
 		XFREE((*plist)->patterns[i]);
@@ -187,6 +188,12 @@ record_pkglist(void *param, int argc, char **argv, char **colname)
 	DUP_OR_NULL(p->category, argv[7]);
 	DUP_OR_NULL(p->pkgpath, argv[8]);
 
+	if (plist->P_type == 1 && argc > 9) {
+		DUP_OR_NULL(p->repo, argv[9]);
+		p->repo_prio = argv[10] ?
+		    strtoll(argv[10], (char **)NULL, 10) : 0;
+	}
+
 	/*
 	 * Only LOCAL_PKG has PKG_KEEP.
 	 */
@@ -227,7 +234,7 @@ init_local_pkglist(void)
 	plist.P_Plisthead = &l_plisthead[0];
 	plist.P_count = 0;
 	plist.P_type = 0;
-	pkgindb_doquery(LOCAL_PKGS_QUERY_ASC, record_pkglist, &plist);
+	pkgaindb_doquery(LOCAL_PKGS_QUERY_ASC, record_pkglist, &plist);
 	l_plistcounter = plist.P_count;
 }
 
@@ -243,7 +250,7 @@ init_remote_pkglist(void)
 	plist.P_Plisthead = &r_plisthead[0];
 	plist.P_count = 0;
 	plist.P_type = 1;
-	pkgindb_doquery(REMOTE_PKGS_QUERY_ASC, record_pkglist, &plist);
+	pkgaindb_doquery(REMOTE_PKGS_QUERY_ASC, record_pkglist, &plist);
 	r_plistcounter = plist.P_count;
 }
 
@@ -491,7 +498,7 @@ rec_pkglist(const char *fmt, ...)
 	sqlite3_vsnprintf(BUFSIZ, query, fmt, ap);
 	va_end(ap);
 
-	if (pkgindb_doquery(query, pdb_rec_list, plist) == PDB_OK)
+	if (pkgaindb_doquery(query, pdb_rec_list, plist) == PDB_OK)
 		return plist;
 
 	XFREE(plist->P_Plisthead);
@@ -622,6 +629,25 @@ pkg_sort_cmp(const void *a, const void *b)
 	return 0;
 }
 
+/*
+ * Return true if another remote entry with the same full package name is
+ * held by an earlier-listed repository.  Display code uses this to avoid
+ * showing the same package twice when multiple repositories carry it.
+ */
+static int
+remote_pkg_dominated(Pkglist *p)
+{
+	Pkglist	*q;
+	size_t slot = pkg_hash_entry(p->name, REMOTE_PKG_HASH_SIZE);
+
+	SLIST_FOREACH(q, &r_plisthead[slot], next) {
+		if (strcmp(q->full, p->full) == 0 &&
+		    q->repo_prio < p->repo_prio)
+			return 1;
+	}
+	return 0;
+}
+
 int
 search_pkg(const char *pattern)
 {
@@ -650,6 +676,8 @@ search_pkg(const char *pattern)
 		    regexec(&re, plist->full, 0, NULL, 0) == 0 ||
 		    (plist->comment != NULL &&
 		    regexec(&re, plist->comment, 0, NULL, 0) == 0)) {
+			if (remote_pkg_dominated(plist))
+				continue;
 			matched = 1;
 			rc = pkg_is_installed(plist);
 
@@ -708,7 +736,8 @@ show_category(char *category)
 	SLIST_FOREACH(plist, &r_plisthead[i], next) {
 		if (plist->category == NULL)
 			continue;
-		if (strcmp(plist->category, category) == 0)
+		if (strcmp(plist->category, category) == 0 &&
+		    !remote_pkg_dominated(plist))
 			printf("%-20s %s\n", plist->full, plist->comment);
 	}
 	}
@@ -723,6 +752,8 @@ show_pkg_category(char *pkgname)
 	for (i = 0; i < REMOTE_PKG_HASH_SIZE; i++) {
 	SLIST_FOREACH(plist, &r_plisthead[i], next) {
 		if (strcmp(plist->name, pkgname) == 0) {
+			if (remote_pkg_dominated(plist))
+				continue;
 			matched = 1;
 			if (plist->category == NULL)
 				continue;

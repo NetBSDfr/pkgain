@@ -27,28 +27,29 @@
  * SUCH DAMAGE.
  */
 
-#include "pkgin.h"
+#include "pkgain.h"
 
 int
 show_pkg_info(char flag, char *pkgname)
 {
 	FILE	*fp;
 	int	rv = 0;
-	char	buf[MAXLEN], cmd[BUFSIZ], *fullpkgname, **prepos;
+	char	buf[MAXLEN], cmd[BUFSIZ], *fullpkgname;
+	RepoConf	*prepos;
 
 	if ((fullpkgname = unique_pkg(pkgname, REMOTE_PKG)) == NULL)
-		errx(EXIT_FAILURE, MSG_PKG_NOT_AVAIL, pkgname);	
+		err(EXIT_FAILURE, MSG_PKG_NOT_AVAIL, pkgname);	
 
 	/* loop through PKG_REPOS */
-	for (prepos = pkg_repos; *prepos != NULL; prepos++) {
+	for (prepos = pkg_repos; prepos->url != NULL; prepos++) {
 		snprintf(cmd, BUFSIZ, "%s -%c %s/%s%s",
-		    pkg_info, flag, *prepos, fullpkgname, PKG_EXT);
+		    pkg_info, flag, prepos->url, fullpkgname, PKG_EXT);
 
 	        if ((fp = popen(cmd, "r")) == NULL)
 			return 1;
 
 		/*
-		 * Historically pkgin skipped blank lines, so we preserve
+		 * Historically pkgain skipped blank lines, so we preserve
 		 * that behaviour for now.
 		 */
 		while (fgets(buf, MAXLEN, fp) != NULL) {

@@ -28,7 +28,7 @@
  *
  */
 
-#include "pkgin.h"
+#include "pkgain.h"
 
 static Preflisthead prefhead;
 
@@ -42,7 +42,7 @@ load_preferred(void)
 	char		*line = NULL, *p;
 	const char	*cmp = "=<>";
 
-	if ((fp = fopen(PKGIN_CONF"/"PREF_FILE, "r")) == NULL)
+	if ((fp = fopen(PKGAIN_CONF"/"PREF_FILE, "r")) == NULL)
 		return;
 
 	SLIST_INIT(&prefhead);

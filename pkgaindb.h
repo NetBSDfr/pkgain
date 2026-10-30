@@ -31,12 +31,13 @@
 #define _DRYDB_H
 
 #include <stdint.h>
-#include "pkgindb_create.h"
+#include "pkgaindb_create.h"
 
 extern const char CHECK_DB_LATEST[];
 extern const char DELETE_LOCAL[];
 extern const char DELETE_REMOTE[];
 extern const char DELETE_REMOTE_PKG_REPO[];
+extern const char REMOTE_PKG_NEXT_ID[];
 extern const char LOCAL_DIRECT_DEPENDS[];
 extern const char REMOTE_DIRECT_DEPENDS[];
 extern const char LOCAL_REVERSE_DEPENDS[];
@@ -54,11 +55,12 @@ extern const char LOCAL_PKGS_QUERY_DESC[];
 extern const char REMOTE_PKGS_QUERY_DESC[];
 extern const char NOKEEP_LOCAL_PKGS[];
 extern const char KEEP_LOCAL_PKGS[];
-extern const char PKG_URL[];
 extern const char DELETE_EMPTY_ROWS[];
 extern const char SELECT_REPO_URLS[];
 extern const char EXISTS_REPO[];
 extern const char INSERT_REPO[];
+extern const char RELEASE_REPO_ALIAS[];
+extern const char UPDATE_REPO_ALIAS[];
 extern const char UPDATE_REPO_MTIME[];
 extern const char DELETE_REPO_URL[];
 extern const char INSERT_CONFLICTS[];

@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  */
 
-#include "pkgin.h"
+#include "pkgain.h"
 #include "external/progressmeter.h"
 
 /*

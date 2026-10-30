@@ -22,7 +22,7 @@
  */
 
 /*
- * This file has been stripped to remove anything not required by pkgin.
+ * This file has been stripped to remove anything not required by pkgain.
  */
 
 #ifndef _INST_LIB_LIB_H_

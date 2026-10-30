@@ -30,12 +30,12 @@
 /*
  * This query checks the compatibility of the current database, and should be
  * one that either completes or fails due to an SQL error based on the most
- * recent schema change.  Returned rows are ignored, so choose a query that
- * runs quickly.
+ * recent schema change (REPOS.REPO_ALIAS).  Returned rows are ignored, so
+ * choose a query that runs quickly.
  */
 const char CHECK_DB_LATEST[] =
-	"SELECT pkgbase "
-	"  FROM local_conflicts "
+	"SELECT REPO_ALIAS "
+	"  FROM repos "
 	" LIMIT 1;";
 
 const char DELETE_LOCAL[] =
@@ -57,6 +57,9 @@ const char DELETE_REMOTE[] =
 const char DELETE_REMOTE_PKG_REPO[] =
 	"DELETE FROM REMOTE_PKG WHERE REPOSITORY = %Q;";
 
+const char REMOTE_PKG_NEXT_ID[] =
+	"SELECT COALESCE(MAX(PKG_ID), 0) + 1 FROM REMOTE_PKG;";
+
 const char LOCAL_DIRECT_DEPENDS[] =
 	"SELECT pattern, pkgbase "
 	"  FROM local_depends, local_pkg "
@@ -64,7 +67,7 @@ const char LOCAL_DIRECT_DEPENDS[] =
 	"   AND local_depends.pkg_id = local_pkg.pkg_id;";
 
 const char REMOTE_DIRECT_DEPENDS[] =
-	"SELECT pattern, pkgbase "
+	"SELECT DISTINCT pattern, pkgbase "
 	"  FROM remote_depends, remote_pkg "
 	" WHERE fullpkgname = %Q "
 	"   AND remote_depends.pkg_id = remote_pkg.pkg_id;";
@@ -91,19 +94,19 @@ const char REMOTE_CONFLICTS[] =
 	"   AND local_conflicts.pkg_id = local_pkg.pkg_id;";
 
 const char REMOTE_PROVIDES[] =
-	"SELECT filename "
+	"SELECT DISTINCT filename "
 	"  FROM remote_provides, remote_pkg "
 	" WHERE fullpkgname = %Q "
 	"   AND remote_provides.pkg_id = remote_pkg.pkg_id;";
 
 const char REMOTE_REQUIRES[] =
-	"SELECT filename "
+	"SELECT DISTINCT filename "
 	"  FROM remote_requires, remote_pkg "
 	" WHERE fullpkgname = %Q "
 	"   AND remote_requires.pkg_id = remote_pkg.pkg_id;";
 
 const char REMOTE_SUPERSEDES[] =
-	"SELECT pattern, pkgbase, pkgname "
+	"SELECT DISTINCT pattern, pkgbase, pkgname "
 	"  FROM remote_supersedes "
 	"  LEFT JOIN remote_pkg "
 	"    ON remote_supersedes.pkg_id = remote_pkg.pkg_id;";
@@ -120,10 +123,12 @@ const char LOCAL_PKGS_QUERY_ASC[] =
 	"FROM LOCAL_PKG "
 	"ORDER BY FULLPKGNAME ASC;";
 
-/* present packages by repository appearance to avoid conflicts between repos */
+/* present packages by repository appearance to avoid conflicts between repos;
+ * GROUP BY collapses the same package held by multiple repositories */
 const char REMOTE_PKGS_QUERY_ASC[] =
 	"SELECT FULLPKGNAME,PKGNAME,PKGVERS,BUILD_DATE,"
-	"COMMENT,FILE_SIZE,SIZE_PKG,CATEGORIES,PKGPATH "
+	"COMMENT,FILE_SIZE,SIZE_PKG,CATEGORIES,PKGPATH,"
+	"REPOS.REPO_URL,REPOS.ROWID "
 	"FROM REMOTE_PKG "
 	"INNER JOIN REPOS WHERE REMOTE_PKG.REPOSITORY = REPOS.REPO_URL "
 	"ORDER BY REPOS.ROWID, FULLPKGNAME ASC;";
@@ -135,10 +140,19 @@ const char LOCAL_PKGS_QUERY_DESC[] =
 	"FROM LOCAL_PKG "
 	"ORDER BY FULLPKGNAME DESC;";
 
+/* for displays, prefer lower versions to be at the top of SLIST;
+ * GROUP BY collapses the same package held by multiple repositories,
+ * preferring the default (unaliased) repository, then repository order */
 const char REMOTE_PKGS_QUERY_DESC[] =
 	"SELECT FULLPKGNAME,PKGNAME,PKGVERS,BUILD_DATE,"
 	"COMMENT,FILE_SIZE,SIZE_PKG,CATEGORIES,PKGPATH "
 	"FROM REMOTE_PKG "
+	"WHERE PKG_ID = ("
+	" SELECT R2.PKG_ID FROM REMOTE_PKG AS R2"
+	"  INNER JOIN REPOS ON R2.REPOSITORY = REPOS.REPO_URL"
+	"  WHERE R2.FULLPKGNAME = REMOTE_PKG.FULLPKGNAME"
+	"  ORDER BY CASE WHEN REPOS.REPO_ALIAS IS NULL THEN 0 ELSE 1 END,"
+	"   REPOS.ROWID LIMIT 1) "
 	"ORDER BY FULLPKGNAME DESC;";
 
 const char NOKEEP_LOCAL_PKGS[] =
@@ -153,9 +167,6 @@ const char KEEP_LOCAL_PKGS[] =
 	" WHERE pkg_keep IS NOT NULL"
 	" ORDER BY fullpkgname DESC;";
 
-const char PKG_URL[] =
-	"SELECT REPOSITORY FROM REMOTE_PKG WHERE FULLPKGNAME = %Q;";
-
 const char DELETE_EMPTY_ROWS[] =
 	"DELETE FROM REMOTE_PKG WHERE PKGNAME IS NULL;";
 
@@ -166,7 +177,13 @@ const char EXISTS_REPO[] =
 	"SELECT COUNT(*) FROM REPOS WHERE REPO_URL = %Q;";
 
 const char INSERT_REPO[] =
-	"INSERT INTO REPOS (REPO_URL, REPO_MTIME) VALUES (%Q, 0);";
+	"INSERT INTO REPOS (REPO_URL, REPO_MTIME, REPO_ALIAS) VALUES (%Q, 0, %Q);";
+
+const char RELEASE_REPO_ALIAS[] =
+	"UPDATE REPOS SET REPO_ALIAS = NULL WHERE REPO_ALIAS = %Q;";
+
+const char UPDATE_REPO_ALIAS[] =
+	"UPDATE REPOS SET REPO_ALIAS = %Q WHERE REPO_URL = %Q;";
 
 const char UPDATE_REPO_MTIME[] =
 	"UPDATE REPOS SET REPO_MTIME = %lld WHERE REPO_URL = %Q;";
@@ -204,7 +221,10 @@ const char EXPORT_KEEP_LIST[] =
 	"ORDER BY PKG_ID DESC;";
 
 const char GET_PKGNAME_BY_PKGPATH[] =
-	"SELECT FULLPKGNAME FROM REMOTE_PKG WHERE PKGPATH = %Q;";
+	"SELECT FULLPKGNAME FROM REMOTE_PKG "
+	"INNER JOIN REPOS ON REMOTE_PKG.REPOSITORY = REPOS.REPO_URL "
+	"WHERE PKGPATH = %Q "
+	"ORDER BY REPOS.ROWID, REMOTE_PKG.PKG_ID;";
 
 const char SHOW_ALL_CATEGORIES[] =
 	"SELECT DISTINCT CATEGORIES FROM REMOTE_PKG WHERE "

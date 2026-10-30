@@ -1,3 +1,16 @@
+## Unreleased
+
+ * Add support for named repositories.  Lines in repositories.conf may now
+   be prefixed with an alias, and `pkgain in package/alias` restricts the
+   package search to that repository.  Identical package versions held by
+   several repositories are now all recorded; on a version tie the
+   default repository (the first one listed without an alias) is
+   preferred, otherwise ties are broken by the order of repositories in
+   repositories.conf.  The original format is fully
+   supported: repositories listed without an alias act as the default, and
+   the first of them can be selected explicitly with the special alias
+   `default`.
+
 ## Version 26.4.0 (2026-04-20)
 
  * Avoid triggering a core package upgrade if only dependencies are upgraded.
@@ -37,14 +50,14 @@
    now correctly handled, and replacements are now correctly calculated to
    handle e.g. the recent php-X.Y -> phpXY-X.Y renames.
 
- * Improved handling for CONFLICTS.  Rather than simply give up, pkgin will
+ * Improved handling for CONFLICTS.  Rather than simply give up, pkgain will
    now calculate the impact of the CONFLICT and show what will happen if the
    user wishes to continue.
 
  * Upgrades will now first upgrade just the core packaging tools if they
-   have available updates.  Users may have to run "pkgin upgrade" twice to
+   have available updates.  Users may have to run "pkgain upgrade" twice to
    ensure all packages are upgraded.  This will help upgrade scenarios and
-   avoid users having to manually run "pkg\_add -U pkg\_install pkgin" prior
+   avoid users having to manually run "pkg\_add -U pkg\_install pkgain" prior
    to upgrades.
 
 ## Version 24.12.0 (2024-12-05)
@@ -62,8 +75,8 @@
 
 ## Version 23.8.0 (2023-08-16)
 
-This is the biggest overhaul of pkgin yet!  As well as fixing many bugs, pkgin
-23.8.0 runs "pkgin -n upgrade" over 2,000x faster on a test system with 12,663
+This is the biggest overhaul of pkgain yet!  As well as fixing many bugs, pkgain
+23.8.0 runs "pkgain -n upgrade" over 2,000x faster on a test system with 12,663
 packages installed compared to 22.10.0 (1.4 seconds vs over 54 minutes).
 
  * Large overhaul of dependency resolution code, fixing many upgrade issues,
@@ -80,7 +93,7 @@ packages installed compared to 22.10.0 (1.4 seconds vs over 54 minutes).
 
  * Output improvements, sorting packages alphabetically and providing a
    simple progress counter.  Fix unwanted output that could end up mixed
-   with package paths in "pkgin export".
+   with package paths in "pkgain export".
 
  * Correct handling of `+REQUIRED_BY` for reverse dependencies, fixing
    `DEPENDS` that use alternate matches.
@@ -90,14 +103,14 @@ packages installed compared to 22.10.0 (1.4 seconds vs over 54 minutes).
 
 Fixes at least the following issues:
 
- * NetBSDfr/pkgin#10
- * NetBSDfr/pkgin#44
- * NetBSDfr/pkgin#79
- * NetBSDfr/pkgin#95
- * NetBSDfr/pkgin#97
- * NetBSDfr/pkgin#110
- * NetBSDfr/pkgin#113
- * NetBSDfr/pkgin#128
+ * NetBSDfr/pkgain#10
+ * NetBSDfr/pkgain#44
+ * NetBSDfr/pkgain#79
+ * NetBSDfr/pkgain#95
+ * NetBSDfr/pkgain#97
+ * NetBSDfr/pkgain#110
+ * NetBSDfr/pkgain#113
+ * NetBSDfr/pkgain#128
  * NetBSD PR#51465
  * NetBSD PR#56683
 
@@ -212,16 +225,16 @@ Fixes at least the following issues:
 
 ## Version 0.14.0 (2019-12-12)
 
- * Ensure reverse dependencies are considered when a "pkgin install" triggers
+ * Ensure reverse dependencies are considered when a "pkgain install" triggers
    an upgrade of a local package, avoiding potentially nasty bugs.
  * Minor performance improvement.
 
 ## Version 0.13.0 (2019-09-24)
 
- * "pkgin upgrade" now upgrades all packages instead of only keep packages, and
-   essentially replaces "pkgin full-upgrade".  Selective upgrades have always
+ * "pkgain upgrade" now upgrades all packages instead of only keep packages, and
+   essentially replaces "pkgain full-upgrade".  Selective upgrades have always
    been risky and provide no benefit, especially in light of refresh support.
-   "pkgin full-upgrade" is retained for compatibility but marked as deprecated.
+   "pkgain full-upgrade" is retained for compatibility but marked as deprecated.
  * Refresh the local package repository when a forced update is requested, so
    that a failed update can be repaired easily.
  * Switch NetBSD default repository from ftp.netbsd.org to cdn.netbsd.org.
@@ -238,7 +251,7 @@ Fixes at least the following issues:
 
 ## Version 0.11.7 (2019-03-07)
 
- * Switch back to NetBSDfr/pkgin as the upstream repository.
+ * Switch back to NetBSDfr/pkgain as the upstream repository.
  * Improve database safety.
  * Fix clang -Wmissing-noreturn and -Wformat-nonliteral warnings.
  * Fix some typos in the manual page.
@@ -313,10 +326,10 @@ Fixes at least the following issues:
  * Fix -d when used with an upgrade action.
  * Fix exit status for various commands and usage.
  * Avoid segfault in show-category.
- * Improve pkgin database initialisation and upgrade checks.
+ * Improve pkgain database initialisation and upgrade checks.
  * Support libarchive 2.x and Minix 3.3.0
- * Support `PKG_INSTALL_DIR` and `PKGIN_DBDIR`, primarily to support the
-   new pkgin test suite: https://github.com/joyent/pkgin-test-suite
+ * Support `PKG_INSTALL_DIR` and `PKGAIN_DBDIR`, primarily to support the
+   new pkgain test suite: https://github.com/joyent/pkgain-test-suite
 
 ## Version 0.9.4 (2016-02-08)
 
@@ -339,19 +352,19 @@ Fixes at least the following issues:
 ## Version 0.9.0 (2015-08-13)
 
  * Various performance improvements from Joyent, see blog post at
-   <http://www.perkin.org.uk/posts/reducing-ram-usage-in-pkgin.html>
+   <http://www.perkin.org.uk/posts/reducing-ram-usage-in-pkgain.html>
    for more details.
  * Clean database entries correctly when changing repositories.
  * Support pkg\_summary.xz if available.
  * Don't switch to parsable output when stdout isn't a tty, broke various
-   automation tools: NetBSDfr/pkgin#46.
+   automation tools: NetBSDfr/pkgain#46.
  * Bugfix: added missing dash before ffu
 
 ## Version 0.8.0 (2015-01-28)
 
  * Added preferred.conf support
  * man page now based on ronn <http://rtomayko.github.io/ronn/ronn.1.html>
- * When -n is provided to pkgin ar, rm, in, fug, packages list is shown
+ * When -n is provided to pkgain ar, rm, in, fug, packages list is shown
    as one package per line so it is easier to read (feature proposed
    by gdt@ in GitHub issue #41)
  * Fixed GitHub issue #33: clean database when repository removed
@@ -365,9 +378,9 @@ Fixes at least the following issues:
  * Avoid deepness > 1 when checking for dependency upgrades, should fix
  * PR #48561
  * Avoid `preserved' packages to be `autoremoved'
- * Fixed GH issue #1, `NULL PKG_PATH` (which is wrong btw) makes pkgin
+ * Fixed GH issue #1, `NULL PKG_PATH` (which is wrong btw) makes pkgain
    segfault, strcmp() secured with safe\_strcmp()
- * Added --with-pkginstall to configure
+ * Added --with-pkgainstall to configure
 
 ## Version 0.7.0 (2014-12-23)
 
@@ -413,8 +426,8 @@ Fixes at least the following issues:
  * Modified default behaviour for Proceed [Y/n]
  * Rewrote narrow\_match() using version\_check() to avoid more
    dirty repositories mistakes.
- * Preparing pkginteractive integration.
- * SQLite is now part of NetBSD 6.0 base, remove it from pkgin's tree.
+ * Preparing pkgainteractive integration.
+ * SQLite is now part of NetBSD 6.0 base, remove it from pkgain's tree.
    Dependency will be added in the package.
  * Added SQLite build patch from sbd@
  * Added show-all-categories
@@ -460,7 +473,7 @@ Fixes at least the following issues:
  * Keep going if unmet requirements are encountered and warn about
    it before proceeding
  * Always move pkg\_install on top of the "to-upgrade" list
- * pkgin now depends on pkgsrc's pkg\_install
+ * pkgain now depends on pkgsrc's pkg\_install
 
 
 ## Version 0.5.1 (2011-09-10)
@@ -472,12 +485,12 @@ Fixes at least the following issues:
    requirements
  * pkg\_install's pkgdb not needed anymore for a fresh start (bsdx's idea)
  * Globs can now be passed as an argument for package installation, i.e.
-   `pkgin in 'mysql-server<5.1'`
+   `pkgain in 'mysql-server<5.1'`
  * Export / import a list of packages as requested by wiz@
  * Operations tracing flag (-t)
  * Database silent migration
  * More flexible check\_yesno()
- * Made pkgin in / rm yes by default
+ * Made pkgain in / rm yes by default
 
 ## Version 0.5.0 (2011-08-21)
 
@@ -500,7 +513,7 @@ Fixes at least the following issues:
 
  * Moving to SF.net
  * Check for mark\_as\_automatic\_installed() return code
- * pkgin can now upgrade pkg\_install with user's approval
+ * pkgain can now upgrade pkg\_install with user's approval
  * url\_stat's size is declared as off\_t, will be > `SSIZE_MAX` on
    32 bits systems. Added a fix for this.
  * Added -P, print package version instead of globs in sd, srd, sfd
@@ -562,22 +575,22 @@ Fixes at least the following issues:
 ## Version 0.2.5 (2009-06-08)
 
  * Added the long awaited repositories file
- * ${PREFIX}/etc/pkgin/repositories.conf
+ * ${PREFIX}/etc/pkgain/repositories.conf
  * Glue between keep-state and pkgdb "automatic" flag.
- * pkgin now handles removal of packages when an upgrade would
+ * pkgain now handles removal of packages when an upgrade would
  * break dependencies, i.e. upgrading php from version 4 to 5
  * will break php4-modules dependencies. Modules will be removed
  * before php-4 is upgraded.
  * Database modification. See the MIGRATION file for details on
    how to safely rebuild your database.
  * mtime check over pkg\_summary files on repositories, don't
-   update pkgin database if mtime have not changed.
+   update pkgain database if mtime have not changed.
  * Database modification, see 20090507 to rebuild it
- * pkgin now records local pkgdb mtime so it does not rebuild
+ * pkgain now records local pkgdb mtime so it does not rebuild
    its database when pkgdb is not updated
  * Parameters have changed.
- * Instead of getopt()-style flags, pkgin is now using commands.
+ * Instead of getopt()-style flags, pkgain is now using commands.
    Only -y and -h have been kept.
- * pkg\_dry is now known as pkgin
+ * pkg\_dry is now known as pkgain
  * Added -c flag, clean cache: delete all downloaded packages from
  * `/var/db/pkg_dry/cache`

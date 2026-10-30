@@ -28,7 +28,7 @@
  */
 
 #include <sqlite3.h>
-#include "pkgin.h"
+#include "pkgain.h"
 
 void
 export_keep(void)
@@ -68,7 +68,7 @@ import_keep(int do_inst, const char *import_file)
 			sqlite3_snprintf(BUFSIZ, query, GET_PKGNAME_BY_PKGPATH,
 			    input);
 
-			if ((pkgindb_doquery(query,
+			if ((pkgaindb_doquery(query,
 					pdb_get_value, fullpkgname)) == PDB_OK)
 				match = xstrdup(fullpkgname);
 			else
@@ -90,7 +90,7 @@ import_keep(int do_inst, const char *import_file)
 	if (pkglist == NULL)
 		errx(EXIT_FAILURE, MSG_EMPTY_IMPORT_LIST);
 
-	pkgin_install(pkglist, do_inst, 0);
+	pkgain_install(pkglist, do_inst, 0);
 
 	free_list(pkglist);
 }

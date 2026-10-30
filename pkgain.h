@@ -27,8 +27,8 @@
  * SUCH DAMAGE.
  */
 
-#ifndef _PKGIN_H
-#define _PKGIN_H
+#ifndef _PKGAIN_H
+#define _PKGAIN_H
 
 #include "config.h"
 
@@ -48,14 +48,14 @@
 #include <fetch.h>
 #include <errno.h>
 #include "messages.h"
-#include "pkgindb.h"
+#include "pkgaindb.h"
 #include "tools.h"
 #include "external/lib.h"
 #include "external/dewey.h"
 
 #define PKG_SUMMARY "pkg_summary"
 #define PKG_EXT ".tgz"
-#define PKGIN_CONF PKG_SYSCONFDIR"/pkgin"
+#define PKGAIN_CONF PKG_SYSCONFDIR"/pkgain"
 #define REPOS_FILE "repositories.conf"
 #define PREF_FILE "preferred.conf"
 
@@ -108,17 +108,17 @@
 
 /* Support various ways to get nanosecond resolution, or default to 0 */
 #if HAVE_STRUCT_STAT_ST_MTIMESPEC_TV_NSEC
-#define pkgin_nanotime	st_mtimespec.tv_nsec
+#define pkgain_nanotime	st_mtimespec.tv_nsec
 #elif HAVE_STRUCT_STAT_ST_MTIM_TV_NSEC
-#define pkgin_nanotime	st_mtim.tv_nsec
+#define pkgain_nanotime	st_mtim.tv_nsec
 #elif HAVE_STRUCT_STAT_ST_MTIME_N
-#define pkgin_nanotime	st_mtime_n
+#define pkgain_nanotime	st_mtime_n
 #elif HAVE_STRUCT_STAT_ST_UMTIME
-#define pkgin_nanotime	st_umtime
+#define pkgain_nanotime	st_umtime
 #elif HAVE_STRUCT_STAT_ST_MTIME_USEC
-#define pkgin_nanotime	st_mtime.usec
+#define pkgain_nanotime	st_mtime.usec
 #else
-#define pkgin_nanotime	0
+#define pkgain_nanotime	0
 #endif
 
 /*
@@ -142,7 +142,7 @@
  *
  * An additional consideration to make when sizing this hash is that over time
  * the number of remote packages is likely to grow, and so we shouldn't be shy
- * about setting a reasonably large value to ensure that pkgin continues to
+ * about setting a reasonably large value to ensure that pkgain continues to
  * perform well in the event of considerable package growth.
  *
  * As the remote package list is only ever loaded once, there are fewer costs
@@ -159,13 +159,13 @@
  * packages from either install or upgrade operations.  Using the pessimistic
  * test case, the following total entries were observed:
  *
- *  - "pkgin install": pkgs=5257,  deps=5
- *  - "pkgin upgrade": pkgs=13803, deps=6748
+ *  - "pkgain install": pkgs=5257,  deps=5
+ *  - "pkgain upgrade": pkgs=13803, deps=6748
  *
- * Note of course that as the "pkgin install" operation in our test case mostly
+ * Note of course that as the "pkgain install" operation in our test case mostly
  * handles packages that are already installed, the deps number is artificially
  * low as the dependencies will already have been handled by deps_impact() by
- * the time later packages are considered.  A normal "pkgin install" for new
+ * the time later packages are considered.  A normal "pkgain install" for new
  * packages will result in a higher deps number.
  *
  * For both hashes we are simply optimising for strcmp() calls which search for
@@ -202,9 +202,9 @@
 #define	DEPS_HASH_SIZE		256
 
 /*
- * The local package hash is only of benefit for "pkgin install" operations
+ * The local package hash is only of benefit for "pkgain install" operations
  * where selected remote packages need to search for matching local packages to
- * upgrade.  "pkgin upgrade" will always consider all local packages and so
+ * upgrade.  "pkgain upgrade" will always consider all local packages and so
  * very few, if any, additional lookups are performed.
  *
  * A relatively small hash size is all that's needed to provide reasonable
@@ -297,6 +297,8 @@ typedef struct Pkglist {
 	char *category; /*!< package category */
 	char *pkgpath; /*!< pkgsrc pkgpath */
 	char *comment; /*!< package list comment */
+	char *repo; /*!< repository URL (remote packages) */
+	int repo_prio; /*!< repository priority, lower is preferred */
 
 	char **patterns;	/* DEPENDS patterns for this package */
 	int patcount;		/* Number of DEPENDS patterns */
@@ -324,6 +326,15 @@ typedef struct Plistarray {
 	int		size;
 } Plistarray;
 
+/**
+ * \struct RepoConf
+ * \brief Named repository entry from repositories.conf
+ */
+typedef struct RepoConf {
+	char	*alias;	/* Short name for selection, NULL if unnamed */
+	char	*url;	/* Repository URL */
+} RepoConf;
+
 typedef struct Preflist {
 	char		*pkg;
 	char		*glob;
@@ -345,7 +356,7 @@ extern uint8_t		package_version;
 extern uint8_t		parsable;
 extern uint8_t		pflag;
 extern char		*env_repos;
-extern char		**pkg_repos;
+extern RepoConf		*pkg_repos;
 extern char		fetchflags[4];
 extern char  		lslimit;
 extern int		l_plistcounter;
@@ -364,6 +375,9 @@ off_t		download_pkg(char *, FILE *, int, int);
 /* summary.c */
 int		update_db(int, int);
 void		split_repos(void);
+void		free_repos(void);
+const char	*lookup_repo(const char *);
+const char	*default_repo_url(void);
 int		chk_repo_list(int);
 /* sqlite_callbacks.c */
 int		pdb_rec_list(void *, int, char **, char **);
@@ -407,10 +421,10 @@ void		show_all_categories(void);
 int		action_is_install(action_t);
 int		action_is_remove(action_t);
 void		do_pkg_remove(Plisthead *);
-int		pkgin_remove(char **);
-int		pkgin_install(char **, int, int);
+int		pkgain_remove(char **);
+int		pkgain_install(char **, int, int);
 char		*action_list_sorted(Plisthead *, action_t);
-int		pkgin_upgrade(int);
+int		pkgain_upgrade(int);
 /* order.c */
 Plisthead	*order_remove(Plisthead *);
 Plisthead	*order_download(Plisthead *);
@@ -419,18 +433,20 @@ Plisthead	*order_install(Plisthead *);
 action_t	calculate_action(Pkglist *, Pkglist *);
 Plisthead	*pkg_impact(char **, int *, int);
 /* autoremove.c */
-void	   	pkgin_autoremove(void);
+void	   	pkgain_autoremove(void);
 void		show_pkg_keep(void);
 void		show_pkg_nokeep(void);
 int		pkg_keep(int, char *);
 /* fsops.c */
 uint64_t	fs_room(const char *);
 void		clean_cache(void);
-char		*read_repos(void);
+RepoConf	*read_repos(void);
 /* pkg_str.c */
-int		find_preferred_pkg(const char *, Pkglist **, char **);
+int		find_preferred_pkg(const char *, const char *, Pkglist **,
+			    char **);
 char	   	*unique_pkg(const char *, const char *);
-Pkglist		*find_remote_pkg(const char *, const char *, const char *);
+Pkglist		*find_remote_pkg(const char *, const char *, const char *,
+			    const char *);
 Pkglist		*find_local_pkg(const char *, const char *);
 int		exact_pkgfmt(const char *);
 int		version_check(char *, char *);
@@ -453,34 +469,34 @@ extern char	*pkg_delete;
 extern char	*pkg_info;
 void		setup_pkg_install(void);
 
-/* pkgindb.c */
+/* pkgaindb.c */
 #define PRIVS_PKGDB	0x1
-#define PRIVS_PKGINDB	0x2
-extern char	*pkgin_dbdir;
-extern char	*pkgin_sqldb;
-extern char	*pkgin_cache;
-extern char	*pkgin_errlog;
-extern char	*pkgin_sqllog;
-void		setup_pkgin_dbdir(void);
+#define PRIVS_PKGAINDB	0x2
+extern char	*pkgain_dbdir;
+extern char	*pkgain_sqldb;
+extern char	*pkgain_cache;
+extern char	*pkgain_errlog;
+extern char	*pkgain_sqllog;
+void		setup_pkgain_dbdir(void);
 uint8_t		have_privs(int);
 const char *	pdb_version(void);
 int		pdb_get_value(void *, int, char **, char **);
-int		pkgindb_doquery(const char *,
+int		pkgaindb_doquery(const char *,
 		    int (*)(void *, int, char *[], char *[]), void *);
-int		pkgindb_dovaquery(const char *, ...);
-struct sqlite3_stmt *pkgindb_stmt_prepare(const char *);
-int		pkgindb_stmt_exec(struct sqlite3_stmt *);
-void		pkgindb_stmt_finalize(struct sqlite3_stmt *);
-uint64_t	pkgindb_savepoint(void);
-void		pkgindb_savepoint_rollback(uint64_t);
-void		pkgindb_savepoint_release(uint64_t);
-int		pkgindb_open(void);
-void		pkgindb_close(void);
+int		pkgaindb_dovaquery(const char *, ...);
+struct sqlite3_stmt *pkgaindb_stmt_prepare(const char *);
+int		pkgaindb_stmt_exec(struct sqlite3_stmt *);
+void		pkgaindb_stmt_finalize(struct sqlite3_stmt *);
+uint64_t	pkgaindb_savepoint(void);
+void		pkgaindb_savepoint_rollback(uint64_t);
+void		pkgaindb_savepoint_release(uint64_t);
+int		pkgaindb_open(void);
+void		pkgaindb_close(void);
 int		pkg_db_mtime(struct stat *);
 void		pkg_db_update_mtime(struct stat *);
-void		repo_record(char **);
+void		repo_record(RepoConf *);
 time_t		pkg_sum_mtime(char *);
-void		pkgindb_stats(void);
+void		pkgaindb_stats(void);
 
 /* preferred.c */
 void		load_preferred(void);

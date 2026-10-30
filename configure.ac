@@ -1,5 +1,5 @@
 AC_PREREQ([2.61])
-AC_INIT([pkgin], [26.4.0], [https://github.com/NetBSDfr/pkgin/issues])
+AC_INIT([pkgain], [26.4.0], [https://github.com/NetBSDfr/pkgain/issues])
 AC_CONFIG_SRCDIR([actions.c])
 AC_CONFIG_HEADERS([config.h])
 AC_CANONICAL_HOST
@@ -32,15 +32,15 @@ AS_IF([test "x$USE_MAINTAINER_MODE" = "xyes"], [
 ])
 
 #
-# --with-dbdir=/path/to/pkgin/db
+# --with-dbdir=/path/to/pkgain/db
 #
 AC_ARG_WITH([dbdir],
 	[AS_HELP_STRING([--with-dbdir=DIR],
-		[Path to pkgin database directory])],
-	[PKGIN_DBDIR="$withval"],
+		[Path to pkgain database directory])],
+	[PKGAIN_DBDIR="$withval"],
 	[AC_MSG_ERROR([--with-dbdir is mandatory])]
 )
-AC_SUBST(PKGIN_DBDIR)
+AC_SUBST(PKGAIN_DBDIR)
 
 #
 # Check for required libraries.  All of them accept --with-*=DIR arguments

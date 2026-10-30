@@ -90,7 +90,7 @@ am__make_keepgoing = (target_option=k; $(am__make_running_with_option))
 am__rm_f = rm -f $(am__rm_f_notfound)
 am__rm_rf = rm -rf $(am__rm_f_notfound)
 pkgdatadir = $(datadir)/@PACKAGE@
-pkgincludedir = $(includedir)/@PACKAGE@
+pkgaincludedir = $(includedir)/@PACKAGE@
 pkglibdir = $(libdir)/@PACKAGE@
 pkglibexecdir = $(libexecdir)/@PACKAGE@
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
@@ -107,7 +107,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-bin_PROGRAMS = pkgin$(EXEEXT)
+bin_PROGRAMS = pkgain$(EXEEXT)
 
 #
 # Conditional sources.
@@ -128,39 +128,39 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(man1dir)"
 PROGRAMS = $(bin_PROGRAMS)
-am__pkgin_SOURCES_DIST = actions.c autoremove.c depends.c download.c \
+am__pkgain_SOURCES_DIST = actions.c autoremove.c depends.c download.c \
 	fsops.c impact.c main.c order.c pkg_check.c pkg_infos.c \
-	pkg_install.c pkg_str.c pkgindb.c pkgindb_queries.c pkglist.c \
+	pkg_install.c pkg_str.c pkgaindb.c pkgaindb_queries.c pkglist.c \
 	preferred.c selection.c sqlite_callbacks.c summary.c tools.c \
 	external/progressmeter.c external/automatic.c external/dewey.c \
 	external/fexec.c external/iterate.c external/lpkg.c \
 	external/opattern.c external/pkgdb.c external/plist.c \
 	external/var.c external/xwrapper.c external/humanize_number.c
 am__dirstamp = $(am__leading_dot)dirstamp
-am__objects_1 = external/pkgin-progressmeter.$(OBJEXT)
-am__objects_2 = external/pkgin-automatic.$(OBJEXT) \
-	external/pkgin-dewey.$(OBJEXT) external/pkgin-fexec.$(OBJEXT) \
-	external/pkgin-iterate.$(OBJEXT) external/pkgin-lpkg.$(OBJEXT) \
-	external/pkgin-opattern.$(OBJEXT) \
-	external/pkgin-pkgdb.$(OBJEXT) external/pkgin-plist.$(OBJEXT) \
-	external/pkgin-var.$(OBJEXT) external/pkgin-xwrapper.$(OBJEXT)
-@HAVE_HUMANIZE_NUMBER_FALSE@am__objects_3 = external/pkgin-humanize_number.$(OBJEXT)
-am_pkgin_OBJECTS = pkgin-actions.$(OBJEXT) pkgin-autoremove.$(OBJEXT) \
-	pkgin-depends.$(OBJEXT) pkgin-download.$(OBJEXT) \
-	pkgin-fsops.$(OBJEXT) pkgin-impact.$(OBJEXT) \
-	pkgin-main.$(OBJEXT) pkgin-order.$(OBJEXT) \
-	pkgin-pkg_check.$(OBJEXT) pkgin-pkg_infos.$(OBJEXT) \
-	pkgin-pkg_install.$(OBJEXT) pkgin-pkg_str.$(OBJEXT) \
-	pkgin-pkgindb.$(OBJEXT) pkgin-pkgindb_queries.$(OBJEXT) \
-	pkgin-pkglist.$(OBJEXT) pkgin-preferred.$(OBJEXT) \
-	pkgin-selection.$(OBJEXT) pkgin-sqlite_callbacks.$(OBJEXT) \
-	pkgin-summary.$(OBJEXT) pkgin-tools.$(OBJEXT) $(am__objects_1) \
+am__objects_1 = external/pkgain-progressmeter.$(OBJEXT)
+am__objects_2 = external/pkgain-automatic.$(OBJEXT) \
+	external/pkgain-dewey.$(OBJEXT) external/pkgain-fexec.$(OBJEXT) \
+	external/pkgain-iterate.$(OBJEXT) external/pkgain-lpkg.$(OBJEXT) \
+	external/pkgain-opattern.$(OBJEXT) \
+	external/pkgain-pkgdb.$(OBJEXT) external/pkgain-plist.$(OBJEXT) \
+	external/pkgain-var.$(OBJEXT) external/pkgain-xwrapper.$(OBJEXT)
+@HAVE_HUMANIZE_NUMBER_FALSE@am__objects_3 = external/pkgain-humanize_number.$(OBJEXT)
+am_pkgain_OBJECTS = pkgain-actions.$(OBJEXT) pkgain-autoremove.$(OBJEXT) \
+	pkgain-depends.$(OBJEXT) pkgain-download.$(OBJEXT) \
+	pkgain-fsops.$(OBJEXT) pkgain-impact.$(OBJEXT) \
+	pkgain-main.$(OBJEXT) pkgain-order.$(OBJEXT) \
+	pkgain-pkg_check.$(OBJEXT) pkgain-pkg_infos.$(OBJEXT) \
+	pkgain-pkg_install.$(OBJEXT) pkgain-pkg_str.$(OBJEXT) \
+	pkgain-pkgaindb.$(OBJEXT) pkgain-pkgaindb_queries.$(OBJEXT) \
+	pkgain-pkglist.$(OBJEXT) pkgain-preferred.$(OBJEXT) \
+	pkgain-selection.$(OBJEXT) pkgain-sqlite_callbacks.$(OBJEXT) \
+	pkgain-summary.$(OBJEXT) pkgain-tools.$(OBJEXT) $(am__objects_1) \
 	$(am__objects_2) $(am__objects_3)
-dist_pkgin_OBJECTS =
-nodist_pkgin_OBJECTS =
-pkgin_OBJECTS = $(am_pkgin_OBJECTS) $(dist_pkgin_OBJECTS) \
-	$(nodist_pkgin_OBJECTS)
-pkgin_LDADD = $(LDADD)
+dist_pkgain_OBJECTS =
+nodist_pkgain_OBJECTS =
+pkgain_OBJECTS = $(am_pkgain_OBJECTS) $(dist_pkgain_OBJECTS) \
+	$(nodist_pkgain_OBJECTS)
+pkgain_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -176,31 +176,31 @@ am__v_at_1 =
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
-am__depfiles_remade = ./$(DEPDIR)/pkgin-actions.Po \
-	./$(DEPDIR)/pkgin-autoremove.Po ./$(DEPDIR)/pkgin-depends.Po \
-	./$(DEPDIR)/pkgin-download.Po ./$(DEPDIR)/pkgin-fsops.Po \
-	./$(DEPDIR)/pkgin-impact.Po ./$(DEPDIR)/pkgin-main.Po \
-	./$(DEPDIR)/pkgin-order.Po ./$(DEPDIR)/pkgin-pkg_check.Po \
-	./$(DEPDIR)/pkgin-pkg_infos.Po \
-	./$(DEPDIR)/pkgin-pkg_install.Po ./$(DEPDIR)/pkgin-pkg_str.Po \
-	./$(DEPDIR)/pkgin-pkgindb.Po \
-	./$(DEPDIR)/pkgin-pkgindb_queries.Po \
-	./$(DEPDIR)/pkgin-pkglist.Po ./$(DEPDIR)/pkgin-preferred.Po \
-	./$(DEPDIR)/pkgin-selection.Po \
-	./$(DEPDIR)/pkgin-sqlite_callbacks.Po \
-	./$(DEPDIR)/pkgin-summary.Po ./$(DEPDIR)/pkgin-tools.Po \
-	external/$(DEPDIR)/pkgin-automatic.Po \
-	external/$(DEPDIR)/pkgin-dewey.Po \
-	external/$(DEPDIR)/pkgin-fexec.Po \
-	external/$(DEPDIR)/pkgin-humanize_number.Po \
-	external/$(DEPDIR)/pkgin-iterate.Po \
-	external/$(DEPDIR)/pkgin-lpkg.Po \
-	external/$(DEPDIR)/pkgin-opattern.Po \
-	external/$(DEPDIR)/pkgin-pkgdb.Po \
-	external/$(DEPDIR)/pkgin-plist.Po \
-	external/$(DEPDIR)/pkgin-progressmeter.Po \
-	external/$(DEPDIR)/pkgin-var.Po \
-	external/$(DEPDIR)/pkgin-xwrapper.Po
+am__depfiles_remade = ./$(DEPDIR)/pkgain-actions.Po \
+	./$(DEPDIR)/pkgain-autoremove.Po ./$(DEPDIR)/pkgain-depends.Po \
+	./$(DEPDIR)/pkgain-download.Po ./$(DEPDIR)/pkgain-fsops.Po \
+	./$(DEPDIR)/pkgain-impact.Po ./$(DEPDIR)/pkgain-main.Po \
+	./$(DEPDIR)/pkgain-order.Po ./$(DEPDIR)/pkgain-pkg_check.Po \
+	./$(DEPDIR)/pkgain-pkg_infos.Po \
+	./$(DEPDIR)/pkgain-pkg_install.Po ./$(DEPDIR)/pkgain-pkg_str.Po \
+	./$(DEPDIR)/pkgain-pkgaindb.Po \
+	./$(DEPDIR)/pkgain-pkgaindb_queries.Po \
+	./$(DEPDIR)/pkgain-pkglist.Po ./$(DEPDIR)/pkgain-preferred.Po \
+	./$(DEPDIR)/pkgain-selection.Po \
+	./$(DEPDIR)/pkgain-sqlite_callbacks.Po \
+	./$(DEPDIR)/pkgain-summary.Po ./$(DEPDIR)/pkgain-tools.Po \
+	external/$(DEPDIR)/pkgain-automatic.Po \
+	external/$(DEPDIR)/pkgain-dewey.Po \
+	external/$(DEPDIR)/pkgain-fexec.Po \
+	external/$(DEPDIR)/pkgain-humanize_number.Po \
+	external/$(DEPDIR)/pkgain-iterate.Po \
+	external/$(DEPDIR)/pkgain-lpkg.Po \
+	external/$(DEPDIR)/pkgain-opattern.Po \
+	external/$(DEPDIR)/pkgain-pkgdb.Po \
+	external/$(DEPDIR)/pkgain-plist.Po \
+	external/$(DEPDIR)/pkgain-progressmeter.Po \
+	external/$(DEPDIR)/pkgain-var.Po \
+	external/$(DEPDIR)/pkgain-xwrapper.Po
 am__mv = mv -f
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -218,9 +218,9 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(pkgin_SOURCES) $(dist_pkgin_SOURCES) \
-	$(nodist_pkgin_SOURCES)
-DIST_SOURCES = $(am__pkgin_SOURCES_DIST) $(dist_pkgin_SOURCES)
+SOURCES = $(pkgain_SOURCES) $(dist_pkgain_SOURCES) \
+	$(nodist_pkgain_SOURCES)
+DIST_SOURCES = $(am__pkgain_SOURCES_DIST) $(dist_pkgain_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -342,7 +342,7 @@ PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
-PKGIN_DBDIR = @PKGIN_DBDIR@
+PKGAIN_DBDIR = @PKGAIN_DBDIR@
 PKG_INSTALL_DIR = @PKG_INSTALL_DIR@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
@@ -410,35 +410,35 @@ pkg_install_SOURCES = external/automatic.c external/dewey.c \
 	external/fexec.c external/iterate.c external/lpkg.c \
 	external/opattern.c external/pkgdb.c external/plist.c \
 	external/var.c external/xwrapper.c
-pkgin_SOURCES = actions.c autoremove.c depends.c download.c fsops.c \
+pkgain_SOURCES = actions.c autoremove.c depends.c download.c fsops.c \
 	impact.c main.c order.c pkg_check.c pkg_infos.c pkg_install.c \
-	pkg_str.c pkgindb.c pkgindb_queries.c pkglist.c preferred.c \
+	pkg_str.c pkgaindb.c pkgaindb_queries.c pkglist.c preferred.c \
 	selection.c sqlite_callbacks.c summary.c tools.c \
 	$(openssh_SOURCES) $(pkg_install_SOURCES) $(am__append_1)
-noinst_HEADERS = cmd.h messages.h pkgin.h pkgindb.h tools.h \
+noinst_HEADERS = cmd.h messages.h pkgain.h pkgaindb.h tools.h \
 	external/dewey.h external/humanize_number.h external/lib.h \
 	external/progressmeter.h external/queue.h
 
 #
 # Required defines.
 #
-pkgin_CPPFLAGS = -DMACHINE_ARCH=\""$(MACHINE_ARCH)"\" \
-	-DPKGIN_DBDIR=\""$(PKGIN_DBDIR)"\" \
-	-DPKGIN_VERSION=\""$(VERSION)"\" \
+pkgain_CPPFLAGS = -DMACHINE_ARCH=\""$(MACHINE_ARCH)"\" \
+	-DPKGAIN_DBDIR=\""$(PKGAIN_DBDIR)"\" \
+	-DPKGAIN_VERSION=\""$(VERSION)"\" \
 	-DPKG_INSTALL_DIR=\""$(PKG_INSTALL_DIR)"\" \
 	-DPKG_SYSCONFDIR=\""$(sysconfdir)"\" -DPREFIX=\""$(prefix)"\"
 
 #
 # Manual pages.
 #
-man1_MANS = pkgin.1
+man1_MANS = pkgain.1
 
 #
 # Generated sources.
 #
-dist_pkgin_SOURCES = pkgin.1.in pkgin.sql
-nodist_pkgin_SOURCES = pkgin.1 pkgindb_create.h
-BUILT_SOURCES = $(nodist_pkgin_SOURCES)
+dist_pkgain_SOURCES = pkgain.1.in pkgain.sql
+nodist_pkgain_SOURCES = pkgain.1 pkgaindb_create.h
+BUILT_SOURCES = $(nodist_pkgain_SOURCES)
 CLEANFILES = $(BUILT_SOURCES)
 all: $(BUILT_SOURCES) config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
@@ -541,34 +541,34 @@ external/$(am__dirstamp):
 external/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) external/$(DEPDIR)
 	@: >>external/$(DEPDIR)/$(am__dirstamp)
-external/pkgin-progressmeter.$(OBJEXT): external/$(am__dirstamp) \
+external/pkgain-progressmeter.$(OBJEXT): external/$(am__dirstamp) \
 	external/$(DEPDIR)/$(am__dirstamp)
-external/pkgin-automatic.$(OBJEXT): external/$(am__dirstamp) \
+external/pkgain-automatic.$(OBJEXT): external/$(am__dirstamp) \
 	external/$(DEPDIR)/$(am__dirstamp)
-external/pkgin-dewey.$(OBJEXT): external/$(am__dirstamp) \
+external/pkgain-dewey.$(OBJEXT): external/$(am__dirstamp) \
 	external/$(DEPDIR)/$(am__dirstamp)
-external/pkgin-fexec.$(OBJEXT): external/$(am__dirstamp) \
+external/pkgain-fexec.$(OBJEXT): external/$(am__dirstamp) \
 	external/$(DEPDIR)/$(am__dirstamp)
-external/pkgin-iterate.$(OBJEXT): external/$(am__dirstamp) \
+external/pkgain-iterate.$(OBJEXT): external/$(am__dirstamp) \
 	external/$(DEPDIR)/$(am__dirstamp)
-external/pkgin-lpkg.$(OBJEXT): external/$(am__dirstamp) \
+external/pkgain-lpkg.$(OBJEXT): external/$(am__dirstamp) \
 	external/$(DEPDIR)/$(am__dirstamp)
-external/pkgin-opattern.$(OBJEXT): external/$(am__dirstamp) \
+external/pkgain-opattern.$(OBJEXT): external/$(am__dirstamp) \
 	external/$(DEPDIR)/$(am__dirstamp)
-external/pkgin-pkgdb.$(OBJEXT): external/$(am__dirstamp) \
+external/pkgain-pkgdb.$(OBJEXT): external/$(am__dirstamp) \
 	external/$(DEPDIR)/$(am__dirstamp)
-external/pkgin-plist.$(OBJEXT): external/$(am__dirstamp) \
+external/pkgain-plist.$(OBJEXT): external/$(am__dirstamp) \
 	external/$(DEPDIR)/$(am__dirstamp)
-external/pkgin-var.$(OBJEXT): external/$(am__dirstamp) \
+external/pkgain-var.$(OBJEXT): external/$(am__dirstamp) \
 	external/$(DEPDIR)/$(am__dirstamp)
-external/pkgin-xwrapper.$(OBJEXT): external/$(am__dirstamp) \
+external/pkgain-xwrapper.$(OBJEXT): external/$(am__dirstamp) \
 	external/$(DEPDIR)/$(am__dirstamp)
-external/pkgin-humanize_number.$(OBJEXT): external/$(am__dirstamp) \
+external/pkgain-humanize_number.$(OBJEXT): external/$(am__dirstamp) \
 	external/$(DEPDIR)/$(am__dirstamp)
 
-pkgin$(EXEEXT): $(pkgin_OBJECTS) $(pkgin_DEPENDENCIES) $(EXTRA_pkgin_DEPENDENCIES) 
-	@rm -f pkgin$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(pkgin_OBJECTS) $(pkgin_LDADD) $(LIBS)
+pkgain$(EXEEXT): $(pkgain_OBJECTS) $(pkgain_DEPENDENCIES) $(EXTRA_pkgain_DEPENDENCIES) 
+	@rm -f pkgain$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(pkgain_OBJECTS) $(pkgain_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -577,38 +577,38 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgin-actions.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgin-autoremove.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgin-depends.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgin-download.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgin-fsops.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgin-impact.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgin-main.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgin-order.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgin-pkg_check.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgin-pkg_infos.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgin-pkg_install.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgin-pkg_str.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgin-pkgindb.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgin-pkgindb_queries.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgin-pkglist.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgin-preferred.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgin-selection.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgin-sqlite_callbacks.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgin-summary.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgin-tools.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@external/$(DEPDIR)/pkgin-automatic.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@external/$(DEPDIR)/pkgin-dewey.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@external/$(DEPDIR)/pkgin-fexec.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@external/$(DEPDIR)/pkgin-humanize_number.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@external/$(DEPDIR)/pkgin-iterate.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@external/$(DEPDIR)/pkgin-lpkg.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@external/$(DEPDIR)/pkgin-opattern.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@external/$(DEPDIR)/pkgin-pkgdb.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@external/$(DEPDIR)/pkgin-plist.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@external/$(DEPDIR)/pkgin-progressmeter.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@external/$(DEPDIR)/pkgin-var.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@external/$(DEPDIR)/pkgin-xwrapper.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgain-actions.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgain-autoremove.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgain-depends.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgain-download.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgain-fsops.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgain-impact.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgain-main.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgain-order.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgain-pkg_check.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgain-pkg_infos.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgain-pkg_install.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgain-pkg_str.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgain-pkgaindb.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgain-pkgaindb_queries.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgain-pkglist.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgain-preferred.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgain-selection.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgain-sqlite_callbacks.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgain-summary.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pkgain-tools.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@external/$(DEPDIR)/pkgain-automatic.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@external/$(DEPDIR)/pkgain-dewey.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@external/$(DEPDIR)/pkgain-fexec.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@external/$(DEPDIR)/pkgain-humanize_number.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@external/$(DEPDIR)/pkgain-iterate.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@external/$(DEPDIR)/pkgain-lpkg.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@external/$(DEPDIR)/pkgain-opattern.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@external/$(DEPDIR)/pkgain-pkgdb.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@external/$(DEPDIR)/pkgain-plist.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@external/$(DEPDIR)/pkgain-progressmeter.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@external/$(DEPDIR)/pkgain-var.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@external/$(DEPDIR)/pkgain-xwrapper.Po@am__quote@ # am--include-marker
 
 $(am__depfiles_remade):
 	@$(MKDIR_P) $(@D)
@@ -632,453 +632,453 @@ am--depfiles: $(am__depfiles_remade)
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(COMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
 
-pkgin-actions.o: actions.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-actions.o -MD -MP -MF $(DEPDIR)/pkgin-actions.Tpo -c -o pkgin-actions.o `test -f 'actions.c' || echo '$(srcdir)/'`actions.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-actions.Tpo $(DEPDIR)/pkgin-actions.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='actions.c' object='pkgin-actions.o' libtool=no @AMDEPBACKSLASH@
+pkgain-actions.o: actions.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-actions.o -MD -MP -MF $(DEPDIR)/pkgain-actions.Tpo -c -o pkgain-actions.o `test -f 'actions.c' || echo '$(srcdir)/'`actions.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-actions.Tpo $(DEPDIR)/pkgain-actions.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='actions.c' object='pkgain-actions.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-actions.o `test -f 'actions.c' || echo '$(srcdir)/'`actions.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-actions.o `test -f 'actions.c' || echo '$(srcdir)/'`actions.c
 
-pkgin-actions.obj: actions.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-actions.obj -MD -MP -MF $(DEPDIR)/pkgin-actions.Tpo -c -o pkgin-actions.obj `if test -f 'actions.c'; then $(CYGPATH_W) 'actions.c'; else $(CYGPATH_W) '$(srcdir)/actions.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-actions.Tpo $(DEPDIR)/pkgin-actions.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='actions.c' object='pkgin-actions.obj' libtool=no @AMDEPBACKSLASH@
+pkgain-actions.obj: actions.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-actions.obj -MD -MP -MF $(DEPDIR)/pkgain-actions.Tpo -c -o pkgain-actions.obj `if test -f 'actions.c'; then $(CYGPATH_W) 'actions.c'; else $(CYGPATH_W) '$(srcdir)/actions.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-actions.Tpo $(DEPDIR)/pkgain-actions.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='actions.c' object='pkgain-actions.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-actions.obj `if test -f 'actions.c'; then $(CYGPATH_W) 'actions.c'; else $(CYGPATH_W) '$(srcdir)/actions.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-actions.obj `if test -f 'actions.c'; then $(CYGPATH_W) 'actions.c'; else $(CYGPATH_W) '$(srcdir)/actions.c'; fi`
 
-pkgin-autoremove.o: autoremove.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-autoremove.o -MD -MP -MF $(DEPDIR)/pkgin-autoremove.Tpo -c -o pkgin-autoremove.o `test -f 'autoremove.c' || echo '$(srcdir)/'`autoremove.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-autoremove.Tpo $(DEPDIR)/pkgin-autoremove.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='autoremove.c' object='pkgin-autoremove.o' libtool=no @AMDEPBACKSLASH@
+pkgain-autoremove.o: autoremove.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-autoremove.o -MD -MP -MF $(DEPDIR)/pkgain-autoremove.Tpo -c -o pkgain-autoremove.o `test -f 'autoremove.c' || echo '$(srcdir)/'`autoremove.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-autoremove.Tpo $(DEPDIR)/pkgain-autoremove.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='autoremove.c' object='pkgain-autoremove.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-autoremove.o `test -f 'autoremove.c' || echo '$(srcdir)/'`autoremove.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-autoremove.o `test -f 'autoremove.c' || echo '$(srcdir)/'`autoremove.c
 
-pkgin-autoremove.obj: autoremove.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-autoremove.obj -MD -MP -MF $(DEPDIR)/pkgin-autoremove.Tpo -c -o pkgin-autoremove.obj `if test -f 'autoremove.c'; then $(CYGPATH_W) 'autoremove.c'; else $(CYGPATH_W) '$(srcdir)/autoremove.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-autoremove.Tpo $(DEPDIR)/pkgin-autoremove.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='autoremove.c' object='pkgin-autoremove.obj' libtool=no @AMDEPBACKSLASH@
+pkgain-autoremove.obj: autoremove.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-autoremove.obj -MD -MP -MF $(DEPDIR)/pkgain-autoremove.Tpo -c -o pkgain-autoremove.obj `if test -f 'autoremove.c'; then $(CYGPATH_W) 'autoremove.c'; else $(CYGPATH_W) '$(srcdir)/autoremove.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-autoremove.Tpo $(DEPDIR)/pkgain-autoremove.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='autoremove.c' object='pkgain-autoremove.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-autoremove.obj `if test -f 'autoremove.c'; then $(CYGPATH_W) 'autoremove.c'; else $(CYGPATH_W) '$(srcdir)/autoremove.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-autoremove.obj `if test -f 'autoremove.c'; then $(CYGPATH_W) 'autoremove.c'; else $(CYGPATH_W) '$(srcdir)/autoremove.c'; fi`
 
-pkgin-depends.o: depends.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-depends.o -MD -MP -MF $(DEPDIR)/pkgin-depends.Tpo -c -o pkgin-depends.o `test -f 'depends.c' || echo '$(srcdir)/'`depends.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-depends.Tpo $(DEPDIR)/pkgin-depends.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='depends.c' object='pkgin-depends.o' libtool=no @AMDEPBACKSLASH@
+pkgain-depends.o: depends.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-depends.o -MD -MP -MF $(DEPDIR)/pkgain-depends.Tpo -c -o pkgain-depends.o `test -f 'depends.c' || echo '$(srcdir)/'`depends.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-depends.Tpo $(DEPDIR)/pkgain-depends.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='depends.c' object='pkgain-depends.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-depends.o `test -f 'depends.c' || echo '$(srcdir)/'`depends.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-depends.o `test -f 'depends.c' || echo '$(srcdir)/'`depends.c
 
-pkgin-depends.obj: depends.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-depends.obj -MD -MP -MF $(DEPDIR)/pkgin-depends.Tpo -c -o pkgin-depends.obj `if test -f 'depends.c'; then $(CYGPATH_W) 'depends.c'; else $(CYGPATH_W) '$(srcdir)/depends.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-depends.Tpo $(DEPDIR)/pkgin-depends.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='depends.c' object='pkgin-depends.obj' libtool=no @AMDEPBACKSLASH@
+pkgain-depends.obj: depends.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-depends.obj -MD -MP -MF $(DEPDIR)/pkgain-depends.Tpo -c -o pkgain-depends.obj `if test -f 'depends.c'; then $(CYGPATH_W) 'depends.c'; else $(CYGPATH_W) '$(srcdir)/depends.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-depends.Tpo $(DEPDIR)/pkgain-depends.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='depends.c' object='pkgain-depends.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-depends.obj `if test -f 'depends.c'; then $(CYGPATH_W) 'depends.c'; else $(CYGPATH_W) '$(srcdir)/depends.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-depends.obj `if test -f 'depends.c'; then $(CYGPATH_W) 'depends.c'; else $(CYGPATH_W) '$(srcdir)/depends.c'; fi`
 
-pkgin-download.o: download.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-download.o -MD -MP -MF $(DEPDIR)/pkgin-download.Tpo -c -o pkgin-download.o `test -f 'download.c' || echo '$(srcdir)/'`download.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-download.Tpo $(DEPDIR)/pkgin-download.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='download.c' object='pkgin-download.o' libtool=no @AMDEPBACKSLASH@
+pkgain-download.o: download.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-download.o -MD -MP -MF $(DEPDIR)/pkgain-download.Tpo -c -o pkgain-download.o `test -f 'download.c' || echo '$(srcdir)/'`download.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-download.Tpo $(DEPDIR)/pkgain-download.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='download.c' object='pkgain-download.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-download.o `test -f 'download.c' || echo '$(srcdir)/'`download.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-download.o `test -f 'download.c' || echo '$(srcdir)/'`download.c
 
-pkgin-download.obj: download.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-download.obj -MD -MP -MF $(DEPDIR)/pkgin-download.Tpo -c -o pkgin-download.obj `if test -f 'download.c'; then $(CYGPATH_W) 'download.c'; else $(CYGPATH_W) '$(srcdir)/download.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-download.Tpo $(DEPDIR)/pkgin-download.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='download.c' object='pkgin-download.obj' libtool=no @AMDEPBACKSLASH@
+pkgain-download.obj: download.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-download.obj -MD -MP -MF $(DEPDIR)/pkgain-download.Tpo -c -o pkgain-download.obj `if test -f 'download.c'; then $(CYGPATH_W) 'download.c'; else $(CYGPATH_W) '$(srcdir)/download.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-download.Tpo $(DEPDIR)/pkgain-download.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='download.c' object='pkgain-download.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-download.obj `if test -f 'download.c'; then $(CYGPATH_W) 'download.c'; else $(CYGPATH_W) '$(srcdir)/download.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-download.obj `if test -f 'download.c'; then $(CYGPATH_W) 'download.c'; else $(CYGPATH_W) '$(srcdir)/download.c'; fi`
 
-pkgin-fsops.o: fsops.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-fsops.o -MD -MP -MF $(DEPDIR)/pkgin-fsops.Tpo -c -o pkgin-fsops.o `test -f 'fsops.c' || echo '$(srcdir)/'`fsops.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-fsops.Tpo $(DEPDIR)/pkgin-fsops.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='fsops.c' object='pkgin-fsops.o' libtool=no @AMDEPBACKSLASH@
+pkgain-fsops.o: fsops.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-fsops.o -MD -MP -MF $(DEPDIR)/pkgain-fsops.Tpo -c -o pkgain-fsops.o `test -f 'fsops.c' || echo '$(srcdir)/'`fsops.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-fsops.Tpo $(DEPDIR)/pkgain-fsops.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='fsops.c' object='pkgain-fsops.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-fsops.o `test -f 'fsops.c' || echo '$(srcdir)/'`fsops.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-fsops.o `test -f 'fsops.c' || echo '$(srcdir)/'`fsops.c
 
-pkgin-fsops.obj: fsops.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-fsops.obj -MD -MP -MF $(DEPDIR)/pkgin-fsops.Tpo -c -o pkgin-fsops.obj `if test -f 'fsops.c'; then $(CYGPATH_W) 'fsops.c'; else $(CYGPATH_W) '$(srcdir)/fsops.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-fsops.Tpo $(DEPDIR)/pkgin-fsops.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='fsops.c' object='pkgin-fsops.obj' libtool=no @AMDEPBACKSLASH@
+pkgain-fsops.obj: fsops.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-fsops.obj -MD -MP -MF $(DEPDIR)/pkgain-fsops.Tpo -c -o pkgain-fsops.obj `if test -f 'fsops.c'; then $(CYGPATH_W) 'fsops.c'; else $(CYGPATH_W) '$(srcdir)/fsops.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-fsops.Tpo $(DEPDIR)/pkgain-fsops.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='fsops.c' object='pkgain-fsops.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-fsops.obj `if test -f 'fsops.c'; then $(CYGPATH_W) 'fsops.c'; else $(CYGPATH_W) '$(srcdir)/fsops.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-fsops.obj `if test -f 'fsops.c'; then $(CYGPATH_W) 'fsops.c'; else $(CYGPATH_W) '$(srcdir)/fsops.c'; fi`
 
-pkgin-impact.o: impact.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-impact.o -MD -MP -MF $(DEPDIR)/pkgin-impact.Tpo -c -o pkgin-impact.o `test -f 'impact.c' || echo '$(srcdir)/'`impact.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-impact.Tpo $(DEPDIR)/pkgin-impact.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='impact.c' object='pkgin-impact.o' libtool=no @AMDEPBACKSLASH@
+pkgain-impact.o: impact.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-impact.o -MD -MP -MF $(DEPDIR)/pkgain-impact.Tpo -c -o pkgain-impact.o `test -f 'impact.c' || echo '$(srcdir)/'`impact.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-impact.Tpo $(DEPDIR)/pkgain-impact.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='impact.c' object='pkgain-impact.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-impact.o `test -f 'impact.c' || echo '$(srcdir)/'`impact.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-impact.o `test -f 'impact.c' || echo '$(srcdir)/'`impact.c
 
-pkgin-impact.obj: impact.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-impact.obj -MD -MP -MF $(DEPDIR)/pkgin-impact.Tpo -c -o pkgin-impact.obj `if test -f 'impact.c'; then $(CYGPATH_W) 'impact.c'; else $(CYGPATH_W) '$(srcdir)/impact.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-impact.Tpo $(DEPDIR)/pkgin-impact.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='impact.c' object='pkgin-impact.obj' libtool=no @AMDEPBACKSLASH@
+pkgain-impact.obj: impact.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-impact.obj -MD -MP -MF $(DEPDIR)/pkgain-impact.Tpo -c -o pkgain-impact.obj `if test -f 'impact.c'; then $(CYGPATH_W) 'impact.c'; else $(CYGPATH_W) '$(srcdir)/impact.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-impact.Tpo $(DEPDIR)/pkgain-impact.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='impact.c' object='pkgain-impact.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-impact.obj `if test -f 'impact.c'; then $(CYGPATH_W) 'impact.c'; else $(CYGPATH_W) '$(srcdir)/impact.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-impact.obj `if test -f 'impact.c'; then $(CYGPATH_W) 'impact.c'; else $(CYGPATH_W) '$(srcdir)/impact.c'; fi`
 
-pkgin-main.o: main.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-main.o -MD -MP -MF $(DEPDIR)/pkgin-main.Tpo -c -o pkgin-main.o `test -f 'main.c' || echo '$(srcdir)/'`main.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-main.Tpo $(DEPDIR)/pkgin-main.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='main.c' object='pkgin-main.o' libtool=no @AMDEPBACKSLASH@
+pkgain-main.o: main.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-main.o -MD -MP -MF $(DEPDIR)/pkgain-main.Tpo -c -o pkgain-main.o `test -f 'main.c' || echo '$(srcdir)/'`main.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-main.Tpo $(DEPDIR)/pkgain-main.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='main.c' object='pkgain-main.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-main.o `test -f 'main.c' || echo '$(srcdir)/'`main.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-main.o `test -f 'main.c' || echo '$(srcdir)/'`main.c
 
-pkgin-main.obj: main.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-main.obj -MD -MP -MF $(DEPDIR)/pkgin-main.Tpo -c -o pkgin-main.obj `if test -f 'main.c'; then $(CYGPATH_W) 'main.c'; else $(CYGPATH_W) '$(srcdir)/main.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-main.Tpo $(DEPDIR)/pkgin-main.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='main.c' object='pkgin-main.obj' libtool=no @AMDEPBACKSLASH@
+pkgain-main.obj: main.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-main.obj -MD -MP -MF $(DEPDIR)/pkgain-main.Tpo -c -o pkgain-main.obj `if test -f 'main.c'; then $(CYGPATH_W) 'main.c'; else $(CYGPATH_W) '$(srcdir)/main.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-main.Tpo $(DEPDIR)/pkgain-main.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='main.c' object='pkgain-main.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-main.obj `if test -f 'main.c'; then $(CYGPATH_W) 'main.c'; else $(CYGPATH_W) '$(srcdir)/main.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-main.obj `if test -f 'main.c'; then $(CYGPATH_W) 'main.c'; else $(CYGPATH_W) '$(srcdir)/main.c'; fi`
 
-pkgin-order.o: order.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-order.o -MD -MP -MF $(DEPDIR)/pkgin-order.Tpo -c -o pkgin-order.o `test -f 'order.c' || echo '$(srcdir)/'`order.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-order.Tpo $(DEPDIR)/pkgin-order.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='order.c' object='pkgin-order.o' libtool=no @AMDEPBACKSLASH@
+pkgain-order.o: order.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-order.o -MD -MP -MF $(DEPDIR)/pkgain-order.Tpo -c -o pkgain-order.o `test -f 'order.c' || echo '$(srcdir)/'`order.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-order.Tpo $(DEPDIR)/pkgain-order.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='order.c' object='pkgain-order.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-order.o `test -f 'order.c' || echo '$(srcdir)/'`order.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-order.o `test -f 'order.c' || echo '$(srcdir)/'`order.c
 
-pkgin-order.obj: order.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-order.obj -MD -MP -MF $(DEPDIR)/pkgin-order.Tpo -c -o pkgin-order.obj `if test -f 'order.c'; then $(CYGPATH_W) 'order.c'; else $(CYGPATH_W) '$(srcdir)/order.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-order.Tpo $(DEPDIR)/pkgin-order.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='order.c' object='pkgin-order.obj' libtool=no @AMDEPBACKSLASH@
+pkgain-order.obj: order.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-order.obj -MD -MP -MF $(DEPDIR)/pkgain-order.Tpo -c -o pkgain-order.obj `if test -f 'order.c'; then $(CYGPATH_W) 'order.c'; else $(CYGPATH_W) '$(srcdir)/order.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-order.Tpo $(DEPDIR)/pkgain-order.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='order.c' object='pkgain-order.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-order.obj `if test -f 'order.c'; then $(CYGPATH_W) 'order.c'; else $(CYGPATH_W) '$(srcdir)/order.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-order.obj `if test -f 'order.c'; then $(CYGPATH_W) 'order.c'; else $(CYGPATH_W) '$(srcdir)/order.c'; fi`
 
-pkgin-pkg_check.o: pkg_check.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-pkg_check.o -MD -MP -MF $(DEPDIR)/pkgin-pkg_check.Tpo -c -o pkgin-pkg_check.o `test -f 'pkg_check.c' || echo '$(srcdir)/'`pkg_check.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-pkg_check.Tpo $(DEPDIR)/pkgin-pkg_check.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='pkg_check.c' object='pkgin-pkg_check.o' libtool=no @AMDEPBACKSLASH@
+pkgain-pkg_check.o: pkg_check.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-pkg_check.o -MD -MP -MF $(DEPDIR)/pkgain-pkg_check.Tpo -c -o pkgain-pkg_check.o `test -f 'pkg_check.c' || echo '$(srcdir)/'`pkg_check.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-pkg_check.Tpo $(DEPDIR)/pkgain-pkg_check.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='pkg_check.c' object='pkgain-pkg_check.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-pkg_check.o `test -f 'pkg_check.c' || echo '$(srcdir)/'`pkg_check.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-pkg_check.o `test -f 'pkg_check.c' || echo '$(srcdir)/'`pkg_check.c
 
-pkgin-pkg_check.obj: pkg_check.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-pkg_check.obj -MD -MP -MF $(DEPDIR)/pkgin-pkg_check.Tpo -c -o pkgin-pkg_check.obj `if test -f 'pkg_check.c'; then $(CYGPATH_W) 'pkg_check.c'; else $(CYGPATH_W) '$(srcdir)/pkg_check.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-pkg_check.Tpo $(DEPDIR)/pkgin-pkg_check.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='pkg_check.c' object='pkgin-pkg_check.obj' libtool=no @AMDEPBACKSLASH@
+pkgain-pkg_check.obj: pkg_check.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-pkg_check.obj -MD -MP -MF $(DEPDIR)/pkgain-pkg_check.Tpo -c -o pkgain-pkg_check.obj `if test -f 'pkg_check.c'; then $(CYGPATH_W) 'pkg_check.c'; else $(CYGPATH_W) '$(srcdir)/pkg_check.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-pkg_check.Tpo $(DEPDIR)/pkgain-pkg_check.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='pkg_check.c' object='pkgain-pkg_check.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-pkg_check.obj `if test -f 'pkg_check.c'; then $(CYGPATH_W) 'pkg_check.c'; else $(CYGPATH_W) '$(srcdir)/pkg_check.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-pkg_check.obj `if test -f 'pkg_check.c'; then $(CYGPATH_W) 'pkg_check.c'; else $(CYGPATH_W) '$(srcdir)/pkg_check.c'; fi`
 
-pkgin-pkg_infos.o: pkg_infos.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-pkg_infos.o -MD -MP -MF $(DEPDIR)/pkgin-pkg_infos.Tpo -c -o pkgin-pkg_infos.o `test -f 'pkg_infos.c' || echo '$(srcdir)/'`pkg_infos.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-pkg_infos.Tpo $(DEPDIR)/pkgin-pkg_infos.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='pkg_infos.c' object='pkgin-pkg_infos.o' libtool=no @AMDEPBACKSLASH@
+pkgain-pkg_infos.o: pkg_infos.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-pkg_infos.o -MD -MP -MF $(DEPDIR)/pkgain-pkg_infos.Tpo -c -o pkgain-pkg_infos.o `test -f 'pkg_infos.c' || echo '$(srcdir)/'`pkg_infos.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-pkg_infos.Tpo $(DEPDIR)/pkgain-pkg_infos.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='pkg_infos.c' object='pkgain-pkg_infos.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-pkg_infos.o `test -f 'pkg_infos.c' || echo '$(srcdir)/'`pkg_infos.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-pkg_infos.o `test -f 'pkg_infos.c' || echo '$(srcdir)/'`pkg_infos.c
 
-pkgin-pkg_infos.obj: pkg_infos.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-pkg_infos.obj -MD -MP -MF $(DEPDIR)/pkgin-pkg_infos.Tpo -c -o pkgin-pkg_infos.obj `if test -f 'pkg_infos.c'; then $(CYGPATH_W) 'pkg_infos.c'; else $(CYGPATH_W) '$(srcdir)/pkg_infos.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-pkg_infos.Tpo $(DEPDIR)/pkgin-pkg_infos.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='pkg_infos.c' object='pkgin-pkg_infos.obj' libtool=no @AMDEPBACKSLASH@
+pkgain-pkg_infos.obj: pkg_infos.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-pkg_infos.obj -MD -MP -MF $(DEPDIR)/pkgain-pkg_infos.Tpo -c -o pkgain-pkg_infos.obj `if test -f 'pkg_infos.c'; then $(CYGPATH_W) 'pkg_infos.c'; else $(CYGPATH_W) '$(srcdir)/pkg_infos.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-pkg_infos.Tpo $(DEPDIR)/pkgain-pkg_infos.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='pkg_infos.c' object='pkgain-pkg_infos.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-pkg_infos.obj `if test -f 'pkg_infos.c'; then $(CYGPATH_W) 'pkg_infos.c'; else $(CYGPATH_W) '$(srcdir)/pkg_infos.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-pkg_infos.obj `if test -f 'pkg_infos.c'; then $(CYGPATH_W) 'pkg_infos.c'; else $(CYGPATH_W) '$(srcdir)/pkg_infos.c'; fi`
 
-pkgin-pkg_install.o: pkg_install.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-pkg_install.o -MD -MP -MF $(DEPDIR)/pkgin-pkg_install.Tpo -c -o pkgin-pkg_install.o `test -f 'pkg_install.c' || echo '$(srcdir)/'`pkg_install.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-pkg_install.Tpo $(DEPDIR)/pkgin-pkg_install.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='pkg_install.c' object='pkgin-pkg_install.o' libtool=no @AMDEPBACKSLASH@
+pkgain-pkg_install.o: pkg_install.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-pkg_install.o -MD -MP -MF $(DEPDIR)/pkgain-pkg_install.Tpo -c -o pkgain-pkg_install.o `test -f 'pkg_install.c' || echo '$(srcdir)/'`pkg_install.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-pkg_install.Tpo $(DEPDIR)/pkgain-pkg_install.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='pkg_install.c' object='pkgain-pkg_install.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-pkg_install.o `test -f 'pkg_install.c' || echo '$(srcdir)/'`pkg_install.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-pkg_install.o `test -f 'pkg_install.c' || echo '$(srcdir)/'`pkg_install.c
 
-pkgin-pkg_install.obj: pkg_install.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-pkg_install.obj -MD -MP -MF $(DEPDIR)/pkgin-pkg_install.Tpo -c -o pkgin-pkg_install.obj `if test -f 'pkg_install.c'; then $(CYGPATH_W) 'pkg_install.c'; else $(CYGPATH_W) '$(srcdir)/pkg_install.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-pkg_install.Tpo $(DEPDIR)/pkgin-pkg_install.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='pkg_install.c' object='pkgin-pkg_install.obj' libtool=no @AMDEPBACKSLASH@
+pkgain-pkg_install.obj: pkg_install.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-pkg_install.obj -MD -MP -MF $(DEPDIR)/pkgain-pkg_install.Tpo -c -o pkgain-pkg_install.obj `if test -f 'pkg_install.c'; then $(CYGPATH_W) 'pkg_install.c'; else $(CYGPATH_W) '$(srcdir)/pkg_install.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-pkg_install.Tpo $(DEPDIR)/pkgain-pkg_install.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='pkg_install.c' object='pkgain-pkg_install.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-pkg_install.obj `if test -f 'pkg_install.c'; then $(CYGPATH_W) 'pkg_install.c'; else $(CYGPATH_W) '$(srcdir)/pkg_install.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-pkg_install.obj `if test -f 'pkg_install.c'; then $(CYGPATH_W) 'pkg_install.c'; else $(CYGPATH_W) '$(srcdir)/pkg_install.c'; fi`
 
-pkgin-pkg_str.o: pkg_str.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-pkg_str.o -MD -MP -MF $(DEPDIR)/pkgin-pkg_str.Tpo -c -o pkgin-pkg_str.o `test -f 'pkg_str.c' || echo '$(srcdir)/'`pkg_str.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-pkg_str.Tpo $(DEPDIR)/pkgin-pkg_str.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='pkg_str.c' object='pkgin-pkg_str.o' libtool=no @AMDEPBACKSLASH@
+pkgain-pkg_str.o: pkg_str.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-pkg_str.o -MD -MP -MF $(DEPDIR)/pkgain-pkg_str.Tpo -c -o pkgain-pkg_str.o `test -f 'pkg_str.c' || echo '$(srcdir)/'`pkg_str.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-pkg_str.Tpo $(DEPDIR)/pkgain-pkg_str.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='pkg_str.c' object='pkgain-pkg_str.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-pkg_str.o `test -f 'pkg_str.c' || echo '$(srcdir)/'`pkg_str.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-pkg_str.o `test -f 'pkg_str.c' || echo '$(srcdir)/'`pkg_str.c
 
-pkgin-pkg_str.obj: pkg_str.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-pkg_str.obj -MD -MP -MF $(DEPDIR)/pkgin-pkg_str.Tpo -c -o pkgin-pkg_str.obj `if test -f 'pkg_str.c'; then $(CYGPATH_W) 'pkg_str.c'; else $(CYGPATH_W) '$(srcdir)/pkg_str.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-pkg_str.Tpo $(DEPDIR)/pkgin-pkg_str.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='pkg_str.c' object='pkgin-pkg_str.obj' libtool=no @AMDEPBACKSLASH@
+pkgain-pkg_str.obj: pkg_str.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-pkg_str.obj -MD -MP -MF $(DEPDIR)/pkgain-pkg_str.Tpo -c -o pkgain-pkg_str.obj `if test -f 'pkg_str.c'; then $(CYGPATH_W) 'pkg_str.c'; else $(CYGPATH_W) '$(srcdir)/pkg_str.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-pkg_str.Tpo $(DEPDIR)/pkgain-pkg_str.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='pkg_str.c' object='pkgain-pkg_str.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-pkg_str.obj `if test -f 'pkg_str.c'; then $(CYGPATH_W) 'pkg_str.c'; else $(CYGPATH_W) '$(srcdir)/pkg_str.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-pkg_str.obj `if test -f 'pkg_str.c'; then $(CYGPATH_W) 'pkg_str.c'; else $(CYGPATH_W) '$(srcdir)/pkg_str.c'; fi`
 
-pkgin-pkgindb.o: pkgindb.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-pkgindb.o -MD -MP -MF $(DEPDIR)/pkgin-pkgindb.Tpo -c -o pkgin-pkgindb.o `test -f 'pkgindb.c' || echo '$(srcdir)/'`pkgindb.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-pkgindb.Tpo $(DEPDIR)/pkgin-pkgindb.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='pkgindb.c' object='pkgin-pkgindb.o' libtool=no @AMDEPBACKSLASH@
+pkgain-pkgaindb.o: pkgaindb.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-pkgaindb.o -MD -MP -MF $(DEPDIR)/pkgain-pkgaindb.Tpo -c -o pkgain-pkgaindb.o `test -f 'pkgaindb.c' || echo '$(srcdir)/'`pkgaindb.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-pkgaindb.Tpo $(DEPDIR)/pkgain-pkgaindb.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='pkgaindb.c' object='pkgain-pkgaindb.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-pkgindb.o `test -f 'pkgindb.c' || echo '$(srcdir)/'`pkgindb.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-pkgaindb.o `test -f 'pkgaindb.c' || echo '$(srcdir)/'`pkgaindb.c
 
-pkgin-pkgindb.obj: pkgindb.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-pkgindb.obj -MD -MP -MF $(DEPDIR)/pkgin-pkgindb.Tpo -c -o pkgin-pkgindb.obj `if test -f 'pkgindb.c'; then $(CYGPATH_W) 'pkgindb.c'; else $(CYGPATH_W) '$(srcdir)/pkgindb.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-pkgindb.Tpo $(DEPDIR)/pkgin-pkgindb.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='pkgindb.c' object='pkgin-pkgindb.obj' libtool=no @AMDEPBACKSLASH@
+pkgain-pkgaindb.obj: pkgaindb.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-pkgaindb.obj -MD -MP -MF $(DEPDIR)/pkgain-pkgaindb.Tpo -c -o pkgain-pkgaindb.obj `if test -f 'pkgaindb.c'; then $(CYGPATH_W) 'pkgaindb.c'; else $(CYGPATH_W) '$(srcdir)/pkgaindb.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-pkgaindb.Tpo $(DEPDIR)/pkgain-pkgaindb.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='pkgaindb.c' object='pkgain-pkgaindb.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-pkgindb.obj `if test -f 'pkgindb.c'; then $(CYGPATH_W) 'pkgindb.c'; else $(CYGPATH_W) '$(srcdir)/pkgindb.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-pkgaindb.obj `if test -f 'pkgaindb.c'; then $(CYGPATH_W) 'pkgaindb.c'; else $(CYGPATH_W) '$(srcdir)/pkgaindb.c'; fi`
 
-pkgin-pkgindb_queries.o: pkgindb_queries.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-pkgindb_queries.o -MD -MP -MF $(DEPDIR)/pkgin-pkgindb_queries.Tpo -c -o pkgin-pkgindb_queries.o `test -f 'pkgindb_queries.c' || echo '$(srcdir)/'`pkgindb_queries.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-pkgindb_queries.Tpo $(DEPDIR)/pkgin-pkgindb_queries.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='pkgindb_queries.c' object='pkgin-pkgindb_queries.o' libtool=no @AMDEPBACKSLASH@
+pkgain-pkgaindb_queries.o: pkgaindb_queries.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-pkgaindb_queries.o -MD -MP -MF $(DEPDIR)/pkgain-pkgaindb_queries.Tpo -c -o pkgain-pkgaindb_queries.o `test -f 'pkgaindb_queries.c' || echo '$(srcdir)/'`pkgaindb_queries.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-pkgaindb_queries.Tpo $(DEPDIR)/pkgain-pkgaindb_queries.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='pkgaindb_queries.c' object='pkgain-pkgaindb_queries.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-pkgindb_queries.o `test -f 'pkgindb_queries.c' || echo '$(srcdir)/'`pkgindb_queries.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-pkgaindb_queries.o `test -f 'pkgaindb_queries.c' || echo '$(srcdir)/'`pkgaindb_queries.c
 
-pkgin-pkgindb_queries.obj: pkgindb_queries.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-pkgindb_queries.obj -MD -MP -MF $(DEPDIR)/pkgin-pkgindb_queries.Tpo -c -o pkgin-pkgindb_queries.obj `if test -f 'pkgindb_queries.c'; then $(CYGPATH_W) 'pkgindb_queries.c'; else $(CYGPATH_W) '$(srcdir)/pkgindb_queries.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-pkgindb_queries.Tpo $(DEPDIR)/pkgin-pkgindb_queries.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='pkgindb_queries.c' object='pkgin-pkgindb_queries.obj' libtool=no @AMDEPBACKSLASH@
+pkgain-pkgaindb_queries.obj: pkgaindb_queries.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-pkgaindb_queries.obj -MD -MP -MF $(DEPDIR)/pkgain-pkgaindb_queries.Tpo -c -o pkgain-pkgaindb_queries.obj `if test -f 'pkgaindb_queries.c'; then $(CYGPATH_W) 'pkgaindb_queries.c'; else $(CYGPATH_W) '$(srcdir)/pkgaindb_queries.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-pkgaindb_queries.Tpo $(DEPDIR)/pkgain-pkgaindb_queries.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='pkgaindb_queries.c' object='pkgain-pkgaindb_queries.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-pkgindb_queries.obj `if test -f 'pkgindb_queries.c'; then $(CYGPATH_W) 'pkgindb_queries.c'; else $(CYGPATH_W) '$(srcdir)/pkgindb_queries.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-pkgaindb_queries.obj `if test -f 'pkgaindb_queries.c'; then $(CYGPATH_W) 'pkgaindb_queries.c'; else $(CYGPATH_W) '$(srcdir)/pkgaindb_queries.c'; fi`
 
-pkgin-pkglist.o: pkglist.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-pkglist.o -MD -MP -MF $(DEPDIR)/pkgin-pkglist.Tpo -c -o pkgin-pkglist.o `test -f 'pkglist.c' || echo '$(srcdir)/'`pkglist.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-pkglist.Tpo $(DEPDIR)/pkgin-pkglist.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='pkglist.c' object='pkgin-pkglist.o' libtool=no @AMDEPBACKSLASH@
+pkgain-pkglist.o: pkglist.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-pkglist.o -MD -MP -MF $(DEPDIR)/pkgain-pkglist.Tpo -c -o pkgain-pkglist.o `test -f 'pkglist.c' || echo '$(srcdir)/'`pkglist.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-pkglist.Tpo $(DEPDIR)/pkgain-pkglist.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='pkglist.c' object='pkgain-pkglist.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-pkglist.o `test -f 'pkglist.c' || echo '$(srcdir)/'`pkglist.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-pkglist.o `test -f 'pkglist.c' || echo '$(srcdir)/'`pkglist.c
 
-pkgin-pkglist.obj: pkglist.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-pkglist.obj -MD -MP -MF $(DEPDIR)/pkgin-pkglist.Tpo -c -o pkgin-pkglist.obj `if test -f 'pkglist.c'; then $(CYGPATH_W) 'pkglist.c'; else $(CYGPATH_W) '$(srcdir)/pkglist.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-pkglist.Tpo $(DEPDIR)/pkgin-pkglist.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='pkglist.c' object='pkgin-pkglist.obj' libtool=no @AMDEPBACKSLASH@
+pkgain-pkglist.obj: pkglist.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-pkglist.obj -MD -MP -MF $(DEPDIR)/pkgain-pkglist.Tpo -c -o pkgain-pkglist.obj `if test -f 'pkglist.c'; then $(CYGPATH_W) 'pkglist.c'; else $(CYGPATH_W) '$(srcdir)/pkglist.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-pkglist.Tpo $(DEPDIR)/pkgain-pkglist.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='pkglist.c' object='pkgain-pkglist.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-pkglist.obj `if test -f 'pkglist.c'; then $(CYGPATH_W) 'pkglist.c'; else $(CYGPATH_W) '$(srcdir)/pkglist.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-pkglist.obj `if test -f 'pkglist.c'; then $(CYGPATH_W) 'pkglist.c'; else $(CYGPATH_W) '$(srcdir)/pkglist.c'; fi`
 
-pkgin-preferred.o: preferred.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-preferred.o -MD -MP -MF $(DEPDIR)/pkgin-preferred.Tpo -c -o pkgin-preferred.o `test -f 'preferred.c' || echo '$(srcdir)/'`preferred.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-preferred.Tpo $(DEPDIR)/pkgin-preferred.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='preferred.c' object='pkgin-preferred.o' libtool=no @AMDEPBACKSLASH@
+pkgain-preferred.o: preferred.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-preferred.o -MD -MP -MF $(DEPDIR)/pkgain-preferred.Tpo -c -o pkgain-preferred.o `test -f 'preferred.c' || echo '$(srcdir)/'`preferred.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-preferred.Tpo $(DEPDIR)/pkgain-preferred.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='preferred.c' object='pkgain-preferred.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-preferred.o `test -f 'preferred.c' || echo '$(srcdir)/'`preferred.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-preferred.o `test -f 'preferred.c' || echo '$(srcdir)/'`preferred.c
 
-pkgin-preferred.obj: preferred.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-preferred.obj -MD -MP -MF $(DEPDIR)/pkgin-preferred.Tpo -c -o pkgin-preferred.obj `if test -f 'preferred.c'; then $(CYGPATH_W) 'preferred.c'; else $(CYGPATH_W) '$(srcdir)/preferred.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-preferred.Tpo $(DEPDIR)/pkgin-preferred.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='preferred.c' object='pkgin-preferred.obj' libtool=no @AMDEPBACKSLASH@
+pkgain-preferred.obj: preferred.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-preferred.obj -MD -MP -MF $(DEPDIR)/pkgain-preferred.Tpo -c -o pkgain-preferred.obj `if test -f 'preferred.c'; then $(CYGPATH_W) 'preferred.c'; else $(CYGPATH_W) '$(srcdir)/preferred.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-preferred.Tpo $(DEPDIR)/pkgain-preferred.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='preferred.c' object='pkgain-preferred.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-preferred.obj `if test -f 'preferred.c'; then $(CYGPATH_W) 'preferred.c'; else $(CYGPATH_W) '$(srcdir)/preferred.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-preferred.obj `if test -f 'preferred.c'; then $(CYGPATH_W) 'preferred.c'; else $(CYGPATH_W) '$(srcdir)/preferred.c'; fi`
 
-pkgin-selection.o: selection.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-selection.o -MD -MP -MF $(DEPDIR)/pkgin-selection.Tpo -c -o pkgin-selection.o `test -f 'selection.c' || echo '$(srcdir)/'`selection.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-selection.Tpo $(DEPDIR)/pkgin-selection.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='selection.c' object='pkgin-selection.o' libtool=no @AMDEPBACKSLASH@
+pkgain-selection.o: selection.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-selection.o -MD -MP -MF $(DEPDIR)/pkgain-selection.Tpo -c -o pkgain-selection.o `test -f 'selection.c' || echo '$(srcdir)/'`selection.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-selection.Tpo $(DEPDIR)/pkgain-selection.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='selection.c' object='pkgain-selection.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-selection.o `test -f 'selection.c' || echo '$(srcdir)/'`selection.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-selection.o `test -f 'selection.c' || echo '$(srcdir)/'`selection.c
 
-pkgin-selection.obj: selection.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-selection.obj -MD -MP -MF $(DEPDIR)/pkgin-selection.Tpo -c -o pkgin-selection.obj `if test -f 'selection.c'; then $(CYGPATH_W) 'selection.c'; else $(CYGPATH_W) '$(srcdir)/selection.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-selection.Tpo $(DEPDIR)/pkgin-selection.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='selection.c' object='pkgin-selection.obj' libtool=no @AMDEPBACKSLASH@
+pkgain-selection.obj: selection.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-selection.obj -MD -MP -MF $(DEPDIR)/pkgain-selection.Tpo -c -o pkgain-selection.obj `if test -f 'selection.c'; then $(CYGPATH_W) 'selection.c'; else $(CYGPATH_W) '$(srcdir)/selection.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-selection.Tpo $(DEPDIR)/pkgain-selection.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='selection.c' object='pkgain-selection.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-selection.obj `if test -f 'selection.c'; then $(CYGPATH_W) 'selection.c'; else $(CYGPATH_W) '$(srcdir)/selection.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-selection.obj `if test -f 'selection.c'; then $(CYGPATH_W) 'selection.c'; else $(CYGPATH_W) '$(srcdir)/selection.c'; fi`
 
-pkgin-sqlite_callbacks.o: sqlite_callbacks.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-sqlite_callbacks.o -MD -MP -MF $(DEPDIR)/pkgin-sqlite_callbacks.Tpo -c -o pkgin-sqlite_callbacks.o `test -f 'sqlite_callbacks.c' || echo '$(srcdir)/'`sqlite_callbacks.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-sqlite_callbacks.Tpo $(DEPDIR)/pkgin-sqlite_callbacks.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='sqlite_callbacks.c' object='pkgin-sqlite_callbacks.o' libtool=no @AMDEPBACKSLASH@
+pkgain-sqlite_callbacks.o: sqlite_callbacks.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-sqlite_callbacks.o -MD -MP -MF $(DEPDIR)/pkgain-sqlite_callbacks.Tpo -c -o pkgain-sqlite_callbacks.o `test -f 'sqlite_callbacks.c' || echo '$(srcdir)/'`sqlite_callbacks.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-sqlite_callbacks.Tpo $(DEPDIR)/pkgain-sqlite_callbacks.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='sqlite_callbacks.c' object='pkgain-sqlite_callbacks.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-sqlite_callbacks.o `test -f 'sqlite_callbacks.c' || echo '$(srcdir)/'`sqlite_callbacks.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-sqlite_callbacks.o `test -f 'sqlite_callbacks.c' || echo '$(srcdir)/'`sqlite_callbacks.c
 
-pkgin-sqlite_callbacks.obj: sqlite_callbacks.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-sqlite_callbacks.obj -MD -MP -MF $(DEPDIR)/pkgin-sqlite_callbacks.Tpo -c -o pkgin-sqlite_callbacks.obj `if test -f 'sqlite_callbacks.c'; then $(CYGPATH_W) 'sqlite_callbacks.c'; else $(CYGPATH_W) '$(srcdir)/sqlite_callbacks.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-sqlite_callbacks.Tpo $(DEPDIR)/pkgin-sqlite_callbacks.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='sqlite_callbacks.c' object='pkgin-sqlite_callbacks.obj' libtool=no @AMDEPBACKSLASH@
+pkgain-sqlite_callbacks.obj: sqlite_callbacks.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-sqlite_callbacks.obj -MD -MP -MF $(DEPDIR)/pkgain-sqlite_callbacks.Tpo -c -o pkgain-sqlite_callbacks.obj `if test -f 'sqlite_callbacks.c'; then $(CYGPATH_W) 'sqlite_callbacks.c'; else $(CYGPATH_W) '$(srcdir)/sqlite_callbacks.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-sqlite_callbacks.Tpo $(DEPDIR)/pkgain-sqlite_callbacks.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='sqlite_callbacks.c' object='pkgain-sqlite_callbacks.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-sqlite_callbacks.obj `if test -f 'sqlite_callbacks.c'; then $(CYGPATH_W) 'sqlite_callbacks.c'; else $(CYGPATH_W) '$(srcdir)/sqlite_callbacks.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-sqlite_callbacks.obj `if test -f 'sqlite_callbacks.c'; then $(CYGPATH_W) 'sqlite_callbacks.c'; else $(CYGPATH_W) '$(srcdir)/sqlite_callbacks.c'; fi`
 
-pkgin-summary.o: summary.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-summary.o -MD -MP -MF $(DEPDIR)/pkgin-summary.Tpo -c -o pkgin-summary.o `test -f 'summary.c' || echo '$(srcdir)/'`summary.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-summary.Tpo $(DEPDIR)/pkgin-summary.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='summary.c' object='pkgin-summary.o' libtool=no @AMDEPBACKSLASH@
+pkgain-summary.o: summary.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-summary.o -MD -MP -MF $(DEPDIR)/pkgain-summary.Tpo -c -o pkgain-summary.o `test -f 'summary.c' || echo '$(srcdir)/'`summary.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-summary.Tpo $(DEPDIR)/pkgain-summary.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='summary.c' object='pkgain-summary.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-summary.o `test -f 'summary.c' || echo '$(srcdir)/'`summary.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-summary.o `test -f 'summary.c' || echo '$(srcdir)/'`summary.c
 
-pkgin-summary.obj: summary.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-summary.obj -MD -MP -MF $(DEPDIR)/pkgin-summary.Tpo -c -o pkgin-summary.obj `if test -f 'summary.c'; then $(CYGPATH_W) 'summary.c'; else $(CYGPATH_W) '$(srcdir)/summary.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-summary.Tpo $(DEPDIR)/pkgin-summary.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='summary.c' object='pkgin-summary.obj' libtool=no @AMDEPBACKSLASH@
+pkgain-summary.obj: summary.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-summary.obj -MD -MP -MF $(DEPDIR)/pkgain-summary.Tpo -c -o pkgain-summary.obj `if test -f 'summary.c'; then $(CYGPATH_W) 'summary.c'; else $(CYGPATH_W) '$(srcdir)/summary.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-summary.Tpo $(DEPDIR)/pkgain-summary.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='summary.c' object='pkgain-summary.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-summary.obj `if test -f 'summary.c'; then $(CYGPATH_W) 'summary.c'; else $(CYGPATH_W) '$(srcdir)/summary.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-summary.obj `if test -f 'summary.c'; then $(CYGPATH_W) 'summary.c'; else $(CYGPATH_W) '$(srcdir)/summary.c'; fi`
 
-pkgin-tools.o: tools.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-tools.o -MD -MP -MF $(DEPDIR)/pkgin-tools.Tpo -c -o pkgin-tools.o `test -f 'tools.c' || echo '$(srcdir)/'`tools.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-tools.Tpo $(DEPDIR)/pkgin-tools.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tools.c' object='pkgin-tools.o' libtool=no @AMDEPBACKSLASH@
+pkgain-tools.o: tools.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-tools.o -MD -MP -MF $(DEPDIR)/pkgain-tools.Tpo -c -o pkgain-tools.o `test -f 'tools.c' || echo '$(srcdir)/'`tools.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-tools.Tpo $(DEPDIR)/pkgain-tools.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tools.c' object='pkgain-tools.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-tools.o `test -f 'tools.c' || echo '$(srcdir)/'`tools.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-tools.o `test -f 'tools.c' || echo '$(srcdir)/'`tools.c
 
-pkgin-tools.obj: tools.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgin-tools.obj -MD -MP -MF $(DEPDIR)/pkgin-tools.Tpo -c -o pkgin-tools.obj `if test -f 'tools.c'; then $(CYGPATH_W) 'tools.c'; else $(CYGPATH_W) '$(srcdir)/tools.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgin-tools.Tpo $(DEPDIR)/pkgin-tools.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tools.c' object='pkgin-tools.obj' libtool=no @AMDEPBACKSLASH@
+pkgain-tools.obj: tools.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pkgain-tools.obj -MD -MP -MF $(DEPDIR)/pkgain-tools.Tpo -c -o pkgain-tools.obj `if test -f 'tools.c'; then $(CYGPATH_W) 'tools.c'; else $(CYGPATH_W) '$(srcdir)/tools.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/pkgain-tools.Tpo $(DEPDIR)/pkgain-tools.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tools.c' object='pkgain-tools.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgin-tools.obj `if test -f 'tools.c'; then $(CYGPATH_W) 'tools.c'; else $(CYGPATH_W) '$(srcdir)/tools.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pkgain-tools.obj `if test -f 'tools.c'; then $(CYGPATH_W) 'tools.c'; else $(CYGPATH_W) '$(srcdir)/tools.c'; fi`
 
-external/pkgin-progressmeter.o: external/progressmeter.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgin-progressmeter.o -MD -MP -MF external/$(DEPDIR)/pkgin-progressmeter.Tpo -c -o external/pkgin-progressmeter.o `test -f 'external/progressmeter.c' || echo '$(srcdir)/'`external/progressmeter.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgin-progressmeter.Tpo external/$(DEPDIR)/pkgin-progressmeter.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/progressmeter.c' object='external/pkgin-progressmeter.o' libtool=no @AMDEPBACKSLASH@
+external/pkgain-progressmeter.o: external/progressmeter.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgain-progressmeter.o -MD -MP -MF external/$(DEPDIR)/pkgain-progressmeter.Tpo -c -o external/pkgain-progressmeter.o `test -f 'external/progressmeter.c' || echo '$(srcdir)/'`external/progressmeter.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgain-progressmeter.Tpo external/$(DEPDIR)/pkgain-progressmeter.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/progressmeter.c' object='external/pkgain-progressmeter.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgin-progressmeter.o `test -f 'external/progressmeter.c' || echo '$(srcdir)/'`external/progressmeter.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgain-progressmeter.o `test -f 'external/progressmeter.c' || echo '$(srcdir)/'`external/progressmeter.c
 
-external/pkgin-progressmeter.obj: external/progressmeter.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgin-progressmeter.obj -MD -MP -MF external/$(DEPDIR)/pkgin-progressmeter.Tpo -c -o external/pkgin-progressmeter.obj `if test -f 'external/progressmeter.c'; then $(CYGPATH_W) 'external/progressmeter.c'; else $(CYGPATH_W) '$(srcdir)/external/progressmeter.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgin-progressmeter.Tpo external/$(DEPDIR)/pkgin-progressmeter.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/progressmeter.c' object='external/pkgin-progressmeter.obj' libtool=no @AMDEPBACKSLASH@
+external/pkgain-progressmeter.obj: external/progressmeter.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgain-progressmeter.obj -MD -MP -MF external/$(DEPDIR)/pkgain-progressmeter.Tpo -c -o external/pkgain-progressmeter.obj `if test -f 'external/progressmeter.c'; then $(CYGPATH_W) 'external/progressmeter.c'; else $(CYGPATH_W) '$(srcdir)/external/progressmeter.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgain-progressmeter.Tpo external/$(DEPDIR)/pkgain-progressmeter.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/progressmeter.c' object='external/pkgain-progressmeter.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgin-progressmeter.obj `if test -f 'external/progressmeter.c'; then $(CYGPATH_W) 'external/progressmeter.c'; else $(CYGPATH_W) '$(srcdir)/external/progressmeter.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgain-progressmeter.obj `if test -f 'external/progressmeter.c'; then $(CYGPATH_W) 'external/progressmeter.c'; else $(CYGPATH_W) '$(srcdir)/external/progressmeter.c'; fi`
 
-external/pkgin-automatic.o: external/automatic.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgin-automatic.o -MD -MP -MF external/$(DEPDIR)/pkgin-automatic.Tpo -c -o external/pkgin-automatic.o `test -f 'external/automatic.c' || echo '$(srcdir)/'`external/automatic.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgin-automatic.Tpo external/$(DEPDIR)/pkgin-automatic.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/automatic.c' object='external/pkgin-automatic.o' libtool=no @AMDEPBACKSLASH@
+external/pkgain-automatic.o: external/automatic.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgain-automatic.o -MD -MP -MF external/$(DEPDIR)/pkgain-automatic.Tpo -c -o external/pkgain-automatic.o `test -f 'external/automatic.c' || echo '$(srcdir)/'`external/automatic.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgain-automatic.Tpo external/$(DEPDIR)/pkgain-automatic.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/automatic.c' object='external/pkgain-automatic.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgin-automatic.o `test -f 'external/automatic.c' || echo '$(srcdir)/'`external/automatic.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgain-automatic.o `test -f 'external/automatic.c' || echo '$(srcdir)/'`external/automatic.c
 
-external/pkgin-automatic.obj: external/automatic.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgin-automatic.obj -MD -MP -MF external/$(DEPDIR)/pkgin-automatic.Tpo -c -o external/pkgin-automatic.obj `if test -f 'external/automatic.c'; then $(CYGPATH_W) 'external/automatic.c'; else $(CYGPATH_W) '$(srcdir)/external/automatic.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgin-automatic.Tpo external/$(DEPDIR)/pkgin-automatic.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/automatic.c' object='external/pkgin-automatic.obj' libtool=no @AMDEPBACKSLASH@
+external/pkgain-automatic.obj: external/automatic.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgain-automatic.obj -MD -MP -MF external/$(DEPDIR)/pkgain-automatic.Tpo -c -o external/pkgain-automatic.obj `if test -f 'external/automatic.c'; then $(CYGPATH_W) 'external/automatic.c'; else $(CYGPATH_W) '$(srcdir)/external/automatic.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgain-automatic.Tpo external/$(DEPDIR)/pkgain-automatic.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/automatic.c' object='external/pkgain-automatic.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgin-automatic.obj `if test -f 'external/automatic.c'; then $(CYGPATH_W) 'external/automatic.c'; else $(CYGPATH_W) '$(srcdir)/external/automatic.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgain-automatic.obj `if test -f 'external/automatic.c'; then $(CYGPATH_W) 'external/automatic.c'; else $(CYGPATH_W) '$(srcdir)/external/automatic.c'; fi`
 
-external/pkgin-dewey.o: external/dewey.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgin-dewey.o -MD -MP -MF external/$(DEPDIR)/pkgin-dewey.Tpo -c -o external/pkgin-dewey.o `test -f 'external/dewey.c' || echo '$(srcdir)/'`external/dewey.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgin-dewey.Tpo external/$(DEPDIR)/pkgin-dewey.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/dewey.c' object='external/pkgin-dewey.o' libtool=no @AMDEPBACKSLASH@
+external/pkgain-dewey.o: external/dewey.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgain-dewey.o -MD -MP -MF external/$(DEPDIR)/pkgain-dewey.Tpo -c -o external/pkgain-dewey.o `test -f 'external/dewey.c' || echo '$(srcdir)/'`external/dewey.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgain-dewey.Tpo external/$(DEPDIR)/pkgain-dewey.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/dewey.c' object='external/pkgain-dewey.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgin-dewey.o `test -f 'external/dewey.c' || echo '$(srcdir)/'`external/dewey.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgain-dewey.o `test -f 'external/dewey.c' || echo '$(srcdir)/'`external/dewey.c
 
-external/pkgin-dewey.obj: external/dewey.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgin-dewey.obj -MD -MP -MF external/$(DEPDIR)/pkgin-dewey.Tpo -c -o external/pkgin-dewey.obj `if test -f 'external/dewey.c'; then $(CYGPATH_W) 'external/dewey.c'; else $(CYGPATH_W) '$(srcdir)/external/dewey.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgin-dewey.Tpo external/$(DEPDIR)/pkgin-dewey.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/dewey.c' object='external/pkgin-dewey.obj' libtool=no @AMDEPBACKSLASH@
+external/pkgain-dewey.obj: external/dewey.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgain-dewey.obj -MD -MP -MF external/$(DEPDIR)/pkgain-dewey.Tpo -c -o external/pkgain-dewey.obj `if test -f 'external/dewey.c'; then $(CYGPATH_W) 'external/dewey.c'; else $(CYGPATH_W) '$(srcdir)/external/dewey.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgain-dewey.Tpo external/$(DEPDIR)/pkgain-dewey.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/dewey.c' object='external/pkgain-dewey.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgin-dewey.obj `if test -f 'external/dewey.c'; then $(CYGPATH_W) 'external/dewey.c'; else $(CYGPATH_W) '$(srcdir)/external/dewey.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgain-dewey.obj `if test -f 'external/dewey.c'; then $(CYGPATH_W) 'external/dewey.c'; else $(CYGPATH_W) '$(srcdir)/external/dewey.c'; fi`
 
-external/pkgin-fexec.o: external/fexec.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgin-fexec.o -MD -MP -MF external/$(DEPDIR)/pkgin-fexec.Tpo -c -o external/pkgin-fexec.o `test -f 'external/fexec.c' || echo '$(srcdir)/'`external/fexec.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgin-fexec.Tpo external/$(DEPDIR)/pkgin-fexec.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/fexec.c' object='external/pkgin-fexec.o' libtool=no @AMDEPBACKSLASH@
+external/pkgain-fexec.o: external/fexec.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgain-fexec.o -MD -MP -MF external/$(DEPDIR)/pkgain-fexec.Tpo -c -o external/pkgain-fexec.o `test -f 'external/fexec.c' || echo '$(srcdir)/'`external/fexec.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgain-fexec.Tpo external/$(DEPDIR)/pkgain-fexec.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/fexec.c' object='external/pkgain-fexec.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgin-fexec.o `test -f 'external/fexec.c' || echo '$(srcdir)/'`external/fexec.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgain-fexec.o `test -f 'external/fexec.c' || echo '$(srcdir)/'`external/fexec.c
 
-external/pkgin-fexec.obj: external/fexec.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgin-fexec.obj -MD -MP -MF external/$(DEPDIR)/pkgin-fexec.Tpo -c -o external/pkgin-fexec.obj `if test -f 'external/fexec.c'; then $(CYGPATH_W) 'external/fexec.c'; else $(CYGPATH_W) '$(srcdir)/external/fexec.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgin-fexec.Tpo external/$(DEPDIR)/pkgin-fexec.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/fexec.c' object='external/pkgin-fexec.obj' libtool=no @AMDEPBACKSLASH@
+external/pkgain-fexec.obj: external/fexec.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgain-fexec.obj -MD -MP -MF external/$(DEPDIR)/pkgain-fexec.Tpo -c -o external/pkgain-fexec.obj `if test -f 'external/fexec.c'; then $(CYGPATH_W) 'external/fexec.c'; else $(CYGPATH_W) '$(srcdir)/external/fexec.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgain-fexec.Tpo external/$(DEPDIR)/pkgain-fexec.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/fexec.c' object='external/pkgain-fexec.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgin-fexec.obj `if test -f 'external/fexec.c'; then $(CYGPATH_W) 'external/fexec.c'; else $(CYGPATH_W) '$(srcdir)/external/fexec.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgain-fexec.obj `if test -f 'external/fexec.c'; then $(CYGPATH_W) 'external/fexec.c'; else $(CYGPATH_W) '$(srcdir)/external/fexec.c'; fi`
 
-external/pkgin-iterate.o: external/iterate.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgin-iterate.o -MD -MP -MF external/$(DEPDIR)/pkgin-iterate.Tpo -c -o external/pkgin-iterate.o `test -f 'external/iterate.c' || echo '$(srcdir)/'`external/iterate.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgin-iterate.Tpo external/$(DEPDIR)/pkgin-iterate.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/iterate.c' object='external/pkgin-iterate.o' libtool=no @AMDEPBACKSLASH@
+external/pkgain-iterate.o: external/iterate.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgain-iterate.o -MD -MP -MF external/$(DEPDIR)/pkgain-iterate.Tpo -c -o external/pkgain-iterate.o `test -f 'external/iterate.c' || echo '$(srcdir)/'`external/iterate.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgain-iterate.Tpo external/$(DEPDIR)/pkgain-iterate.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/iterate.c' object='external/pkgain-iterate.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgin-iterate.o `test -f 'external/iterate.c' || echo '$(srcdir)/'`external/iterate.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgain-iterate.o `test -f 'external/iterate.c' || echo '$(srcdir)/'`external/iterate.c
 
-external/pkgin-iterate.obj: external/iterate.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgin-iterate.obj -MD -MP -MF external/$(DEPDIR)/pkgin-iterate.Tpo -c -o external/pkgin-iterate.obj `if test -f 'external/iterate.c'; then $(CYGPATH_W) 'external/iterate.c'; else $(CYGPATH_W) '$(srcdir)/external/iterate.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgin-iterate.Tpo external/$(DEPDIR)/pkgin-iterate.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/iterate.c' object='external/pkgin-iterate.obj' libtool=no @AMDEPBACKSLASH@
+external/pkgain-iterate.obj: external/iterate.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgain-iterate.obj -MD -MP -MF external/$(DEPDIR)/pkgain-iterate.Tpo -c -o external/pkgain-iterate.obj `if test -f 'external/iterate.c'; then $(CYGPATH_W) 'external/iterate.c'; else $(CYGPATH_W) '$(srcdir)/external/iterate.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgain-iterate.Tpo external/$(DEPDIR)/pkgain-iterate.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/iterate.c' object='external/pkgain-iterate.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgin-iterate.obj `if test -f 'external/iterate.c'; then $(CYGPATH_W) 'external/iterate.c'; else $(CYGPATH_W) '$(srcdir)/external/iterate.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgain-iterate.obj `if test -f 'external/iterate.c'; then $(CYGPATH_W) 'external/iterate.c'; else $(CYGPATH_W) '$(srcdir)/external/iterate.c'; fi`
 
-external/pkgin-lpkg.o: external/lpkg.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgin-lpkg.o -MD -MP -MF external/$(DEPDIR)/pkgin-lpkg.Tpo -c -o external/pkgin-lpkg.o `test -f 'external/lpkg.c' || echo '$(srcdir)/'`external/lpkg.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgin-lpkg.Tpo external/$(DEPDIR)/pkgin-lpkg.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/lpkg.c' object='external/pkgin-lpkg.o' libtool=no @AMDEPBACKSLASH@
+external/pkgain-lpkg.o: external/lpkg.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgain-lpkg.o -MD -MP -MF external/$(DEPDIR)/pkgain-lpkg.Tpo -c -o external/pkgain-lpkg.o `test -f 'external/lpkg.c' || echo '$(srcdir)/'`external/lpkg.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgain-lpkg.Tpo external/$(DEPDIR)/pkgain-lpkg.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/lpkg.c' object='external/pkgain-lpkg.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgin-lpkg.o `test -f 'external/lpkg.c' || echo '$(srcdir)/'`external/lpkg.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgain-lpkg.o `test -f 'external/lpkg.c' || echo '$(srcdir)/'`external/lpkg.c
 
-external/pkgin-lpkg.obj: external/lpkg.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgin-lpkg.obj -MD -MP -MF external/$(DEPDIR)/pkgin-lpkg.Tpo -c -o external/pkgin-lpkg.obj `if test -f 'external/lpkg.c'; then $(CYGPATH_W) 'external/lpkg.c'; else $(CYGPATH_W) '$(srcdir)/external/lpkg.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgin-lpkg.Tpo external/$(DEPDIR)/pkgin-lpkg.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/lpkg.c' object='external/pkgin-lpkg.obj' libtool=no @AMDEPBACKSLASH@
+external/pkgain-lpkg.obj: external/lpkg.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgain-lpkg.obj -MD -MP -MF external/$(DEPDIR)/pkgain-lpkg.Tpo -c -o external/pkgain-lpkg.obj `if test -f 'external/lpkg.c'; then $(CYGPATH_W) 'external/lpkg.c'; else $(CYGPATH_W) '$(srcdir)/external/lpkg.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgain-lpkg.Tpo external/$(DEPDIR)/pkgain-lpkg.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/lpkg.c' object='external/pkgain-lpkg.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgin-lpkg.obj `if test -f 'external/lpkg.c'; then $(CYGPATH_W) 'external/lpkg.c'; else $(CYGPATH_W) '$(srcdir)/external/lpkg.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgain-lpkg.obj `if test -f 'external/lpkg.c'; then $(CYGPATH_W) 'external/lpkg.c'; else $(CYGPATH_W) '$(srcdir)/external/lpkg.c'; fi`
 
-external/pkgin-opattern.o: external/opattern.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgin-opattern.o -MD -MP -MF external/$(DEPDIR)/pkgin-opattern.Tpo -c -o external/pkgin-opattern.o `test -f 'external/opattern.c' || echo '$(srcdir)/'`external/opattern.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgin-opattern.Tpo external/$(DEPDIR)/pkgin-opattern.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/opattern.c' object='external/pkgin-opattern.o' libtool=no @AMDEPBACKSLASH@
+external/pkgain-opattern.o: external/opattern.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgain-opattern.o -MD -MP -MF external/$(DEPDIR)/pkgain-opattern.Tpo -c -o external/pkgain-opattern.o `test -f 'external/opattern.c' || echo '$(srcdir)/'`external/opattern.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgain-opattern.Tpo external/$(DEPDIR)/pkgain-opattern.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/opattern.c' object='external/pkgain-opattern.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgin-opattern.o `test -f 'external/opattern.c' || echo '$(srcdir)/'`external/opattern.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgain-opattern.o `test -f 'external/opattern.c' || echo '$(srcdir)/'`external/opattern.c
 
-external/pkgin-opattern.obj: external/opattern.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgin-opattern.obj -MD -MP -MF external/$(DEPDIR)/pkgin-opattern.Tpo -c -o external/pkgin-opattern.obj `if test -f 'external/opattern.c'; then $(CYGPATH_W) 'external/opattern.c'; else $(CYGPATH_W) '$(srcdir)/external/opattern.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgin-opattern.Tpo external/$(DEPDIR)/pkgin-opattern.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/opattern.c' object='external/pkgin-opattern.obj' libtool=no @AMDEPBACKSLASH@
+external/pkgain-opattern.obj: external/opattern.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgain-opattern.obj -MD -MP -MF external/$(DEPDIR)/pkgain-opattern.Tpo -c -o external/pkgain-opattern.obj `if test -f 'external/opattern.c'; then $(CYGPATH_W) 'external/opattern.c'; else $(CYGPATH_W) '$(srcdir)/external/opattern.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgain-opattern.Tpo external/$(DEPDIR)/pkgain-opattern.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/opattern.c' object='external/pkgain-opattern.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgin-opattern.obj `if test -f 'external/opattern.c'; then $(CYGPATH_W) 'external/opattern.c'; else $(CYGPATH_W) '$(srcdir)/external/opattern.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgain-opattern.obj `if test -f 'external/opattern.c'; then $(CYGPATH_W) 'external/opattern.c'; else $(CYGPATH_W) '$(srcdir)/external/opattern.c'; fi`
 
-external/pkgin-pkgdb.o: external/pkgdb.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgin-pkgdb.o -MD -MP -MF external/$(DEPDIR)/pkgin-pkgdb.Tpo -c -o external/pkgin-pkgdb.o `test -f 'external/pkgdb.c' || echo '$(srcdir)/'`external/pkgdb.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgin-pkgdb.Tpo external/$(DEPDIR)/pkgin-pkgdb.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/pkgdb.c' object='external/pkgin-pkgdb.o' libtool=no @AMDEPBACKSLASH@
+external/pkgain-pkgdb.o: external/pkgdb.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgain-pkgdb.o -MD -MP -MF external/$(DEPDIR)/pkgain-pkgdb.Tpo -c -o external/pkgain-pkgdb.o `test -f 'external/pkgdb.c' || echo '$(srcdir)/'`external/pkgdb.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgain-pkgdb.Tpo external/$(DEPDIR)/pkgain-pkgdb.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/pkgdb.c' object='external/pkgain-pkgdb.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgin-pkgdb.o `test -f 'external/pkgdb.c' || echo '$(srcdir)/'`external/pkgdb.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgain-pkgdb.o `test -f 'external/pkgdb.c' || echo '$(srcdir)/'`external/pkgdb.c
 
-external/pkgin-pkgdb.obj: external/pkgdb.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgin-pkgdb.obj -MD -MP -MF external/$(DEPDIR)/pkgin-pkgdb.Tpo -c -o external/pkgin-pkgdb.obj `if test -f 'external/pkgdb.c'; then $(CYGPATH_W) 'external/pkgdb.c'; else $(CYGPATH_W) '$(srcdir)/external/pkgdb.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgin-pkgdb.Tpo external/$(DEPDIR)/pkgin-pkgdb.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/pkgdb.c' object='external/pkgin-pkgdb.obj' libtool=no @AMDEPBACKSLASH@
+external/pkgain-pkgdb.obj: external/pkgdb.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgain-pkgdb.obj -MD -MP -MF external/$(DEPDIR)/pkgain-pkgdb.Tpo -c -o external/pkgain-pkgdb.obj `if test -f 'external/pkgdb.c'; then $(CYGPATH_W) 'external/pkgdb.c'; else $(CYGPATH_W) '$(srcdir)/external/pkgdb.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgain-pkgdb.Tpo external/$(DEPDIR)/pkgain-pkgdb.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/pkgdb.c' object='external/pkgain-pkgdb.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgin-pkgdb.obj `if test -f 'external/pkgdb.c'; then $(CYGPATH_W) 'external/pkgdb.c'; else $(CYGPATH_W) '$(srcdir)/external/pkgdb.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgain-pkgdb.obj `if test -f 'external/pkgdb.c'; then $(CYGPATH_W) 'external/pkgdb.c'; else $(CYGPATH_W) '$(srcdir)/external/pkgdb.c'; fi`
 
-external/pkgin-plist.o: external/plist.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgin-plist.o -MD -MP -MF external/$(DEPDIR)/pkgin-plist.Tpo -c -o external/pkgin-plist.o `test -f 'external/plist.c' || echo '$(srcdir)/'`external/plist.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgin-plist.Tpo external/$(DEPDIR)/pkgin-plist.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/plist.c' object='external/pkgin-plist.o' libtool=no @AMDEPBACKSLASH@
+external/pkgain-plist.o: external/plist.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgain-plist.o -MD -MP -MF external/$(DEPDIR)/pkgain-plist.Tpo -c -o external/pkgain-plist.o `test -f 'external/plist.c' || echo '$(srcdir)/'`external/plist.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgain-plist.Tpo external/$(DEPDIR)/pkgain-plist.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/plist.c' object='external/pkgain-plist.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgin-plist.o `test -f 'external/plist.c' || echo '$(srcdir)/'`external/plist.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgain-plist.o `test -f 'external/plist.c' || echo '$(srcdir)/'`external/plist.c
 
-external/pkgin-plist.obj: external/plist.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgin-plist.obj -MD -MP -MF external/$(DEPDIR)/pkgin-plist.Tpo -c -o external/pkgin-plist.obj `if test -f 'external/plist.c'; then $(CYGPATH_W) 'external/plist.c'; else $(CYGPATH_W) '$(srcdir)/external/plist.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgin-plist.Tpo external/$(DEPDIR)/pkgin-plist.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/plist.c' object='external/pkgin-plist.obj' libtool=no @AMDEPBACKSLASH@
+external/pkgain-plist.obj: external/plist.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgain-plist.obj -MD -MP -MF external/$(DEPDIR)/pkgain-plist.Tpo -c -o external/pkgain-plist.obj `if test -f 'external/plist.c'; then $(CYGPATH_W) 'external/plist.c'; else $(CYGPATH_W) '$(srcdir)/external/plist.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgain-plist.Tpo external/$(DEPDIR)/pkgain-plist.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/plist.c' object='external/pkgain-plist.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgin-plist.obj `if test -f 'external/plist.c'; then $(CYGPATH_W) 'external/plist.c'; else $(CYGPATH_W) '$(srcdir)/external/plist.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgain-plist.obj `if test -f 'external/plist.c'; then $(CYGPATH_W) 'external/plist.c'; else $(CYGPATH_W) '$(srcdir)/external/plist.c'; fi`
 
-external/pkgin-var.o: external/var.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgin-var.o -MD -MP -MF external/$(DEPDIR)/pkgin-var.Tpo -c -o external/pkgin-var.o `test -f 'external/var.c' || echo '$(srcdir)/'`external/var.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgin-var.Tpo external/$(DEPDIR)/pkgin-var.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/var.c' object='external/pkgin-var.o' libtool=no @AMDEPBACKSLASH@
+external/pkgain-var.o: external/var.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgain-var.o -MD -MP -MF external/$(DEPDIR)/pkgain-var.Tpo -c -o external/pkgain-var.o `test -f 'external/var.c' || echo '$(srcdir)/'`external/var.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgain-var.Tpo external/$(DEPDIR)/pkgain-var.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/var.c' object='external/pkgain-var.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgin-var.o `test -f 'external/var.c' || echo '$(srcdir)/'`external/var.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgain-var.o `test -f 'external/var.c' || echo '$(srcdir)/'`external/var.c
 
-external/pkgin-var.obj: external/var.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgin-var.obj -MD -MP -MF external/$(DEPDIR)/pkgin-var.Tpo -c -o external/pkgin-var.obj `if test -f 'external/var.c'; then $(CYGPATH_W) 'external/var.c'; else $(CYGPATH_W) '$(srcdir)/external/var.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgin-var.Tpo external/$(DEPDIR)/pkgin-var.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/var.c' object='external/pkgin-var.obj' libtool=no @AMDEPBACKSLASH@
+external/pkgain-var.obj: external/var.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgain-var.obj -MD -MP -MF external/$(DEPDIR)/pkgain-var.Tpo -c -o external/pkgain-var.obj `if test -f 'external/var.c'; then $(CYGPATH_W) 'external/var.c'; else $(CYGPATH_W) '$(srcdir)/external/var.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgain-var.Tpo external/$(DEPDIR)/pkgain-var.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/var.c' object='external/pkgain-var.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgin-var.obj `if test -f 'external/var.c'; then $(CYGPATH_W) 'external/var.c'; else $(CYGPATH_W) '$(srcdir)/external/var.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgain-var.obj `if test -f 'external/var.c'; then $(CYGPATH_W) 'external/var.c'; else $(CYGPATH_W) '$(srcdir)/external/var.c'; fi`
 
-external/pkgin-xwrapper.o: external/xwrapper.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgin-xwrapper.o -MD -MP -MF external/$(DEPDIR)/pkgin-xwrapper.Tpo -c -o external/pkgin-xwrapper.o `test -f 'external/xwrapper.c' || echo '$(srcdir)/'`external/xwrapper.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgin-xwrapper.Tpo external/$(DEPDIR)/pkgin-xwrapper.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/xwrapper.c' object='external/pkgin-xwrapper.o' libtool=no @AMDEPBACKSLASH@
+external/pkgain-xwrapper.o: external/xwrapper.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgain-xwrapper.o -MD -MP -MF external/$(DEPDIR)/pkgain-xwrapper.Tpo -c -o external/pkgain-xwrapper.o `test -f 'external/xwrapper.c' || echo '$(srcdir)/'`external/xwrapper.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgain-xwrapper.Tpo external/$(DEPDIR)/pkgain-xwrapper.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/xwrapper.c' object='external/pkgain-xwrapper.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgin-xwrapper.o `test -f 'external/xwrapper.c' || echo '$(srcdir)/'`external/xwrapper.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgain-xwrapper.o `test -f 'external/xwrapper.c' || echo '$(srcdir)/'`external/xwrapper.c
 
-external/pkgin-xwrapper.obj: external/xwrapper.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgin-xwrapper.obj -MD -MP -MF external/$(DEPDIR)/pkgin-xwrapper.Tpo -c -o external/pkgin-xwrapper.obj `if test -f 'external/xwrapper.c'; then $(CYGPATH_W) 'external/xwrapper.c'; else $(CYGPATH_W) '$(srcdir)/external/xwrapper.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgin-xwrapper.Tpo external/$(DEPDIR)/pkgin-xwrapper.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/xwrapper.c' object='external/pkgin-xwrapper.obj' libtool=no @AMDEPBACKSLASH@
+external/pkgain-xwrapper.obj: external/xwrapper.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgain-xwrapper.obj -MD -MP -MF external/$(DEPDIR)/pkgain-xwrapper.Tpo -c -o external/pkgain-xwrapper.obj `if test -f 'external/xwrapper.c'; then $(CYGPATH_W) 'external/xwrapper.c'; else $(CYGPATH_W) '$(srcdir)/external/xwrapper.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgain-xwrapper.Tpo external/$(DEPDIR)/pkgain-xwrapper.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/xwrapper.c' object='external/pkgain-xwrapper.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgin-xwrapper.obj `if test -f 'external/xwrapper.c'; then $(CYGPATH_W) 'external/xwrapper.c'; else $(CYGPATH_W) '$(srcdir)/external/xwrapper.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgain-xwrapper.obj `if test -f 'external/xwrapper.c'; then $(CYGPATH_W) 'external/xwrapper.c'; else $(CYGPATH_W) '$(srcdir)/external/xwrapper.c'; fi`
 
-external/pkgin-humanize_number.o: external/humanize_number.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgin-humanize_number.o -MD -MP -MF external/$(DEPDIR)/pkgin-humanize_number.Tpo -c -o external/pkgin-humanize_number.o `test -f 'external/humanize_number.c' || echo '$(srcdir)/'`external/humanize_number.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgin-humanize_number.Tpo external/$(DEPDIR)/pkgin-humanize_number.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/humanize_number.c' object='external/pkgin-humanize_number.o' libtool=no @AMDEPBACKSLASH@
+external/pkgain-humanize_number.o: external/humanize_number.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgain-humanize_number.o -MD -MP -MF external/$(DEPDIR)/pkgain-humanize_number.Tpo -c -o external/pkgain-humanize_number.o `test -f 'external/humanize_number.c' || echo '$(srcdir)/'`external/humanize_number.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgain-humanize_number.Tpo external/$(DEPDIR)/pkgain-humanize_number.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/humanize_number.c' object='external/pkgain-humanize_number.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgin-humanize_number.o `test -f 'external/humanize_number.c' || echo '$(srcdir)/'`external/humanize_number.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgain-humanize_number.o `test -f 'external/humanize_number.c' || echo '$(srcdir)/'`external/humanize_number.c
 
-external/pkgin-humanize_number.obj: external/humanize_number.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgin-humanize_number.obj -MD -MP -MF external/$(DEPDIR)/pkgin-humanize_number.Tpo -c -o external/pkgin-humanize_number.obj `if test -f 'external/humanize_number.c'; then $(CYGPATH_W) 'external/humanize_number.c'; else $(CYGPATH_W) '$(srcdir)/external/humanize_number.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgin-humanize_number.Tpo external/$(DEPDIR)/pkgin-humanize_number.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/humanize_number.c' object='external/pkgin-humanize_number.obj' libtool=no @AMDEPBACKSLASH@
+external/pkgain-humanize_number.obj: external/humanize_number.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT external/pkgain-humanize_number.obj -MD -MP -MF external/$(DEPDIR)/pkgain-humanize_number.Tpo -c -o external/pkgain-humanize_number.obj `if test -f 'external/humanize_number.c'; then $(CYGPATH_W) 'external/humanize_number.c'; else $(CYGPATH_W) '$(srcdir)/external/humanize_number.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) external/$(DEPDIR)/pkgain-humanize_number.Tpo external/$(DEPDIR)/pkgain-humanize_number.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='external/humanize_number.c' object='external/pkgain-humanize_number.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgin_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgin-humanize_number.obj `if test -f 'external/humanize_number.c'; then $(CYGPATH_W) 'external/humanize_number.c'; else $(CYGPATH_W) '$(srcdir)/external/humanize_number.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pkgain_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o external/pkgain-humanize_number.obj `if test -f 'external/humanize_number.c'; then $(CYGPATH_W) 'external/humanize_number.c'; else $(CYGPATH_W) '$(srcdir)/external/humanize_number.c'; fi`
 install-man1: $(man1_MANS)
 	@$(NORMAL_INSTALL)
 	@list1='$(man1_MANS)'; \
@@ -1408,38 +1408,38 @@ clean-am: clean-binPROGRAMS clean-generic mostlyclean-am
 
 distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-	-rm -f ./$(DEPDIR)/pkgin-actions.Po
-	-rm -f ./$(DEPDIR)/pkgin-autoremove.Po
-	-rm -f ./$(DEPDIR)/pkgin-depends.Po
-	-rm -f ./$(DEPDIR)/pkgin-download.Po
-	-rm -f ./$(DEPDIR)/pkgin-fsops.Po
-	-rm -f ./$(DEPDIR)/pkgin-impact.Po
-	-rm -f ./$(DEPDIR)/pkgin-main.Po
-	-rm -f ./$(DEPDIR)/pkgin-order.Po
-	-rm -f ./$(DEPDIR)/pkgin-pkg_check.Po
-	-rm -f ./$(DEPDIR)/pkgin-pkg_infos.Po
-	-rm -f ./$(DEPDIR)/pkgin-pkg_install.Po
-	-rm -f ./$(DEPDIR)/pkgin-pkg_str.Po
-	-rm -f ./$(DEPDIR)/pkgin-pkgindb.Po
-	-rm -f ./$(DEPDIR)/pkgin-pkgindb_queries.Po
-	-rm -f ./$(DEPDIR)/pkgin-pkglist.Po
-	-rm -f ./$(DEPDIR)/pkgin-preferred.Po
-	-rm -f ./$(DEPDIR)/pkgin-selection.Po
-	-rm -f ./$(DEPDIR)/pkgin-sqlite_callbacks.Po
-	-rm -f ./$(DEPDIR)/pkgin-summary.Po
-	-rm -f ./$(DEPDIR)/pkgin-tools.Po
-	-rm -f external/$(DEPDIR)/pkgin-automatic.Po
-	-rm -f external/$(DEPDIR)/pkgin-dewey.Po
-	-rm -f external/$(DEPDIR)/pkgin-fexec.Po
-	-rm -f external/$(DEPDIR)/pkgin-humanize_number.Po
-	-rm -f external/$(DEPDIR)/pkgin-iterate.Po
-	-rm -f external/$(DEPDIR)/pkgin-lpkg.Po
-	-rm -f external/$(DEPDIR)/pkgin-opattern.Po
-	-rm -f external/$(DEPDIR)/pkgin-pkgdb.Po
-	-rm -f external/$(DEPDIR)/pkgin-plist.Po
-	-rm -f external/$(DEPDIR)/pkgin-progressmeter.Po
-	-rm -f external/$(DEPDIR)/pkgin-var.Po
-	-rm -f external/$(DEPDIR)/pkgin-xwrapper.Po
+	-rm -f ./$(DEPDIR)/pkgain-actions.Po
+	-rm -f ./$(DEPDIR)/pkgain-autoremove.Po
+	-rm -f ./$(DEPDIR)/pkgain-depends.Po
+	-rm -f ./$(DEPDIR)/pkgain-download.Po
+	-rm -f ./$(DEPDIR)/pkgain-fsops.Po
+	-rm -f ./$(DEPDIR)/pkgain-impact.Po
+	-rm -f ./$(DEPDIR)/pkgain-main.Po
+	-rm -f ./$(DEPDIR)/pkgain-order.Po
+	-rm -f ./$(DEPDIR)/pkgain-pkg_check.Po
+	-rm -f ./$(DEPDIR)/pkgain-pkg_infos.Po
+	-rm -f ./$(DEPDIR)/pkgain-pkg_install.Po
+	-rm -f ./$(DEPDIR)/pkgain-pkg_str.Po
+	-rm -f ./$(DEPDIR)/pkgain-pkgaindb.Po
+	-rm -f ./$(DEPDIR)/pkgain-pkgaindb_queries.Po
+	-rm -f ./$(DEPDIR)/pkgain-pkglist.Po
+	-rm -f ./$(DEPDIR)/pkgain-preferred.Po
+	-rm -f ./$(DEPDIR)/pkgain-selection.Po
+	-rm -f ./$(DEPDIR)/pkgain-sqlite_callbacks.Po
+	-rm -f ./$(DEPDIR)/pkgain-summary.Po
+	-rm -f ./$(DEPDIR)/pkgain-tools.Po
+	-rm -f external/$(DEPDIR)/pkgain-automatic.Po
+	-rm -f external/$(DEPDIR)/pkgain-dewey.Po
+	-rm -f external/$(DEPDIR)/pkgain-fexec.Po
+	-rm -f external/$(DEPDIR)/pkgain-humanize_number.Po
+	-rm -f external/$(DEPDIR)/pkgain-iterate.Po
+	-rm -f external/$(DEPDIR)/pkgain-lpkg.Po
+	-rm -f external/$(DEPDIR)/pkgain-opattern.Po
+	-rm -f external/$(DEPDIR)/pkgain-pkgdb.Po
+	-rm -f external/$(DEPDIR)/pkgain-plist.Po
+	-rm -f external/$(DEPDIR)/pkgain-progressmeter.Po
+	-rm -f external/$(DEPDIR)/pkgain-var.Po
+	-rm -f external/$(DEPDIR)/pkgain-xwrapper.Po
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-hdr distclean-tags
@@ -1487,38 +1487,38 @@ installcheck-am:
 maintainer-clean: maintainer-clean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf $(top_srcdir)/autom4te.cache
-	-rm -f ./$(DEPDIR)/pkgin-actions.Po
-	-rm -f ./$(DEPDIR)/pkgin-autoremove.Po
-	-rm -f ./$(DEPDIR)/pkgin-depends.Po
-	-rm -f ./$(DEPDIR)/pkgin-download.Po
-	-rm -f ./$(DEPDIR)/pkgin-fsops.Po
-	-rm -f ./$(DEPDIR)/pkgin-impact.Po
-	-rm -f ./$(DEPDIR)/pkgin-main.Po
-	-rm -f ./$(DEPDIR)/pkgin-order.Po
-	-rm -f ./$(DEPDIR)/pkgin-pkg_check.Po
-	-rm -f ./$(DEPDIR)/pkgin-pkg_infos.Po
-	-rm -f ./$(DEPDIR)/pkgin-pkg_install.Po
-	-rm -f ./$(DEPDIR)/pkgin-pkg_str.Po
-	-rm -f ./$(DEPDIR)/pkgin-pkgindb.Po
-	-rm -f ./$(DEPDIR)/pkgin-pkgindb_queries.Po
-	-rm -f ./$(DEPDIR)/pkgin-pkglist.Po
-	-rm -f ./$(DEPDIR)/pkgin-preferred.Po
-	-rm -f ./$(DEPDIR)/pkgin-selection.Po
-	-rm -f ./$(DEPDIR)/pkgin-sqlite_callbacks.Po
-	-rm -f ./$(DEPDIR)/pkgin-summary.Po
-	-rm -f ./$(DEPDIR)/pkgin-tools.Po
-	-rm -f external/$(DEPDIR)/pkgin-automatic.Po
-	-rm -f external/$(DEPDIR)/pkgin-dewey.Po
-	-rm -f external/$(DEPDIR)/pkgin-fexec.Po
-	-rm -f external/$(DEPDIR)/pkgin-humanize_number.Po
-	-rm -f external/$(DEPDIR)/pkgin-iterate.Po
-	-rm -f external/$(DEPDIR)/pkgin-lpkg.Po
-	-rm -f external/$(DEPDIR)/pkgin-opattern.Po
-	-rm -f external/$(DEPDIR)/pkgin-pkgdb.Po
-	-rm -f external/$(DEPDIR)/pkgin-plist.Po
-	-rm -f external/$(DEPDIR)/pkgin-progressmeter.Po
-	-rm -f external/$(DEPDIR)/pkgin-var.Po
-	-rm -f external/$(DEPDIR)/pkgin-xwrapper.Po
+	-rm -f ./$(DEPDIR)/pkgain-actions.Po
+	-rm -f ./$(DEPDIR)/pkgain-autoremove.Po
+	-rm -f ./$(DEPDIR)/pkgain-depends.Po
+	-rm -f ./$(DEPDIR)/pkgain-download.Po
+	-rm -f ./$(DEPDIR)/pkgain-fsops.Po
+	-rm -f ./$(DEPDIR)/pkgain-impact.Po
+	-rm -f ./$(DEPDIR)/pkgain-main.Po
+	-rm -f ./$(DEPDIR)/pkgain-order.Po
+	-rm -f ./$(DEPDIR)/pkgain-pkg_check.Po
+	-rm -f ./$(DEPDIR)/pkgain-pkg_infos.Po
+	-rm -f ./$(DEPDIR)/pkgain-pkg_install.Po
+	-rm -f ./$(DEPDIR)/pkgain-pkg_str.Po
+	-rm -f ./$(DEPDIR)/pkgain-pkgaindb.Po
+	-rm -f ./$(DEPDIR)/pkgain-pkgaindb_queries.Po
+	-rm -f ./$(DEPDIR)/pkgain-pkglist.Po
+	-rm -f ./$(DEPDIR)/pkgain-preferred.Po
+	-rm -f ./$(DEPDIR)/pkgain-selection.Po
+	-rm -f ./$(DEPDIR)/pkgain-sqlite_callbacks.Po
+	-rm -f ./$(DEPDIR)/pkgain-summary.Po
+	-rm -f ./$(DEPDIR)/pkgain-tools.Po
+	-rm -f external/$(DEPDIR)/pkgain-automatic.Po
+	-rm -f external/$(DEPDIR)/pkgain-dewey.Po
+	-rm -f external/$(DEPDIR)/pkgain-fexec.Po
+	-rm -f external/$(DEPDIR)/pkgain-humanize_number.Po
+	-rm -f external/$(DEPDIR)/pkgain-iterate.Po
+	-rm -f external/$(DEPDIR)/pkgain-lpkg.Po
+	-rm -f external/$(DEPDIR)/pkgain-opattern.Po
+	-rm -f external/$(DEPDIR)/pkgain-pkgdb.Po
+	-rm -f external/$(DEPDIR)/pkgain-plist.Po
+	-rm -f external/$(DEPDIR)/pkgain-progressmeter.Po
+	-rm -f external/$(DEPDIR)/pkgain-var.Po
+	-rm -f external/$(DEPDIR)/pkgain-xwrapper.Po
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
@@ -1560,13 +1560,13 @@ uninstall-man: uninstall-man1
 
 .PRECIOUS: Makefile
 
-pkgin.1: pkgin.1.in
-	@sed -e 's,/var/db/pkgin,$(PKGIN_DBDIR),g' \
-	     -e 's,/usr/pkg/etc,$(sysconfdir),g' $(srcdir)/pkgin.1.in >$@
-pkgindb_create.h: Makefile pkgin.sql
+pkgain.1: pkgain.1.in
+	@sed -e 's,/var/db/pkgain,$(PKGAIN_DBDIR),g' \
+	     -e 's,/usr/pkg/etc,$(sysconfdir),g' $(srcdir)/pkgain.1.in >$@
+pkgaindb_create.h: Makefile pkgain.sql
 	@echo "/* Automatically generated, DO NOT EDIT */" >$@
 	@echo "#define CREATE_DRYDB \" \\" >>$@
-	@sed -e 's/$$/ \\/' -e 's/\"/\\\"/g' $(srcdir)/pkgin.sql >>$@
+	@sed -e 's/$$/ \\/' -e 's/\"/\\\"/g' $(srcdir)/pkgain.sql >>$@
 	@echo '"'  >>$@
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.

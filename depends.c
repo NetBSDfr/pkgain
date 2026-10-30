@@ -28,7 +28,7 @@
  */
 
 #include <sqlite3.h>
-#include "pkgin.h"
+#include "pkgain.h"
 
 /*
  * SQLite callback for LOCAL_DIRECT_DEPENDS and REMOTE_DIRECT_DEPENDS, add a
@@ -92,15 +92,15 @@ get_depends_matches(const char *pkgname, Plisthead *depends, depends_t type)
 	switch (type) {
 	case DEPENDS_LOCAL:
 		sqlite3_snprintf(BUFSIZ, query, LOCAL_DIRECT_DEPENDS, pkgname);
-		pkgindb_doquery(query, record_depends, depends);
+		pkgaindb_doquery(query, record_depends, depends);
 		break;
 	case DEPENDS_REMOTE:
 		sqlite3_snprintf(BUFSIZ, query, REMOTE_DIRECT_DEPENDS, pkgname);
-		pkgindb_doquery(query, record_depends, depends);
+		pkgaindb_doquery(query, record_depends, depends);
 		break;
 	case DEPENDS_REVERSE:
 		sqlite3_snprintf(BUFSIZ, query, LOCAL_REVERSE_DEPENDS, pkgname);
-		pkgindb_doquery(query, record_reverse_depends, depends);
+		pkgaindb_doquery(query, record_reverse_depends, depends);
 		break;
 	}
 }
@@ -157,7 +157,7 @@ new_pattern_depend(Pkglist *pkg, Plisthead *depends, int depsize,
 	if (type == DEPENDS_LOCAL)
 		fpkg = find_local_pkg(pkg->patterns[0], pkg->name);
 	else
-		fpkg = find_remote_pkg(pkg->patterns[0], pkg->name, NULL);
+		fpkg = find_remote_pkg(pkg->patterns[0], pkg->name, NULL, NULL);
 
 	if (fpkg == NULL) {
 		TRACE(" < ERROR no match found for %s%s\n", pkg->patterns[0],

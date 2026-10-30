@@ -32,7 +32,7 @@
 #undef _FILE_OFFSET_BITS
 #define _FILE_OFFSET_BITS 64 /* needed for large filesystems on sunos */
 #endif
-#include "pkgin.h"
+#include "pkgain.h"
 #include <dirent.h>
 
 /* Variable options for the repositories file */
@@ -63,13 +63,13 @@ clean_cache(void)
 	struct dirent	*ep;
 	char		pkgpath[BUFSIZ + 1];
 
-	if ((dp = opendir(pkgin_cache)) == NULL)
-		err(EXIT_FAILURE, "couldn't open %s", pkgin_cache);
+	if ((dp = opendir(pkgain_cache)) == NULL)
+		err(EXIT_FAILURE, "couldn't open %s", pkgain_cache);
 
 	while ((ep = readdir(dp)) != NULL)
 		if (ep->d_name[0] != '.') {
 			snprintf(pkgpath, sizeof(pkgpath), "%s/%s",
-				pkgin_cache, ep->d_name);
+				pkgain_cache, ep->d_name);
 			if (unlink(pkgpath) < 0)
 				err(EXIT_FAILURE,
 					"could not delete %s", pkgpath);
@@ -77,62 +77,145 @@ clean_cache(void)
 	closedir(dp);
 }
 
-char *
+/*
+ * Check whether a string starts with a supported repository URL scheme.
+ */
+static int
+is_repo_url(const char *s)
+{
+	return strncmp(s, "ftp://", 6) == 0 ||
+	    strncmp(s, "http://", 7) == 0 ||
+	    strncmp(s, "https://", 8) == 0 ||
+	    strncmp(s, "file://", 7) == 0;
+}
+
+/*
+ * Parse repositories.conf into a NULL terminated array of RepoConf entries.
+ * Each whitespace-separated token starting with a URL scheme defines a
+ * repository, optionally preceded by an alias name, e.g.:
+ *
+ *	http://example.org/pub/pkgsrc/packages/All
+ *	alias http://example.org/pub/pkgsrc/packages/All
+ *
+ * Lines starting with '#' are comments; other non-URL tokens are ignored,
+ * so the original one-URL-per-line format (including several URLs on a
+ * single line) continues to work unchanged.  Repositories without an alias
+ * act as the default, and the first listed one may also be selected
+ * explicitly as "default".  Macro expansion applies to the URL only.
+ * Returns NULL if no repositories were found.
+ */
+RepoConf *
 read_repos(void)
 {
 	FILE	*fp;
-	char	*tmp, *b, *repos = NULL, buf[BUFSIZ];
+	RepoConf	*repos;
+	size_t	capacity, count, i;
+	char	buf[BUFSIZ], urlbuf[BUFSIZ], *save, *tok, *alias, *tmp, *b;
+	int	dup;
 	const struct VarParam	*vp;
 
-	if ((fp = fopen(PKGIN_CONF"/"REPOS_FILE, "r")) == NULL)
+	if ((fp = fopen(PKGAIN_CONF"/"REPOS_FILE, "r")) == NULL)
 		return NULL;
 
-	while (!feof(fp) && !ferror(fp)) {
-		memset(buf, 0, BUFSIZ);
+	capacity = 2; /* 1 entry + NULL */
+	repos = xcalloc(capacity, sizeof(RepoConf));
+	count = 0;
 
+	while (!feof(fp) && !ferror(fp)) {
 		if (fgets(buf, BUFSIZ, fp) == NULL)
 			continue;
+		trimcr(buf);
 
-		if (strncmp(buf, "ftp://", 6) != 0 &&
-			strncmp(buf, "http://", 7) != 0 &&
-			strncmp(buf, "https://", 8) != 0 &&
-			strncmp(buf, "file://", 7) != 0)
+		/* Lines starting with '#' are comments */
+		if (buf[strspn(buf, " \t")] == '#')
 			continue;
 
-		/*
-		 * Try to replace all the ocurrences with the proper
-		 * system values.
-		 */
-		for (vp = var; vp->func != NULL; vp++) {
-			if (strstr(buf, vp->opt) != NULL) {
+		alias = NULL;
+		for (tok = strtok_r(buf, " \t", &save); tok != NULL;
+		    tok = strtok_r(NULL, " \t", &save)) {
+			if (!is_repo_url(tok)) {
+				/* candidate alias for a following URL */
+				alias = tok;
+				continue;
+			}
+
+			/* Validate and claim the optional alias */
+			if (alias != NULL) {
+				dup = 0;
+				if (strchr(alias, '/') != NULL ||
+				    strchr(alias, '=') != NULL) {
+					warnx("invalid repository alias"
+					    " '%s', ignoring", alias);
+					alias = NULL;
+				} else {
+					for (i = 0; i < count; i++) {
+						if (repos[i].alias != NULL &&
+						    strcmp(repos[i].alias,
+						    alias) == 0) {
+							dup = 1;
+							break;
+						}
+					}
+					if (dup) {
+						warnx("duplicate repository"
+						    " alias '%s', ignoring",
+						    alias);
+						alias = NULL;
+					}
+				}
+			}
+
+			/*
+			 * Try to replace all the ocurrences of supported
+			 * macros with the proper system values.
+			 */
+			strlcpy(urlbuf, tok, sizeof(urlbuf));
+			for (vp = var; vp->func != NULL; vp++) {
+				if (strstr(urlbuf, vp->opt) == NULL)
+					continue;
 				tmp = vp->func();
 				if (tmp == NULL) {
 					warn(MSG_TRANS_FAILED, vp->opt);
 					continue;
 				}
-				if ((b = strreplace(buf, vp->opt, tmp)) != NULL)
-					strncpy(buf, b, BUFSIZ - 1);
-				else
-					warn(MSG_INVALID_REPOS, buf);
+				if ((b = strreplace(urlbuf, vp->opt,
+				    tmp)) != NULL) {
+					strncpy(urlbuf, b,
+					    sizeof(urlbuf) - 1);
+					urlbuf[sizeof(urlbuf) - 1] = '\0';
+					XFREE(b);
+				} else
+					warn(MSG_INVALID_REPOS, urlbuf);
 
 				XFREE(tmp);
-				XFREE(b);
 			}
-		}
 
-		trimcr(buf);
+			if (count + 2 > capacity) {
+				repos = xrealloc(repos,
+				    2 * capacity * sizeof(RepoConf));
+				memset(&repos[capacity], 0,
+				    capacity * sizeof(RepoConf));
+				capacity *= 2;
+			}
 
-		/* Accumulate repos into a space-separated string. */
-		if (repos == NULL)
-			repos = xstrdup(buf);
-		else {
-			tmp = repos;
-			repos = xasprintf("%s %s", tmp, buf);
-			free(tmp);
+			repos[count].alias = alias != NULL ?
+			    xstrdup(alias) : NULL;
+			repos[count].url = xstrdup(urlbuf);
+			count++;
+			repos[count].alias = NULL;
+			repos[count].url = NULL;
+
+			alias = NULL;
 		}
 	}
 
 	fclose(fp);
 
+	if (count == 0) {
+		XFREE(repos);
+		return NULL;
+	}
+
 	return repos;
 }
+

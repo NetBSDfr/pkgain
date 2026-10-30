@@ -32,7 +32,7 @@
  */
 
 #include <sqlite3.h>
-#include "pkgin.h"
+#include "pkgain.h"
 
 /*
  * Table name lookup, as a convenience for tables that have identical LOCAL_
@@ -92,7 +92,8 @@ static void		insert_remote_summary(struct archive *, char *);
 static void		delete_remote_tbl(struct Summary, char *);
 int			colnames(void *, int, char **, char **);
 
-char			*env_repos, **pkg_repos;
+char			*env_repos;
+RepoConf		*pkg_repos;
 /* column count for table fields, given by colnames callback */
 int			colcount = 0;
 /* force pkg_summary reload */
@@ -239,7 +240,7 @@ prepare_stmt(const char *fmt, const char *table)
 	char buf[BUFSIZ];
 
 	snprintf(buf, BUFSIZ, fmt, table);
-	return pkgindb_stmt_prepare(buf);
+	return pkgaindb_stmt_prepare(buf);
 }
 
 /*
@@ -266,7 +267,7 @@ prepare_pkg_stmt(struct Summary sum)
 	}
 	strlcat(buf, ");", sizeof(buf));
 
-	return pkgindb_stmt_prepare(buf);
+	return pkgaindb_stmt_prepare(buf);
 }
 
 static void
@@ -285,13 +286,13 @@ prepare_stmts(struct Summary sum)
 static void
 finalize_stmts(struct Summary sum)
 {
-	pkgindb_stmt_finalize(stmts.pkg);
-	pkgindb_stmt_finalize(stmts.conflicts);
-	pkgindb_stmt_finalize(stmts.depends);
-	pkgindb_stmt_finalize(stmts.provides);
-	pkgindb_stmt_finalize(stmts.requires);
+	pkgaindb_stmt_finalize(stmts.pkg);
+	pkgaindb_stmt_finalize(stmts.conflicts);
+	pkgaindb_stmt_finalize(stmts.depends);
+	pkgaindb_stmt_finalize(stmts.provides);
+	pkgaindb_stmt_finalize(stmts.requires);
 	if (sum.type == REMOTE_SUMMARY)
-		pkgindb_stmt_finalize(stmts.supersedes);
+		pkgaindb_stmt_finalize(stmts.supersedes);
 }
 
 /*
@@ -308,7 +309,7 @@ insert_pattern(sqlite3_stmt *stmt, int pkgid, const char *pattern)
 	    sqlite3_bind_text(stmt, 3, pkgbase, -1, SQLITE_STATIC) != SQLITE_OK)
 		errx(EXIT_FAILURE, "Failed to bind %s", pattern);
 
-	pkgindb_stmt_exec(stmt);
+	pkgaindb_stmt_exec(stmt);
 	free(pkgbase);
 }
 
@@ -319,7 +320,7 @@ insert_value(sqlite3_stmt *stmt, int pkgid, const char *value)
 	    sqlite3_bind_text(stmt, 2, value, -1, SQLITE_STATIC) != SQLITE_OK)
 		errx(EXIT_FAILURE, "Failed to bind %s", value);
 
-	pkgindb_stmt_exec(stmt);
+	pkgaindb_stmt_exec(stmt);
 }
 
 /*
@@ -353,7 +354,7 @@ insert_pkg(int pkgid)
 		}
 	}
 
-	(void) pkgindb_stmt_exec(stmts.pkg);
+	(void) pkgaindb_stmt_exec(stmts.pkg);
 }
 
 /**
@@ -378,7 +379,7 @@ static void
 parse_entry(struct Summary sum, int pkgid, char *line)
 {
 	static uint8_t	check_machine_arch = 1;
-	int		i;
+	int		i, remain;
 	char		*val, *v, buf[BUFSIZ];
 
 	if ((val = strchr(line, '=')) == NULL)
@@ -387,16 +388,22 @@ parse_entry(struct Summary sum, int pkgid, char *line)
 	val++;
 
 	/*
-	 * Check MACHINE_ARCH of the package matches the local machine.
+	 * Check MACHINE_ARCH of the remote package matches the local
+	 * machine.  Local package metadata is irrelevant here: packages
+	 * built elsewhere legitimately record a foreign MACHINE_ARCH,
+	 * and repositories.conf cannot fix that.
 	 */
-	if (check_machine_arch && strncmp(line, "MACHINE_ARCH=", 13) == 0) {
+	if (sum.type == REMOTE_SUMMARY && check_machine_arch &&
+	    strncmp(line, "MACHINE_ARCH=", 13) == 0) {
 		if (strncmp(MACHINE_ARCH, val, strlen(MACHINE_ARCH))) {
-			alarm(0); /* Stop the progress meter */
+			remain = alarm(0); /* Stop the progress meter */
 			printf(MSG_ARCH_DONT_MATCH, val, MACHINE_ARCH);
 			if (!check_yesno(DEFAULT_NO))
 				exit(EXIT_FAILURE);
 			check_machine_arch = 0;
-			alarm(1); /* Restart progress XXX: UPDATE_INTERVAL */
+			/* Restart progress only if the meter was armed XXX */
+			if (remain > 0)
+				alarm(1); /* XXX: UPDATE_INTERVAL */
 		}
 		return;
 	}
@@ -483,7 +490,7 @@ insert_local_summary(FILE *fp)
 	uint64_t	savepoint;
 
 	if (fp == NULL) {
-		pkgindb_close();
+		pkgaindb_close();
 		errx(EXIT_FAILURE, "Couldn't read local pkg_info");
 	}
 
@@ -491,13 +498,13 @@ insert_local_summary(FILE *fp)
 	freecols();
 	sqlite3_snprintf(BUFSIZ, buf, "PRAGMA table_info(%w);",
 	    sumsw[LOCAL_SUMMARY].pkg);
-	pkgindb_doquery(buf, colnames, NULL);
+	pkgaindb_doquery(buf, colnames, NULL);
 
 	SLIST_INIT(&inserthead);
 
 	prepare_stmts(sumsw[LOCAL_SUMMARY]);
 
-	savepoint = pkgindb_savepoint();
+	savepoint = pkgaindb_savepoint();
 
 	while (fgets(buf, BUFSIZ, fp) != NULL) {
 		/*
@@ -512,9 +519,26 @@ insert_local_summary(FILE *fp)
 		parse_entry(sumsw[LOCAL_SUMMARY], pkgid, buf);
 	}
 
-	pkgindb_savepoint_release(savepoint);
+	pkgaindb_savepoint_release(savepoint);
 
 	finalize_stmts(sumsw[LOCAL_SUMMARY]);
+}
+
+/*
+ * Seed callback for the PKG_ID counter used by insert_remote_summary().
+ * Repositories updated in isolation must not reuse rowids still referenced
+ * by the rows of repositories this run leaves untouched.
+ */
+static int
+get_next_pkgid(void *param, int argc, char **argv, char **colname)
+{
+	(void)argc;
+	(void)colname;
+
+	if (argv != NULL)
+		*(int *)param = atoi(argv[0]);
+
+	return PDB_OK;
 }
 
 /*
@@ -523,14 +547,14 @@ insert_local_summary(FILE *fp)
 static void
 insert_remote_summary(struct archive *a, char *cur_repo)
 {
-	static int	pkgid = 1;
+	int		pkgid = 1;
 	size_t		buflen, offset;
 	ssize_t		r;
 	char		*buf, *pe, *pi, *npi;
 	uint64_t	savepoint;
 
 	if (a == NULL) {
-		pkgindb_close();
+		pkgaindb_close();
 		errx(EXIT_FAILURE, "Couldn't read pkg_summary");
 	}
 
@@ -546,13 +570,15 @@ insert_remote_summary(struct archive *a, char *cur_repo)
 	freecols();
 	sqlite3_snprintf(buflen, buf, "PRAGMA table_info(%w);",
 	    sumsw[REMOTE_SUMMARY].pkg);
-	pkgindb_doquery(buf, colnames, NULL);
+	pkgaindb_doquery(buf, colnames, NULL);
 
 	SLIST_INIT(&inserthead);
 
 	prepare_stmts(sumsw[REMOTE_SUMMARY]);
 
-	savepoint = pkgindb_savepoint();
+	savepoint = pkgaindb_savepoint();
+
+	pkgaindb_doquery(REMOTE_PKG_NEXT_ID, get_next_pkgid, &pkgid);
 
 	/*
 	 * Main loop.  Read in archive, split into package records and parse
@@ -624,12 +650,12 @@ insert_remote_summary(struct archive *a, char *cur_repo)
 	XFREE(buf);
 
 	if (r != ARCHIVE_OK) {
-		pkgindb_savepoint_rollback(savepoint);
+		pkgaindb_savepoint_rollback(savepoint);
 		errx(EXIT_FAILURE, "Short read of pkg_summary: %s",
 		    archive_error_string(a));
 	}
 
-	pkgindb_savepoint_release(savepoint);
+	pkgaindb_savepoint_release(savepoint);
 
 	finalize_stmts(sumsw[REMOTE_SUMMARY]);
 
@@ -650,9 +676,9 @@ delete_remote_tbl(struct Summary sum, char *repo)
 	 * etc first, then finally remove from REMOTE_PKG.
 	 */
 	for (table = &(sum.pkg) + 1; *table != NULL; ++table) {
-		pkgindb_dovaquery(DELETE_REMOTE, *table, repo);
+		pkgaindb_dovaquery(DELETE_REMOTE, *table, repo);
 	}
-	pkgindb_dovaquery(DELETE_REMOTE_PKG_REPO, repo);
+	pkgaindb_dovaquery(DELETE_REMOTE_PKG_REPO, repo);
 }
 
 /*
@@ -762,7 +788,7 @@ insert_local_required_by(void)
 		SLIST_FOREACH(p, &pkgs[i], entries) {
 			for (j = 0; j < PKG_HASH_SIZE; j++) {
 				SLIST_FOREACH(e, &p->required_by[j], entries) {
-					pkgindb_dovaquery(INSERT_REQUIRED_BY,
+					pkgaindb_dovaquery(INSERT_REQUIRED_BY,
 					    p->pkgname, e->pkgname);
 					free(e->pkgname);
 				}
@@ -793,7 +819,7 @@ update_localdb(int verbose)
 	/*
 	 * Start a write transaction, excluding other writers until committed.
 	 */
-	if (pkgindb_doquery("BEGIN IMMEDIATE;", NULL, NULL))
+	if (pkgaindb_doquery("BEGIN IMMEDIATE;", NULL, NULL))
 		errx(EXIT_FAILURE, "failed to begin immediate transaction");
 
 	/*
@@ -806,7 +832,7 @@ update_localdb(int verbose)
 	 * Delete and recreate the LOCAL_PKG table, as it's simpler and faster
 	 * than updating.
 	 */
-	pkgindb_doquery(DELETE_LOCAL, NULL, NULL);
+	pkgaindb_doquery(DELETE_LOCAL, NULL, NULL);
 
 	if (verbose)
 		printf(MSG_READING_LOCAL_SUMMARY);
@@ -839,7 +865,7 @@ update_localdb(int verbose)
 	}
 	}
 out:
-	if (pkgindb_doquery("COMMIT;", NULL, NULL))
+	if (pkgaindb_doquery("COMMIT;", NULL, NULL))
 		errx(EXIT_FAILURE, "failed to commit transaction");
 }
 
@@ -855,14 +881,14 @@ pdb_delete_remote(void *param, int argc, char **argv, char **colname)
 	if (argv == NULL)
 		return PDB_ERR;
 
-	for (i = 0; pkg_repos[i] != NULL; i++) {
-		if (strcmp(pkg_repos[i], argv[0]) == 0)
+	for (i = 0; pkg_repos[i].url != NULL; i++) {
+		if (strcmp(pkg_repos[i].url, argv[0]) == 0)
 			return PDB_OK;
 	}
 
 	printf(MSG_CLEANING_DB_FROM_REPO, argv[0]);
 	delete_remote_tbl(sumsw[REMOTE_SUMMARY], argv[0]);
-	pkgindb_dovaquery(DELETE_REPO_URL, argv[0]);
+	pkgaindb_dovaquery(DELETE_REPO_URL, argv[0]);
 
 	force_fetch = 1;
 
@@ -874,47 +900,47 @@ update_remotedb(int verbose)
 {
 	struct archive	*a;
 	time_t		repo_mtime;
-	char		**prepos;
+	RepoConf	*prepos;
 	uint8_t		cleaned = 0;
 
 	/* loop through PKG_REPOS */
-	for (prepos = pkg_repos; *prepos != NULL; prepos++) {
+	for (prepos = pkg_repos; prepos->url != NULL; prepos++) {
 
 		if (verbose)
-			printf(MSG_PROCESSING_REMOTE_SUMMARY, *prepos);
+			printf(MSG_PROCESSING_REMOTE_SUMMARY, prepos->url);
 
 		/* load remote pkg_summary */
-		if ((a = fetch_summary(*prepos, &repo_mtime)) == NULL) {
+		if ((a = fetch_summary(prepos->url, &repo_mtime)) == NULL) {
 			if (verbose)
-				printf(MSG_DB_IS_UP_TO_DATE, *prepos);
+				printf(MSG_DB_IS_UP_TO_DATE, prepos->url);
 			continue;
 		}
 
 		/* Delete any unused repositories. */
 		if (!cleaned) {
-			pkgindb_doquery(SELECT_REPO_URLS, pdb_delete_remote,
+			pkgaindb_doquery(SELECT_REPO_URLS, pdb_delete_remote,
 			    NULL);
 			cleaned = 1;
 		}
 
 		/* delete remote* associated to this repository */
-		delete_remote_tbl(sumsw[REMOTE_SUMMARY], *prepos);
+		delete_remote_tbl(sumsw[REMOTE_SUMMARY], prepos->url);
 
 		/* update remote* table for this repository */
-		insert_remote_summary(a, *prepos);
+		insert_remote_summary(a, prepos->url);
 
 		/* mark repository as being updated with new mtime */
-		pkgindb_dovaquery(UPDATE_REPO_MTIME, (long long)repo_mtime, *prepos);
+		pkgaindb_dovaquery(UPDATE_REPO_MTIME, (long long)repo_mtime, prepos->url);
 	}
 
 	/* remove empty rows (duplicates) */
-	pkgindb_doquery(DELETE_EMPTY_ROWS, NULL, NULL);
+	pkgaindb_doquery(DELETE_EMPTY_ROWS, NULL, NULL);
 }
 
 int
 update_db(int which, int verbose)
 {
-	if (!have_privs(PRIVS_PKGINDB))
+	if (!have_privs(PRIVS_PKGAINDB))
 		return EXIT_FAILURE;
 
 	/* always check for LOCAL_SUMMARY updates */
@@ -932,35 +958,118 @@ update_db(int which, int verbose)
 void
 split_repos(void)
 {
-	size_t	repocount;
-	char	*p;
+	char	*p, *tok;
+	size_t	capacity, count;
+	RepoConf	*repos;
 
 	if ((p = getenv("PKG_REPOS")) != NULL) {
+		/*
+		 * Environment override is a plain whitespace separated list
+		 * of URLs; such repositories have no alias and cannot be
+		 * selected by name.
+		 */
 		env_repos = xstrdup(p);
+
+		capacity = 2; /* 1 entry + NULL */
+		repos = xcalloc(capacity, sizeof(RepoConf));
+		count = 0;
+
+		for (tok = strtok(env_repos, " \t"); tok != NULL;
+		    tok = strtok(NULL, " \t")) {
+			if (count + 2 > capacity) {
+				repos = xrealloc(repos,
+				    2 * capacity * sizeof(RepoConf));
+				memset(&repos[capacity], 0,
+				    capacity * sizeof(RepoConf));
+				capacity *= 2;
+			}
+			repos[count].alias = NULL;
+			repos[count].url = xstrdup(tok);
+			count++;
+			repos[count].alias = NULL;
+			repos[count].url = NULL;
+		}
+
+		if (count == 0)
+			errx(EXIT_FAILURE, MSG_MISSING_PKG_REPOS);
+
+		pkg_repos = repos;
 	} else {
-		if ((env_repos = read_repos()) == NULL)
+		if ((pkg_repos = read_repos()) == NULL)
 			errx(EXIT_FAILURE, MSG_MISSING_PKG_REPOS);
 	}
 
-	repocount = 2; /* 1st elm + NULL */
+	repo_record(pkg_repos);
+}
 
-	pkg_repos = xmalloc(repocount * sizeof(char *));
-	*pkg_repos = env_repos;
+/*
+ * Resolve a repository alias into its URL, or NULL if it is not a configured
+ * alias.
+ */
+const char *
+lookup_repo(const char *alias)
+{
+	int	i;
+	int	first_unlabeled = -1;
 
-	p = env_repos;
+	if (alias == NULL || pkg_repos == NULL || *alias == '\0')
+		return NULL;
 
-	while((p = strchr(p, ' ')) != NULL) {
-		*p = '\0';
-		p++;
-
-		pkg_repos = xrealloc(pkg_repos, ++repocount * sizeof(char *));
-		pkg_repos[repocount - 2] = p;
+	for (i = 0; pkg_repos[i].url != NULL; i++) {
+		if (pkg_repos[i].alias == NULL) {
+			if (first_unlabeled == -1)
+				first_unlabeled = i;
+			continue;
+		}
+		if (strcmp(pkg_repos[i].alias, alias) == 0)
+			return pkg_repos[i].url;
 	}
 
-	/* NULL last element */
-	pkg_repos[repocount - 1] = NULL;
+	/*
+	 * "default" selects the first repository listed without an
+	 * explicit alias, keeping the original unlabeled format usable
+	 * as a repository selector.
+	 */
+	if (first_unlabeled != -1 && strcmp(alias, "default") == 0)
+		return pkg_repos[first_unlabeled].url;
 
-	repo_record(pkg_repos);
+	return NULL;
+}
+
+/*
+ * Return the URL of the default repository, i.e. the first one listed
+ * without an explicit alias, or NULL if every repository is aliased.
+ */
+const char *
+default_repo_url(void)
+{
+	int	i;
+
+	if (pkg_repos == NULL)
+		return NULL;
+
+	for (i = 0; pkg_repos[i].url != NULL; i++)
+		if (pkg_repos[i].alias == NULL)
+			return pkg_repos[i].url;
+
+	return NULL;
+}
+
+void
+free_repos(void)
+{
+	int	i;
+
+	XFREE(env_repos);
+
+	if (pkg_repos == NULL)
+		return;
+
+	for (i = 0; pkg_repos[i].url != NULL; i++) {
+		XFREE(pkg_repos[i].alias);
+		XFREE(pkg_repos[i].url);
+	}
+	XFREE(pkg_repos);
 }
 
 /*
@@ -969,7 +1078,7 @@ split_repos(void)
 int
 chk_repo_list(int force)
 {
-	pkgindb_doquery(SELECT_REPO_URLS, pdb_delete_remote, NULL);
+	pkgaindb_doquery(SELECT_REPO_URLS, pdb_delete_remote, NULL);
 
 	if (force)
 		force_fetch = 1;

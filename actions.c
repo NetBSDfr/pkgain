@@ -28,7 +28,7 @@
  */
 
 #include <sqlite3.h>
-#include "pkgin.h"
+#include "pkgain.h"
 #include <sys/ioctl.h>
 #include <time.h>
 #include <unistd.h>
@@ -63,7 +63,7 @@ pkg_download(Plisthead *installhead)
 	SLIST_FOREACH(p, installhead, next) {
 		/*
 		 * We don't (yet) support resume so start by explicitly
-		 * removing any existing file.  pkgin_install() has already
+		 * removing any existing file.  pkgain_install() has already
 		 * checked to see if it's valid, and we know it is not.
 		 */
 		(void) unlink(p->ipkg->pkgfs);
@@ -145,7 +145,7 @@ pkg_download(Plisthead *installhead)
 }
 
 /**
- * \brief Analyse pkgin_errlog for warnings
+ * \brief Analyse pkgain_errlog for warnings
  */
 static void
 analyse_pkglog(long int filepos)
@@ -156,7 +156,7 @@ analyse_pkglog(long int filepos)
 	if (filepos < 0)
 		return;
 
-	if ((err_ro = fopen(pkgin_errlog, "r")) == NULL)
+	if ((err_ro = fopen(pkgain_errlog, "r")) == NULL)
 		return;
 
 	(void)fseek(err_ro, filepos, SEEK_SET);
@@ -180,7 +180,7 @@ analyse_pkglog(long int filepos)
 }
 
 /**
- * \brief Tags pkgin_errlog with date
+ * \brief Tags pkgain_errlog with date
  */
 #define DATELEN 64
 
@@ -212,9 +212,9 @@ static void
 open_pi_log(void)
 {
 	if (!verbosity && !said) {
-		if ((err_fp = fopen(pkgin_errlog, "a")) == NULL) {
+		if ((err_fp = fopen(pkgain_errlog, "a")) == NULL) {
  			fprintf(stderr, MSG_CANT_OPEN_WRITE,
-				pkgin_errlog);
+				pkgain_errlog);
 			exit(EXIT_FAILURE);
 		}
 
@@ -232,7 +232,7 @@ close_pi_log(int output)
 		analyse_pkglog(rm_filepos);
 		printf(MSG_WARNS_ERRS, warn_count, err_count);
 		if (warn_count > 0 || err_count > 0)
-			printf(MSG_PKG_INSTALL_LOGGING_TO, pkgin_errlog);
+			printf(MSG_PKG_INSTALL_LOGGING_TO, pkgain_errlog);
 	}
 
 	warn_count = err_count = said = 0;
@@ -555,7 +555,7 @@ check_core_upgrade(void)
 {
 	const char *pkgs[] = {
 		"pkg_install",
-		"pkgin",
+		"pkgain",
 		NULL,
 	};
 	Pkglist *lpkg, *rpkg;
@@ -574,7 +574,7 @@ check_core_upgrade(void)
 		if (upgrade)
 			continue;
 
-		if (find_preferred_pkg(pkgs[p], &rpkg, NULL) != 0)
+		if (find_preferred_pkg(pkgs[p], NULL, &rpkg, NULL) != 0)
 			continue;
 		if (calculate_action(lpkg, rpkg) == ACTION_UPGRADE)
 			upgrade = 1;
@@ -590,7 +590,7 @@ check_core_upgrade(void)
 }
 
 int
-pkgin_install(char **pkgargs, int do_inst, int upgrade)
+pkgain_install(char **pkgargs, int do_inst, int upgrade)
 {
 	FILE		*fp;
 	int		installnum = 0, upgradenum = 0;
@@ -598,7 +598,7 @@ pkgin_install(char **pkgargs, int do_inst, int upgrade)
 	int		removenum = 0, supersedenum = 0;
 	int		coreupg = 0;
 	int		argn, rc = EXIT_SUCCESS;
-	int		privsreqd = PRIVS_PKGINDB;
+	int		privsreqd = PRIVS_PKGAINDB;
 	uint64_t	free_space;
 	int64_t		file_size = 0, size_pkg = 0;
 	size_t		len;
@@ -611,7 +611,7 @@ pkgin_install(char **pkgargs, int do_inst, int upgrade)
 	char		*toremove = NULL, *tosupersede = NULL;
 	char		*unmet_reqs = NULL;
 	char		**corepkgs;
-	char		pkgrepo[BUFSIZ], query[BUFSIZ];
+	char		*pkgrepo;
 	char		h_psize[H_BUF], h_fsize[H_BUF], h_free[H_BUF];
 	struct		stat st;
 
@@ -630,7 +630,7 @@ pkgin_install(char **pkgargs, int do_inst, int upgrade)
 	 * Initialise local CONFLICTS as it will be used by pkg_impact().
 	 */
 	l_conflicthead = init_array(CONFLICTS_HASH_SIZE);
-	pkgindb_doquery(LOCAL_CONFLICTS, record_pattern_to_array, l_conflicthead);
+	pkgaindb_doquery(LOCAL_CONFLICTS, record_pattern_to_array, l_conflicthead);
 
 	/*
 	 * If pkgargs is NULL we're performing an upgrade.  First check to see
@@ -699,14 +699,14 @@ pkgin_install(char **pkgargs, int do_inst, int upgrade)
 			continue;
 
 		/*
-		 * Retrieve the correct repository for the package and save it,
-		 * this is used later by pkg_download().
+		 * Use the repository recorded for the selected remote package
+		 * to build the download URL, used later by pkg_download().
 		 */
-		sqlite3_snprintf(BUFSIZ, query, PKG_URL, p->rpkg->full);
-		if (pkgindb_doquery(query, pdb_get_value, pkgrepo) != 0)
+		if (p->rpkg->repo == NULL)
 			errx(EXIT_FAILURE, MSG_PKG_NO_REPO, p->rpkg->full);
+		pkgrepo = p->rpkg->repo;
 
-		p->pkgfs = xasprintf("%s/%s%s", pkgin_cache, p->rpkg->full,
+		p->pkgfs = xasprintf("%s/%s%s", pkgain_cache, p->rpkg->full,
 		    PKG_EXT);
 		p->pkgurl = xasprintf("%s/%s%s", pkgrepo, p->rpkg->full,
 		    PKG_EXT);
@@ -766,11 +766,11 @@ pkgin_install(char **pkgargs, int do_inst, int upgrade)
 	humanize_size(h_psize, size_pkg < 0 ? -size_pkg : size_pkg);
 
 	/* check disk space */
-	free_space = fs_room(pkgin_cache);
+	free_space = fs_room(pkgain_cache);
 	if (free_space < (uint64_t)file_size) {
 		humanize_size(h_free, (int64_t)free_space);
 		errx(EXIT_FAILURE, MSG_NO_CACHE_SPACE,
-			pkgin_cache, h_fsize, h_free);
+			pkgain_cache, h_fsize, h_free);
 	}
 	free_space = fs_room(PREFIX);
 	if (size_pkg > 0 && free_space < (uint64_t)size_pkg) {
@@ -934,7 +934,7 @@ installend:
 }
 
 int
-pkgin_remove(char **pkgargs)
+pkgain_remove(char **pkgargs)
 {
 	action_list_t	*al;
 	Plistarray	*rmhead;
@@ -1019,10 +1019,10 @@ pkgin_remove(char **pkgargs)
 }
 
 int
-pkgin_upgrade(int do_inst)
+pkgain_upgrade(int do_inst)
 {
 	if (is_empty_local_pkglist())
 		errx(EXIT_FAILURE, MSG_EMPTY_LOCAL_PKGLIST);
 
-	return pkgin_install(NULL, do_inst, 1);
+	return pkgain_install(NULL, do_inst, 1);
 }

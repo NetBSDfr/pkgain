@@ -28,7 +28,7 @@
  * Routines for configuring and using pkg_install utilities.
  */
 
-#include "pkgin.h"
+#include "pkgain.h"
 
 char *pkg_add;
 char *pkg_admin;

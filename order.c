@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  */
 
-#include "pkgin.h"
+#include "pkgain.h"
 
 /*
  * Order package lists to ensure they are correctly ordered when passed to
@@ -87,7 +87,7 @@ order_remove(Plisthead *impacthead)
 /*
  * Download order, sorted alphabetically.
  *
- * Skip any packages not marked for download by pkgin_install(), then sort the
+ * Skip any packages not marked for download by pkgain_install(), then sort the
  * remainder by PKGNAME and build the ordered list.
  */
 Plisthead *

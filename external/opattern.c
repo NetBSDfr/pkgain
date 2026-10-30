@@ -100,7 +100,7 @@ quick_pkg_match(const char *pattern, const char *pkg)
 {
 #define simple(x) (isalnum((unsigned char)(x)) || (x) == '-')
 	/*
-	 * In pkgin we often match over the entire remote repository, and so it
+	 * In pkgain we often match over the entire remote repository, and so it
 	 * is optimal to extend this faster check to more characters and reduce
 	 * the number of candidate matches, as later pkg_match checks are much
 	 * more expensive.
@@ -111,7 +111,7 @@ quick_pkg_match(const char *pattern, const char *pkg)
 	 *
 	 * $ for i in {2..10}; do
 	 * >   printf "%3s:" ${i}
-	 * >   pkgin avail | cut -c1-${i} | sort | uniq -c | sort -n | tail -1
+	 * >   pkgain avail | cut -c1-${i} | sort | uniq -c | sort -n | tail -1
 	 * > done
 	 *
 	 *   2:   7144 py

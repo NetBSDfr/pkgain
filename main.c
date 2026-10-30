@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  */
 
-#include "pkgin.h"
+#include "pkgain.h"
 #include "cmd.h"
 #include "external/lib.h"
 
@@ -54,7 +54,7 @@ main(int argc, char *argv[])
 	const char	*chrootpath = NULL;
 	int		v4flag = 0, v6flag = 0, ffidx = 0;
 
-	setprogname("pkgin");
+	setprogname("pkgain");
 
 	/* Default to not doing \r printouts if we don't send to a tty */
 	parsable = !isatty(fileno(stdout));
@@ -79,8 +79,8 @@ main(int argc, char *argv[])
 			noflag = 1;
 			break;
 		case 'v':
-			printf("pkgin %s (using %s)\n",
-			    PKGIN_VERSION, pdb_version());
+			printf("pkgain %s (using %s)\n",
+			    PKGAIN_VERSION, pdb_version());
 			exit(EXIT_SUCCESS);
 			/* NOTREACHED */
 		case 'h':
@@ -148,19 +148,19 @@ main(int argc, char *argv[])
 	/* Configure pkg_install */
 	setup_pkg_install();
 
-	/* Configure pkgin database directory */
-	setup_pkgin_dbdir();
+	/* Configure pkgain database directory */
+	setup_pkgain_dbdir();
 
 	/*
 	 * Opening the database returns 0 for a valid database schema, and 1
 	 * for a newly created or recreated database, so we use that to
 	 * determine whether an upgrade needs to be performed or not.
 	 */
-	need_upgrade = pkgindb_open();
+	need_upgrade = pkgaindb_open();
 
 	/*
 	 * Check for updates to the local pkgdb and refresh the local database
-	 * (quietly to avoid unexpected stdout for e.g. "pkgin export") if
+	 * (quietly to avoid unexpected stdout for e.g. "pkgain export") if
 	 * necessary.  Ignore any returned errors so that unprivileged users
 	 * can perform query operations.
 	 */
@@ -242,7 +242,7 @@ main(int argc, char *argv[])
 	case PKG_INST_CMD: /* install a package and its dependencies */
 		missing_param(argc, 2, MSG_PKG_ARGS_INST);
 		pkgargs = mkpkgargs(&argv[1]);
-		rc = pkgin_install(pkgargs, do_inst, 0);
+		rc = pkgain_install(pkgargs, do_inst, 0);
 		break;
 	/*
 	 * Historically there was a distinction between "upgrade" (only upgrade
@@ -251,15 +251,15 @@ main(int argc, char *argv[])
 	 */
 	case PKG_UPGRD_CMD:
 	case PKG_FUPGRD_CMD:
-		rc = pkgin_upgrade(do_inst);
+		rc = pkgain_upgrade(do_inst);
 		break;
 	case PKG_REMV_CMD: /* remove packages and reverse dependencies */
 		missing_param(argc, 2, MSG_PKG_ARGS_RM);
 		pkgargs = mkpkgargs(&argv[1]);
-		rc = pkgin_remove(pkgargs);
+		rc = pkgain_remove(pkgargs);
 		break;
 	case PKG_AUTORM_CMD: /* autoremove orphan packages */
-		pkgin_autoremove();
+		pkgain_autoremove();
 		break;
 	case PKG_KEEP_CMD: /* mark a package as "keep" (not automatic) */
 		missing_param(argc, 2, MSG_PKG_ARGS_KEEP);
@@ -285,7 +285,7 @@ main(int argc, char *argv[])
 		missing_param(argc, 2, MSG_MISSING_SRCH);
 		rc = search_pkg(argv[1]);
 		break;
-	case PKG_CLEAN_CMD: /* clean pkgin's packages cache */
+	case PKG_CLEAN_CMD: /* clean pkgain's packages cache */
 		clean_cache();
 		break;
 	case PKG_EXPORT_CMD: /* export PKGPATH for keep packages */
@@ -331,7 +331,7 @@ main(int argc, char *argv[])
 		ginto();
 		break;
         case PKG_STATS_CMD: /* show package statistics */
-                pkgindb_stats();
+                pkgaindb_stats();
                 break;
 	default:
 		usage(EXIT_FAILURE);
@@ -341,13 +341,12 @@ main(int argc, char *argv[])
 	free_local_pkglist();
 	free_remote_pkglist();
 
-	pkgindb_close();
+	pkgaindb_close();
 
 	if (tracefp != NULL)
 		fclose(tracefp);
 
-	XFREE(env_repos);
-	XFREE(pkg_repos);
+	free_repos();
 	free_preferred();
 	free_list(pkgargs);
 
@@ -378,7 +377,7 @@ find_cmd(const char *arg)
 
 /*
  * copy const argv to a modifiable array to expand globs in
- * pkg_impact, https://github.com/NetBSDfr/pkgin/issues/114
+ * pkg_impact, https://github.com/NetBSDfr/pkgain/issues/114
  */
 static char **
 mkpkgargs(char **args)
@@ -402,7 +401,7 @@ usage(int status)
 	int i;
 
 	fprintf((status) ? stderr : stdout,
-	    "Usage: pkgin [-46cdfhlnPtvVy] command [package ...]\n\n"
+	    "Usage: pkgain [-46cdfhlnPtvVy] command [package ...]\n\n"
 	    "Commands and shortcuts:\n");
 
 	for (i = 0; cmd[i].name != NULL; i++) {

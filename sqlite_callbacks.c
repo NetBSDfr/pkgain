@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  */
 
-#include "pkgin.h"
+#include "pkgain.h"
 
 /** 
  * SQLite callback, record package list
